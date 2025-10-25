@@ -30,6 +30,8 @@ function setStatus(msg, isError=false){
 }
 function hideDataControls(){ document.getElementById('dataControls').classList.add('hidden'); }
 function showDataControls(){ document.getElementById('dataControls').classList.remove('hidden'); }
+function hideSourceLink(){ document.getElementById('sourceLink').classList.add('hidden'); }
+function showSourceLink(){ document.getElementById('sourceLink').classList.remove('hidden'); }
 
 // Build filters + render once data is available
 function initUI(){
@@ -55,14 +57,14 @@ dataModeSel.addEventListener('change', () => {
   chooseFileBtn.classList.toggle('hidden', dataModeSel.value !== 'file');
 });
 reloadOnlineBtn.addEventListener('click', async () => {
-  try { await loadCSV(); initUI(); }
+  try { await loadCSV(); initUI(); showSourceLink(); }
   catch (err) { console.error(err); setStatus('Online load failed. Try Upload.', true); showDataControls(); dataModeSel.value = 'file'; chooseFileBtn.classList.remove('hidden'); }
 });
 chooseFileBtn.addEventListener('click', () => fileInput.click());
 fileInput.addEventListener('change', () => {
   const file = fileInput.files && fileInput.files[0]; if (!file) return;
   const reader = new FileReader();
-  reader.onload = () => { try { loadFromText(String(reader.result||'')); initUI(); } catch (err) { console.error(err); setStatus('Failed to parse uploaded file.', true); showDataControls(); } };
+  reader.onload = () => { try { loadFromText(String(reader.result||'')); initUI(); hideSourceLink(); } catch (err) { console.error(err); setStatus('Failed to parse uploaded file.', true); showDataControls(); } };
   reader.readAsText(file);
 });
 
@@ -71,21 +73,22 @@ const TEST_MODE = new URLSearchParams(location.search).has('test');
 async function boot(){
   if (TEST_MODE) {
     document.getElementById('testBadge').textContent = '• Test mode active (using mock data)';
-    const headers = ['Code','Name','Atk Name','Type','Sub','AP','DF','DMG','DUR','Atk Type'];
+    const headers = ['Type','Sub','Code','Name','Atk Type','Atk Name','DMG','DUR','AP','DF','ST','PF'];
     const rows = [
-      { Code:'ARC-01', Name:'Arc Blaster',        'Atk Name':'Arc Blaster',        Type:'Primary',   Sub:'Energy',     AP:'0',  DF:25, DMG:30,  DUR:0.5, 'Atk Type':'Arc' },
-      { Code:'ARC-01', Name:'Arc Blaster',        'Atk Name':'Arc Blaster (Mk2)', Type:'Primary',   Sub:'Energy',     AP:'0',  DF:30, DMG:60,  DUR:0.3, 'Atk Type':'Explosion' },
-      { Code:'GNP-02', Name:'Grenade Pistol',     'Atk Name':'Grenade Pistol',    Type:'Secondary', Sub:'Sidearm',    AP:'3',  DF:40, DMG:90,  DUR:0.0, 'Atk Type':'Projectile' },
-      { Code:'GNP-02', Name:'Grenade Pistol',     'Atk Name':'Grenade Pistol',    Type:'Secondary', Sub:'Sidearm',    AP:'3',  DF:50, DMG:120, DUR:0.0, 'Atk Type':'Explosion' },
-      { Code:'GL6-FR', Name:'GL-6 Frag',          'Atk Name':'GL-6 Frag',         Type:'Grenade',   Sub:'Explosive',  AP:'4',  DF:25, DMG:220, DUR:0.0, 'Atk Type':'Explosion' },
-      { Code:'OBL-77', Name:'Orbital Laser',      'Atk Name':'Orbital Laser',     Type:'Support',   Sub:'Orbital',    AP:'6+', DF:30, DMG:300, DUR:2.0, 'Atk Type':'Beam' },
-      { Code:'SPR-09', Name:'Spear',              'Atk Name':'Spear',             Type:'Stratagem', Sub:'Anti-Armor', AP:'5',  DF:25, DMG:200, DUR:0.0, 'Atk Type':'Impact' },
-      { Code:'FLM-10', Name:'Flamethrower',       'Atk Name':'Flamethrower',      Type:'Primary',   Sub:'Spray',      AP:'1/2',DF:25, DMG:25,  DUR:1.8, 'Atk Type':'Spray' }
+      { Type:'Primary', Sub:'AR', Code:'AR-23', Name:'Liberator', 'Atk Type':'projectile', 'Atk Name':'5.5x50mm FULL METAL JACKET_P', DMG:90, DUR:22, AP:2, DF:10, ST:15, PF:10 },
+      { Type:'Primary', Sub:'AR', Code:'AR-23P', Name:'Liberator Penetrator', 'Atk Type':'projectile', 'Atk Name':'5.5x50mm PENETRATOR_P', DMG:65, DUR:15, AP:3, DF:10, ST:10, PF:10 },
+      { Type:'Secondary', Sub:'PDW', Code:'P-2', Name:'Peacemaker', 'Atk Type':'projectile', 'Atk Name':'9x20mm HOLLOW POINT_P', DMG:95, DUR:30, AP:2, DF:10, ST:15, PF:4 },
+      { Type:'Grenade', Sub:'GR', Code:'G-6', Name:'Frag', 'Atk Type':'explosion', 'Atk Name':'G-6 FRAG_E', DMG:500, DUR:50, AP:3, DF:20, ST:25, PF:40 },
+      { Type:'Grenade', Sub:'GR', Code:'G-6', Name:'Frag', 'Atk Type':'projectile', 'Atk Name':'SHRAPNEL_P x35', DMG:110, DUR:35, AP:3, DF:10, ST:10, PF:20 },
+      { Type:'Support', Sub:'MG', Code:'MG-43', Name:'Machine Gun', 'Atk Type':'projectile', 'Atk Name':'8x60mm FULL METAL JACKET_P1', DMG:90, DUR:23, AP:3, DF:10, ST:20, PF:12 },
+      { Type:'Stratagem', Sub:'ORB', Code:'-', Name:'ORBITAL PRECISION STRIKE', 'Atk Type':'projectile', 'Atk Name':'380mm HE CANNON ROUND_P', DMG:3500, DUR:3500, AP:8, DF:50, ST:50, PF:20 },
+      { Type:'Stratagem', Sub:'ORB', Code:'-', Name:'ORBITAL PRECISION STRIKE', 'Atk Type':'explosion', 'Atk Name':'380mm HE CANNON ROUND_P_IE', DMG:1000, DUR:1000, AP:6, DF:50, ST:70, PF:60 }
     ];
     ingestMatrix([headers, ...rows.map(r => headers.map(h => r[h]))]);
-    initUI();
+    initUI(); 
+    hideSourceLink();
   } else {
-    try { await loadCSV(); initUI(); }
+    try { await loadCSV(); initUI(); showSourceLink(); }
     catch (err) { console.error('CSV load failed:', err); setStatus('Online load failed. Use Upload.', true); showDataControls(); dataModeSel.value = 'file'; chooseFileBtn.classList.remove('hidden'); }
   }
 }

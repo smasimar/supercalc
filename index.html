@@ -18,35 +18,43 @@
 
   <main>
     <section id="tab-weapons" class="panel">
-      <div id="dataControls" class="data-controls">
-        <select id="dataMode" class="select">
-          <option value="onlineCsv" selected>Online (CSV)</option>
-          <option value="file">Upload CSV/TSV</option>
-        </select>
-        <button class="button" id="reloadOnline">Reload</button>
-        <button class="button" id="chooseFile">Choose File</button>
-        <input type="file" id="fileInput" accept=".csv,.tsv,text/csv,text/tab-separated-values" class="hidden" />
-        <span id="statusMsg" class="status"></span>
-      </div>
 
-      <div class="filters">
-        <div class="row"><span class="label">Type:</span><div class="chiprow" id="typeFilters"></div></div>
-        <div class="row"><span class="label">Sub:</span><div class="chiprow" id="subFilters"></div></div>
-        <div class="row">
-          <input class="input wide" id="search" placeholder="Quick filter… (matches any column)" />
-          <button class="button" id="resetSort">Reset sort</button>
-          <span id="testBadge" class="test-badge"></span>
+      <section id="tab-weapons" class="panel">
+        <a id="sourceLink"
+          class="source-link hidden"
+          href="https://helldivers.wiki.gg/wiki/Damage_Comparison"
+          target="_blank"
+          rel="noopener noreferrer">Source: Helldivers wiki</a>
+
+        <div id="dataControls" class="data-controls">
+          <select id="dataMode" class="select">
+            <option value="onlineCsv" selected>Online (CSV)</option>
+            <option value="file">Upload CSV/TSV</option>
+          </select>
+          <button class="button" id="reloadOnline">Reload</button>
+          <button class="button" id="chooseFile">Choose File</button>
+          <input type="file" id="fileInput" accept=".csv,.tsv,text/csv,text/tab-separated-values" class="hidden" />
+          <span id="statusMsg" class="status"></span>
         </div>
-      </div>
 
-      <div class="table-wrap">
-        <table id="weaponsTable"><thead id="thead"></thead><tbody id="tbody"></tbody></table>
-      </div>
-    </section>
+        <div class="filters">
+          <div class="row"><span class="label">Type:</span><div class="chiprow" id="typeFilters"></div></div>
+          <div class="row"><span class="label">Sub:</span><div class="chiprow" id="subFilters"></div></div>
+          <div class="row">
+            <input class="input wide" id="search" placeholder="Quick filter… (matches any column)" />
+            <button class="button" id="resetSort">Reset sort</button>
+            <span id="testBadge" class="test-badge"></span>
+          </div>
+        </div>
 
-    <section id="tab-enemies" class="panel hidden"><div class="filters"><div class="row"><span class="label">Enemy Data</span></div></div><div class="placeholder">Coming soon.</div></section>
-    <section id="tab-calculator" class="panel hidden"><div class="filters"><div class="row"><span class="label">Damage Calculator</span></div></div><div class="placeholder">Coming soon.</div></section>
-  </main>
+        <div class="table-wrap">
+          <table id="weaponsTable"><thead id="thead"></thead><tbody id="tbody"></tbody></table>
+        </div>
+      </section>
+
+      <section id="tab-enemies" class="panel hidden"><div class="filters"><div class="row"><span class="label">Enemy Data</span></div></div><div class="placeholder">Coming soon.</div></section>
+      <section id="tab-calculator" class="panel hidden"><div class="filters"><div class="row"><span class="label">Damage Calculator</span></div></div><div class="placeholder">Coming soon.</div></section>
+    </main>
 
   <script type="module" src="app.js"></script>
 </body>
