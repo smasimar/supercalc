@@ -1,8 +1,10 @@
-import { loadCSV, loadFromText, ingestMatrix } from './data.js';
-import { buildTypeFilters, buildSubFilters, renderTable } from './table.js';
-import { loadEnemyData, buildEnemyFactionFilters, renderEnemyTable, setupEnemyTableSorting } from './enemy-data.js';
-import './filters.js'; // sets up event listeners for search & type/sub chips
-import './enemy-filters.js'; // sets up event listeners for enemy search
+import { loadCSV, loadFromText, ingestMatrix } from './weapons/data.js';
+import { buildTypeFilters, buildSubFilters, renderTable } from './weapons/table.js';
+import { loadEnemyData } from './enemies/data.js';
+import { renderEnemyTable, setupEnemyTableSorting } from './enemies/table.js';
+import { buildEnemyFactionFilters } from './enemies/filters.js';
+import './weapons/filters.js'; // sets up event listeners for search & type/sub chips
+import './enemies/filters.js'; // sets up event listeners for enemy search
 
 // Tabs
 const sections = {
@@ -21,6 +23,7 @@ document.querySelectorAll('.tab').forEach(btn => {
     // Load enemy data when enemies tab is activated
     if (tab === 'enemies') {
       const enemyStatusEl = document.getElementById('enemyStatusMsg');
+      const enemySourceEl = document.getElementById('enemySourceLink');
       try {
         if (enemyStatusEl) enemyStatusEl.textContent = 'Loading enemy data...';
         await loadEnemyData();
@@ -28,6 +31,7 @@ document.querySelectorAll('.tab').forEach(btn => {
         renderEnemyTable();
         setupEnemyTableSorting();
         if (enemyStatusEl) enemyStatusEl.textContent = '';
+        if (enemySourceEl) enemySourceEl.classList.remove('hidden');
       } catch (err) {
         console.error('Failed to load enemy data:', err);
         if (enemyStatusEl) {

@@ -1,21 +1,9 @@
-// filters.js — search and reset controls
+// weapons/filters.js — search and reset controls
 import { state } from './data.js';
 import { applyFilters, sortAndRenderBody } from './table.js';
+import { debounce } from '../utils.js';
 
 window._searchQuery = '';
-
-// Debounce utility function
-function debounce(func, wait) {
-  let timeout;
-  return function executedFunction(...args) {
-    const later = () => {
-      clearTimeout(timeout);
-      func(...args);
-    };
-    clearTimeout(timeout);
-    timeout = setTimeout(later, wait);
-  };
-}
 
 const searchEl = document.getElementById('search');
 if (searchEl) {

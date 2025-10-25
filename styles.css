@@ -102,24 +102,21 @@ main{
   100% { transform: rotate(360deg); }
 }
 
-/* Enemy table sorting */
-.sortable {
-  cursor: pointer;
-  user-select: none;
-}
-
-.sortable:hover {
-  background-color: rgba(255, 255, 255, 0.05);
-}
-
-.sort-asc::after {
+/* Table sorting (unified for weapons and enemies) */
+thead th.sort-asc::after,
+.sortable.sort-asc::after {
   content: ' ▲';
   color: var(--accent);
+  margin-left: 6px;
+  display: inline-block;
 }
 
-.sort-desc::after {
+thead th.sort-desc::after,
+.sortable.sort-desc::after {
   content: ' ▼';
   color: var(--accent);
+  margin-left: 6px;
+  display: inline-block;
 }
 
 .data-controls{position:absolute; top:8px; right:10px; display:flex; gap:6px; align-items:center}

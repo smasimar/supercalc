@@ -1,6 +1,6 @@
 // table.js — render, grouping, sorting, filters
 import { state } from './data.js';
-import { classifyAtkType, atkColorClass, apColorClass, dfColorClass } from './colors.js';
+import { classifyAtkType, atkColorClass, apColorClass, dfColorClass } from '../colors.js';
 
 export function isNumber(v){ return v !== null && v !== '' && !isNaN(Number(v)); }
 
@@ -30,9 +30,23 @@ export function renderTable(){
   const trh = document.createElement('tr');
   state.headers.forEach(h => {
     const th = document.createElement('th');
-    th.textContent = h; th.title = `Sort by ${h}`;
-    if (state.sortKey === h) { const span = document.createElement('span'); span.className = 'sort-indicator'; span.textContent = state.sortDir === 'asc' ? '▲' : '▼'; th.appendChild(span); }
-    th.addEventListener('click', () => { if (state.sortKey === h) { state.sortDir = state.sortDir === 'asc' ? 'desc' : 'asc'; } else { state.sortKey = h; state.sortDir = 'asc'; } sortAndRenderBody(); });
+    th.textContent = h; 
+    th.title = `Sort by ${h}`;
+    
+    // Add sort indicator if this column is being sorted
+    if (state.sortKey === h) {
+      th.classList.add(state.sortDir === 'asc' ? 'sort-asc' : 'sort-desc');
+    }
+    
+    th.addEventListener('click', () => { 
+      if (state.sortKey === h) { 
+        state.sortDir = state.sortDir === 'asc' ? 'desc' : 'asc'; 
+      } else { 
+        state.sortKey = h; 
+        state.sortDir = 'asc'; 
+      } 
+      renderTable(); // Re-render to update sort indicators
+    });
     trh.appendChild(th);
   });
   thead.appendChild(trh);
