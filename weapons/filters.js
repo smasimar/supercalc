@@ -20,7 +20,33 @@ if (searchEl) {
 const resetEl = document.getElementById('resetSort');
 if (resetEl) {
   resetEl.addEventListener('click', () => {
-    state.sortKey = null; state.sortDir = 'asc';
-    sortAndRenderBody();
+    // Clear search field
+    const searchEl = document.getElementById('search');
+    if (searchEl) {
+      searchEl.value = '';
+      window._searchQuery = '';
+    }
+    
+    // Uncheck all type filters
+    const typeChips = document.querySelectorAll('#typeFilters .chip');
+    typeChips.forEach(chip => chip.classList.remove('active'));
+    
+    // Uncheck all sub filters
+    const subChips = document.querySelectorAll('#subFilters .chip');
+    subChips.forEach(chip => chip.classList.remove('active'));
+    
+    // Clear sort state
+    state.sortKey = null;
+    state.sortDir = 'asc';
+    
+    // Remove sort indicators from headers
+    const sortableHeaders = document.querySelectorAll('#weaponsTable th');
+    sortableHeaders.forEach(h => {
+      h.classList.remove('sort-asc', 'sort-desc');
+    });
+    
+    // Reapply filters to reset state
+    applyFilters();
+    renderTable();
   });
 }

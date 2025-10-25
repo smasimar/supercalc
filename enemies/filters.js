@@ -88,3 +88,33 @@ if (enemySearchEl) {
     debouncedApplyEnemyFilters();
   });
 }
+
+// Setup reset button
+const enemyResetEl = document.getElementById('enemyResetSort');
+if (enemyResetEl) {
+  enemyResetEl.addEventListener('click', () => {
+    // Clear search field
+    const searchEl = document.getElementById('enemySearch');
+    if (searchEl) {
+      searchEl.value = '';
+      window._enemySearchQuery = '';
+    }
+    
+    // Uncheck all faction filters
+    const factionChips = document.querySelectorAll('#enemyFactionFilters .chip');
+    factionChips.forEach(chip => chip.classList.remove('active'));
+    
+    // Clear sort state
+    enemyState.sortKey = null;
+    enemyState.sortDir = 'asc';
+    
+    // Update sort indicators
+    const sortableHeaders = document.querySelectorAll('#enemyTable th.sortable');
+    sortableHeaders.forEach(h => {
+      h.classList.remove('sort-asc', 'sort-desc');
+    });
+    
+    // Reapply filters to reset state
+    applyEnemyFilters();
+  });
+}
