@@ -18,42 +18,76 @@
 
   <main>
     <section id="tab-weapons" class="panel">
+      <a id="sourceLink"
+        class="source-link hidden"
+        href="https://helldivers.wiki.gg/wiki/Damage_Comparison"
+        target="_blank"
+        rel="noopener noreferrer">Source: Helldivers wiki</a>
 
-      <section id="tab-weapons" class="panel">
-        <a id="sourceLink"
-          class="source-link hidden"
-          href="https://helldivers.wiki.gg/wiki/Damage_Comparison"
-          target="_blank"
-          rel="noopener noreferrer">Source: Helldivers wiki</a>
-
-        <div id="dataControls" class="data-controls">
-          <select id="dataMode" class="select">
-            <option value="onlineCsv" selected>Online (CSV)</option>
-            <option value="file">Upload CSV/TSV</option>
-          </select>
-          <button class="button" id="reloadOnline">Reload</button>
-          <button class="button" id="chooseFile">Choose File</button>
-          <input type="file" id="fileInput" accept=".csv,.tsv,text/csv,text/tab-separated-values" class="hidden" />
-          <span id="statusMsg" class="status"></span>
+      <div id="dataControls" class="data-controls">
+        <select id="dataMode" class="select">
+          <option value="onlineCsv" selected>Online (CSV)</option>
+          <option value="file">Upload CSV/TSV</option>
+        </select>
+        <button class="button" id="reloadOnline">Reload</button>
+        <button class="button" id="chooseFile">Choose File</button>
+        <input type="file" id="fileInput" accept=".csv,.tsv,text/csv,text/tab-separated-values" class="hidden" />
+        <span id="statusMsg" class="status"></span>
+        <div id="loadingIndicator" class="loading-indicator hidden">
+          <div class="spinner"></div>
+          <span>Loading...</span>
         </div>
+      </div>
 
-        <div class="filters">
-          <div class="row"><span class="label">Type:</span><div class="chiprow" id="typeFilters"></div></div>
-          <div class="row"><span class="label">Sub:</span><div class="chiprow" id="subFilters"></div></div>
-          <div class="row">
-            <input class="input wide" id="search" placeholder="Quick filter… (matches any column)" />
-            <button class="button" id="resetSort">Reset sort</button>
-            <span id="testBadge" class="test-badge"></span>
-          </div>
+      <div class="filters">
+        <div class="row"><span class="label">Type:</span><div class="chiprow" id="typeFilters"></div></div>
+        <div class="row"><span class="label">Sub:</span><div class="chiprow" id="subFilters"></div></div>
+        <div class="row">
+          <input class="input wide" id="search" placeholder="Search weapons… (matches any field)" />
+          <button class="button" id="resetSort">Reset sort</button>
+          <span id="testBadge" class="test-badge"></span>
         </div>
+      </div>
 
-        <div class="table-wrap">
-          <table id="weaponsTable"><thead id="thead"></thead><tbody id="tbody"></tbody></table>
+      <div class="table-wrap">
+        <table id="weaponsTable"><thead id="thead"></thead><tbody id="tbody"></tbody></table>
+      </div>
+    </section>
+
+    <section id="tab-enemies" class="panel hidden">
+      <div class="filters">
+        <div class="row"><span class="label">Faction:</span><div class="chiprow" id="enemyFactionFilters"></div></div>
+        <div class="row">
+          <input class="input wide" id="enemySearch" placeholder="Search enemies… (matches any field)" />
+          <span id="enemyStatusMsg" class="status"></span>
         </div>
-      </section>
+      </div>
 
-      <section id="tab-enemies" class="panel hidden"><div class="filters"><div class="row"><span class="label">Enemy Data</span></div></div><div class="placeholder">Coming soon.</div></section>
-      <section id="tab-calculator" class="panel hidden"><div class="filters"><div class="row"><span class="label">Damage Calculator</span></div></div><div class="placeholder">Coming soon.</div></section>
+      <div class="table-wrap">
+        <table id="enemyTable">
+          <thead>
+            <tr>
+              <th>Unit</th>
+              <th class="sortable" data-sort="zone_name">Zone Name</th>
+              <th class="sortable" data-sort="health">Health</th>
+              <th class="sortable" data-sort="Con">Con</th>
+              <th class="sortable" data-sort="Dur%">Dur%</th>
+              <th class="sortable" data-sort="AV">AV</th>
+              <th class="sortable" data-sort="IsFatal">IsFatal</th>
+              <th class="sortable" data-sort="ExTarget">ExTarget</th>
+              <th class="sortable" data-sort="ExMult">ExMult</th>
+              <th class="sortable" data-sort="ToMain%">ToMain%</th>
+              <th class="sortable" data-sort="MainCap">MainCap</th>
+            </tr>
+          </thead>
+          <tbody id="enemyTableBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+
+    <section id="tab-calculator" class="panel hidden"><div class="filters"><div class="row"><span class="label">Damage Calculator</span></div></div><div class="placeholder">Coming soon :3</div></section>
+
     </main>
 
   <script type="module" src="app.js"></script>

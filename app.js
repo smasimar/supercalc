@@ -1,6 +1,8 @@
 import { loadCSV, loadFromText, ingestMatrix } from './data.js';
 import { buildTypeFilters, buildSubFilters, renderTable } from './table.js';
+import { loadEnemyData, buildEnemyFactionFilters, renderEnemyTable, setupEnemyTableSorting } from './enemy-data.js';
 import './filters.js'; // sets up event listeners for search & type/sub chips
+import './enemy-filters.js'; // sets up event listeners for enemy search
 
 // Tabs
 const sections = {
@@ -10,11 +12,30 @@ const sections = {
 };
 
 document.querySelectorAll('.tab').forEach(btn => {
-  btn.addEventListener('click', () => {
+  btn.addEventListener('click', async () => {
     document.querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     const tab = btn.dataset.tab;
     for (const k in sections) sections[k].classList.toggle('hidden', k !== tab);
+    
+    // Load enemy data when enemies tab is activated
+    if (tab === 'enemies') {
+      const enemyStatusEl = document.getElementById('enemyStatusMsg');
+      try {
+        if (enemyStatusEl) enemyStatusEl.textContent = 'Loading enemy data...';
+        await loadEnemyData();
+        buildEnemyFactionFilters();
+        renderEnemyTable();
+        setupEnemyTableSorting();
+        if (enemyStatusEl) enemyStatusEl.textContent = '';
+      } catch (err) {
+        console.error('Failed to load enemy data:', err);
+        if (enemyStatusEl) {
+          enemyStatusEl.textContent = 'Failed to load enemy data';
+          enemyStatusEl.style.color = '#ff8080';
+        }
+      }
+    }
   });
 });
 
@@ -24,14 +45,61 @@ const chooseFileBtn = document.getElementById('chooseFile');
 const fileInput = document.getElementById('fileInput');
 const reloadOnlineBtn = document.getElementById('reloadOnline');
 
-function setStatus(msg, isError=false){
+function setStatus(msg, isError=false, showRetry=false){
   const el = document.getElementById('statusMsg');
-  if (!el) return; el.textContent = msg || ''; el.style.color = isError ? '#ff8080' : 'var(--muted)';
+  if (!el) return; 
+  
+  el.textContent = msg || ''; 
+  el.style.color = isError ? '#ff8080' : 'var(--muted)';
+  
+  // Add retry button for errors
+  if (isError && showRetry) {
+    const retryBtn = document.createElement('button');
+    retryBtn.textContent = 'Retry';
+    retryBtn.className = 'retry-btn';
+    retryBtn.style.marginLeft = '8px';
+    retryBtn.style.padding = '2px 8px';
+    retryBtn.style.fontSize = '12px';
+    retryBtn.style.border = '1px solid #ff8080';
+    retryBtn.style.background = 'transparent';
+    retryBtn.style.color = '#ff8080';
+    retryBtn.style.borderRadius = '3px';
+    retryBtn.style.cursor = 'pointer';
+    
+    retryBtn.addEventListener('click', async () => {
+      retryBtn.remove();
+      setStatus('Retrying...', false);
+      try {
+        await loadCSV(); 
+        initUI(); 
+        showSourceLink();
+        setStatus('Data loaded successfully', false);
+      } catch (err) {
+        console.error('Retry failed:', err);
+        setStatus('Retry failed. Try uploading a file.', true, true);
+        showDataControls();
+        dataModeSel.value = 'file';
+        chooseFileBtn.classList.remove('hidden');
+      }
+    });
+    
+    el.appendChild(retryBtn);
+  }
 }
 function hideDataControls(){ document.getElementById('dataControls').classList.add('hidden'); }
 function showDataControls(){ document.getElementById('dataControls').classList.remove('hidden'); }
 function hideSourceLink(){ document.getElementById('sourceLink').classList.add('hidden'); }
 function showSourceLink(){ document.getElementById('sourceLink').classList.remove('hidden'); }
+
+function showLoading() {
+  const loadingEl = document.getElementById('loadingIndicator');
+  if (loadingEl) loadingEl.classList.remove('hidden');
+}
+
+function hideLoading() {
+  const loadingEl = document.getElementById('loadingIndicator');
+  if (loadingEl) loadingEl.classList.add('hidden');
+}
 
 // Build filters + render once data is available
 function initUI(){
@@ -57,14 +125,46 @@ dataModeSel.addEventListener('change', () => {
   chooseFileBtn.classList.toggle('hidden', dataModeSel.value !== 'file');
 });
 reloadOnlineBtn.addEventListener('click', async () => {
-  try { await loadCSV(); initUI(); showSourceLink(); }
-  catch (err) { console.error(err); setStatus('Online load failed. Try Upload.', true); showDataControls(); dataModeSel.value = 'file'; chooseFileBtn.classList.remove('hidden'); }
+  try { 
+    setStatus('Loading data...', false);
+    showLoading();
+    await loadCSV(); 
+    initUI(); 
+    showSourceLink();
+    setStatus('Data loaded successfully', false);
+    hideLoading();
+  }
+  catch (err) { 
+    console.error(err); 
+    hideLoading();
+    setStatus('Online load failed. Try Upload.', true, true); 
+    showDataControls(); 
+    dataModeSel.value = 'file'; 
+    chooseFileBtn.classList.remove('hidden'); 
+  }
 });
 chooseFileBtn.addEventListener('click', () => fileInput.click());
 fileInput.addEventListener('change', () => {
-  const file = fileInput.files && fileInput.files[0]; if (!file) return;
+  const file = fileInput.files && fileInput.files[0]; 
+  if (!file) return;
+  
+  setStatus('Reading file...', false);
+  showLoading();
   const reader = new FileReader();
-  reader.onload = () => { try { loadFromText(String(reader.result||'')); initUI(); hideSourceLink(); } catch (err) { console.error(err); setStatus('Failed to parse uploaded file.', true); showDataControls(); } };
+  reader.onload = () => { 
+    try { 
+      loadFromText(String(reader.result||'')); 
+      initUI(); 
+      hideSourceLink();
+      setStatus('File loaded successfully', false);
+      hideLoading();
+    } catch (err) { 
+      console.error(err); 
+      hideLoading();
+      setStatus('Failed to parse uploaded file.', true); 
+      showDataControls(); 
+    } 
+  };
   reader.readAsText(file);
 });
 
@@ -88,8 +188,23 @@ async function boot(){
     initUI(); 
     hideSourceLink();
   } else {
-    try { await loadCSV(); initUI(); showSourceLink(); }
-    catch (err) { console.error('CSV load failed:', err); setStatus('Online load failed. Use Upload.', true); showDataControls(); dataModeSel.value = 'file'; chooseFileBtn.classList.remove('hidden'); }
+    try { 
+      setStatus('Loading data...', false);
+      showLoading();
+      await loadCSV(); 
+      initUI(); 
+      showSourceLink();
+      setStatus('Data loaded successfully', false);
+      hideLoading();
+    }
+    catch (err) { 
+      console.error('CSV load failed:', err); 
+      hideLoading();
+      setStatus('Online load failed. Use Upload.', true, true); 
+      showDataControls(); 
+      dataModeSel.value = 'file'; 
+      chooseFileBtn.classList.remove('hidden'); 
+    }
   }
 }
 

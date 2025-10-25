@@ -9,6 +9,10 @@ export const state = {
   filterActive: false,
   sortKey: null,
   sortDir: 'asc',
+  // Pre-indexed data for faster filtering
+  typeIndex: new Map(),
+  subIndex: new Map(),
+  searchIndex: new Map(),
   keys: {
     typeKey: null,
     subKey: null,
@@ -49,6 +53,40 @@ export function ingestMatrix(matrix) {
   ingestHeadersAndRows(hdrs, bodyRows);
 }
 
+function buildIndexes() {
+  // Clear existing indexes
+  state.typeIndex.clear();
+  state.subIndex.clear();
+  state.searchIndex.clear();
+  
+  // Build type and sub indexes
+  for (const group of state.groups) {
+    if (group.type) {
+      const typeKey = group.type.toLowerCase();
+      if (!state.typeIndex.has(typeKey)) {
+        state.typeIndex.set(typeKey, new Set());
+      }
+      state.typeIndex.get(typeKey).add(group);
+    }
+    
+    if (group.sub) {
+      const subKey = group.sub.toLowerCase();
+      if (!state.subIndex.has(subKey)) {
+        state.subIndex.set(subKey, new Set());
+      }
+      state.subIndex.get(subKey).add(group);
+    }
+    
+    // Build search index for fast text search
+    const searchText = [
+      group.name,
+      ...group.rows.flatMap(row => Object.values(row))
+    ].map(v => String(v || '').toLowerCase()).join(' ');
+    
+    state.searchIndex.set(group, searchText);
+  }
+}
+
 export function ingestHeadersAndRows(newHeaders, newRows) {
   state.headers = newHeaders; state.rows = newRows;
   const lower = (s) => String(s||'').toLowerCase();
@@ -77,6 +115,9 @@ export function ingestHeadersAndRows(newHeaders, newRows) {
   state.groups = Array.from(map.values());
   state.filteredGroups = [];
   state.filterActive = false;
+  
+  // Build indexes for fast filtering
+  buildIndexes();
 }
 
 export async function loadCSV(){

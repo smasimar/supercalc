@@ -130,16 +130,53 @@ export function applyFilters(){
   }
 
   const q = window._searchQuery || '';
-  state.filteredGroups = state.groups.filter(g => {
-    if (typeFilterActive) { const t = (g.type || '').toString().toLowerCase(); if (!activeTypes.includes(t)) return false; }
-    if (subFilterActive)  { const s = (g.sub || '').toString().toLowerCase(); if (!activeSubs.includes(s)) return false; }
-    if (!hasSearch) return true;
-    if ((g.name || '').toLowerCase().includes(q)) return true;
-    for (const r of g.rows) { for (const h of state.headers) { const v = r[h]; if (v !== null && v !== undefined && String(v).toLowerCase().includes(q)) return true; } }
-    return false;
-  });
+  
+  // Use pre-indexed data for much faster filtering
+  let filteredGroups = state.groups;
+  
+  // Apply type filter using index
+  if (typeFilterActive) {
+    const typeGroups = new Set();
+    for (const type of activeTypes) {
+      const groups = state.typeIndex.get(type);
+      if (groups) {
+        for (const group of groups) {
+          typeGroups.add(group);
+        }
+      }
+    }
+    filteredGroups = filteredGroups.filter(g => typeGroups.has(g));
+  }
+  
+  // Apply sub filter using index
+  if (subFilterActive) {
+    const subGroups = new Set();
+    for (const sub of activeSubs) {
+      const groups = state.subIndex.get(sub);
+      if (groups) {
+        for (const group of groups) {
+          subGroups.add(group);
+        }
+      }
+    }
+    filteredGroups = filteredGroups.filter(g => subGroups.has(g));
+  }
+  
+  // Apply search filter using pre-built search index
+  if (hasSearch) {
+    filteredGroups = filteredGroups.filter(g => {
+      const searchText = state.searchIndex.get(g);
+      if (!searchText) return false;
+      
+      // Split query into individual words and check if ALL words are found
+      const queryWords = q.trim().split(/\s+/).filter(word => word.length > 0);
+      return queryWords.every(word => searchText.includes(word));
+    });
+  }
 
-  state.filterActive = true; sortAndRenderBody();
+  state.filteredGroups = filteredGroups;
+  state.filterActive = true; 
+  sortAndRenderBody();
 }
 
 export function buildTypeFilters(){
