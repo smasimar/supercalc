@@ -92,10 +92,12 @@ export function sortAndRenderBody(){
           if (dfCls) td.classList.add(dfCls);
         }
 
-        // Atk Name coloring based on the exact column key detected
+        // Atk Name coloring + truncate (same color scheme as Atk Type/DMG/DUR)
         if (state.keys.atkNameKey && h === state.keys.atkNameKey) {
           const cls = atkColorClass(atkClass);
           if (cls) td.classList.add(cls);
+          td.classList.add('trunc');          // <-- enables ellipsis
+          if (v != null) td.title = String(v); // tooltip shows full value
         }
 
         // Name is a link but not colored
