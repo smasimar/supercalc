@@ -63,7 +63,7 @@ main{
 .panel{
   position:relative; background:var(--panel); border:2px solid var(--border); border-radius:0; box-shadow:var(--shadow);
   display:flex; flex-direction:column;
-  flex:1; min-height:0; /* allow inner scroller to size correctly */
+  flex:1; min-height:0; overflow-y:auto; /* allow inner scroller to size correctly */
 }
 
 .filters{padding:9px 11px; border-bottom:2px solid var(--border); display:grid; gap:8px}
@@ -159,10 +159,13 @@ tbody tr:hover{background:rgba(255,255,255,.03)}
 
 /* Calculator styles */
 .calculator-container{
-  padding:16px; display:flex; flex-direction:column; gap:24px
+  padding:16px; display:flex; flex-direction:column; gap:24px; position:relative
 }
 .calculator-section{
-  display:flex; flex-direction:column; gap:8px
+  display:flex; flex-direction:column; gap:8px; position:relative
+}
+.calculator-section .row{
+  overflow:visible
 }
 .calculator-section .row .label{
   min-width:60px
@@ -174,7 +177,7 @@ tbody tr:hover{background:rgba(255,255,255,.03)}
   min-width:552px
 }
 .calculator-dropdown{
-  position:absolute; top:100%; left:0; background:#1b1b1b; border:2px solid var(--border); max-height:200px; overflow-y:auto; z-index:100; margin-top:2px; min-width:552px
+  position:absolute; top:100%; left:0; background:#1b1b1b; border:2px solid var(--border); max-height:300px; overflow-y:auto; z-index:1000; margin-top:2px; min-width:552px
 }
 .calculator-dropdown.hidden{display:none}
 .dropdown-item{
@@ -184,14 +187,17 @@ tbody tr:hover{background:rgba(255,255,255,.03)}
 .dropdown-item:last-child{border-bottom:none}
 
 .calculator-details-panel{
-  background:#171717; border:2px solid var(--border); padding:12px; overflow:auto; width:100%
+  background:#171717; border:2px solid var(--border); padding:12px; overflow-y:auto; overflow-x:hidden; width:100%; max-height:35vh
+}
+#calculator-result{
+  padding:12px; overflow-y:visible; overflow-x:hidden
 }
 
 /* Calculator tables inherit same styling as main tables */
 .calculator-table thead th{
-  position:sticky; top:0; background:#202020; z-index:2; text-align:left; font-size:12px; letter-spacing:.3px; color:var(--muted); border-bottom:2px solid var(--border); padding:8px 10px; user-select:none; white-space:nowrap
+  position:sticky; top:0; background:#202020; z-index:2; text-align:left; font-size:12px; letter-spacing:.3px; color:var(--muted); border-bottom:2px solid var(--border); padding:4px 10px; user-select:none; white-space:nowrap
 }
-.calculator-table tbody td{padding:8px 10px; border-bottom:1px solid var(--border)}
+.calculator-table tbody td{padding:4px 10px; border-bottom:1px solid var(--border)}
 .calculator-table tbody tr:hover{background:rgba(255,255,255,.03)}
 
 /* Styled checkboxes and radio buttons */
@@ -227,8 +233,20 @@ tbody tr:hover{background:rgba(255,255,255,.03)}
   top: 50%; left: 50%;
   transform: translate(-50%, -50%);
   color: var(--bg);
-  font-weight: bold;
   font-size: 12px;
+  font-weight: bold;
+}
+
+/* Calculator hit counter buttons */
+.calculator-details-panel button {
+  transition: all 0.15s ease;
+}
+.calculator-details-panel button:hover {
+  background: var(--border);
+  transform: scale(1.05);
+}
+.calculator-details-panel button:active {
+  transform: scale(0.95);
 }
 
 

@@ -4,6 +4,9 @@ import { state as weaponsState } from '../weapons/data.js';
 import { enemyState } from '../enemies/data.js';
 import { renderWeaponDetails, renderEnemyDetails } from './rendering.js';
 
+// Global flag to prevent duplicate enemy selector setup
+let enemySelectorSetup = false;
+
 export function setupCalculator() {
   // Check if enemy data was already loaded and mark it as loaded
   if (enemyState.units && enemyState.units.length > 0) {
@@ -11,7 +14,10 @@ export function setupCalculator() {
   }
   
   setupWeaponSelector();
-  setupEnemySelector();
+  if (!enemySelectorSetup) {
+    setupEnemySelector();
+    enemySelectorSetup = true;
+  }
 }
 
 function setupWeaponSelector() {
@@ -26,6 +32,17 @@ function setupWeaponSelector() {
   // Populate options
   function populateDropdown(query = '') {
     const options = getWeaponOptions();
+    
+    // Check if weapon data is loaded
+    if (!options || options.length === 0) {
+      weaponDropdown.innerHTML = '';
+      const noResults = document.createElement('div');
+      noResults.className = 'dropdown-item';
+      noResults.textContent = 'Loading weapon data...';
+      weaponDropdown.appendChild(noResults);
+      return;
+    }
+    
     filteredOptions = options.filter(weapon => {
       // Build the searchable text from all fields
       const type = (weapon.type || '').toLowerCase();
@@ -81,6 +98,9 @@ function setupWeaponSelector() {
     calculatorState.selectedWeapon = weapon;
     weaponInput.value = displayText || weapon.name;
     renderWeaponDetails(weapon);
+    // Clear calculation when weapon changes
+    const resultContainer = document.getElementById('calculator-result');
+    if (resultContainer) resultContainer.innerHTML = '';
   }
   
   // Input focus/typing
@@ -104,6 +124,20 @@ function setupWeaponSelector() {
   
   // Populate initially
   populateDropdown();
+  
+  // Poll for data availability and refresh when ready
+  const checkDataAvailability = setInterval(() => {
+    if (weaponsState.groups && weaponsState.groups.length > 0) {
+      // Data is now available, trigger a refresh if dropdown is open
+      if (isOpen) {
+        populateDropdown(weaponInput.value);
+      }
+      clearInterval(checkDataAvailability);
+    }
+  }, 200);
+  
+  // Stop checking after 5 seconds
+  setTimeout(() => clearInterval(checkDataAvailability), 5000);
 }
 
 function setupEnemySelector() {
@@ -160,19 +194,6 @@ function setupEnemySelector() {
     isOpen = true;
     enemyDropdown.classList.remove('hidden');
     populateDropdown(enemyInput.value);
-    
-    // Check periodically if enemy data becomes available
-    if (getEnemyOptions().length === 0) {
-      const checkInterval = setInterval(() => {
-        if (getEnemyOptions().length > 0) {
-          populateDropdown(enemyInput.value);
-          clearInterval(checkInterval);
-        }
-      }, 200);
-      
-      // Clear interval after 5 seconds
-      setTimeout(() => clearInterval(checkInterval), 5000);
-    }
   }
   
   function closeDropdown() {
@@ -184,6 +205,9 @@ function setupEnemySelector() {
     calculatorState.selectedEnemy = enemy;
     enemyInput.value = `[${enemy.health} HP] ${enemy.name}`;
     renderEnemyDetails(enemy);
+    // Clear calculation when enemy changes
+    const resultContainer = document.getElementById('calculator-result');
+    if (resultContainer) resultContainer.innerHTML = '';
   }
   
   // Input focus/typing
@@ -207,5 +231,19 @@ function setupEnemySelector() {
   
   // Populate initially
   populateDropdown();
+  
+  // Poll for data availability and refresh when ready
+  const checkDataAvailability = setInterval(() => {
+    if (enemyState.units && enemyState.units.length > 0) {
+      // Data is now available, trigger a refresh if dropdown is open
+      if (isOpen) {
+        populateDropdown(enemyInput.value);
+      }
+      clearInterval(checkDataAvailability);
+    }
+  }, 200);
+  
+  // Stop checking after 5 seconds
+  setTimeout(() => clearInterval(checkDataAvailability), 5000);
 }
 

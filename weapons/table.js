@@ -26,6 +26,7 @@ export function groupSortValue(group, key, numeric){
 
 export function renderTable(){
   const thead = document.getElementById('thead');
+  if (!thead) return;
   thead.innerHTML = '';
   const trh = document.createElement('tr');
   state.headers.forEach(h => {
@@ -55,6 +56,7 @@ export function renderTable(){
 
 export function sortAndRenderBody(){
   const tbody = document.getElementById('tbody');
+  if (!tbody) return;
   tbody.innerHTML = '';
   const source = state.filterActive ? state.filteredGroups : state.groups;
   let ordered = [...source];

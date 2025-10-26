@@ -1,5 +1,6 @@
 // calculator/rendering.js — render selected weapon and enemy details
 import { classifyAtkType, atkColorClass, apColorClass, dfColorClass } from '../colors.js';
+import { renderCalculation } from './calculation.js';
 
 export function renderWeaponDetails(weapon) {
   const container = document.getElementById('calculator-weapon-details');
@@ -27,7 +28,7 @@ export function renderWeaponDetails(weapon) {
   
   // Add checkbox selector column first
   const checkboxTh = document.createElement('th');
-  checkboxTh.style.padding = '6px 10px';
+  checkboxTh.style.padding = '4px 10px';
   checkboxTh.style.textAlign = 'left';
   checkboxTh.style.borderBottom = '2px solid var(--border)';
   checkboxTh.style.color = 'var(--muted)';
@@ -42,7 +43,7 @@ export function renderWeaponDetails(weapon) {
   headers.forEach(header => {
     const th = document.createElement('th');
     th.textContent = header;
-    th.style.padding = '6px 10px';
+    th.style.padding = '4px 10px';
     th.style.textAlign = 'left';
     th.style.borderBottom = '2px solid var(--border)';
     th.style.color = 'var(--muted)';
@@ -64,7 +65,7 @@ export function renderWeaponDetails(weapon) {
     
     // Add checkbox as first column
     const checkboxTd = document.createElement('td');
-    checkboxTd.style.padding = '6px 10px';
+    checkboxTd.style.padding = '4px 10px';
     checkboxTd.style.borderBottom = '1px solid var(--border)';
     checkboxTd.style.width = '30px';
     checkboxTd.style.textAlign = 'center';
@@ -72,9 +73,9 @@ export function renderWeaponDetails(weapon) {
     const checkbox = document.createElement('input');
     checkbox.type = 'checkbox';
     checkbox.id = `weapon-attack-${rowIndex}`;
+    checkbox.dataset.rowIndex = rowIndex;
     checkbox.addEventListener('change', () => {
-      // Store selected attack for damage calculation
-      console.log('Selected attack:', row, atkClass);
+      renderCalculation();
     });
     
     checkboxTd.appendChild(checkbox);
@@ -162,7 +163,7 @@ export function renderEnemyDetails(enemy) {
   
   // Add radio selector column first
   const radioTh = document.createElement('th');
-  radioTh.style.padding = '6px 10px';
+  radioTh.style.padding = '4px 10px';
   radioTh.style.textAlign = 'left';
   radioTh.style.borderBottom = '2px solid var(--border)';
   radioTh.style.color = 'var(--muted)';
@@ -178,7 +179,7 @@ export function renderEnemyDetails(enemy) {
     if (header === 'zone_name') label = 'Zone Name';
     else if (header === 'health') label = 'Health';
     th.textContent = label;
-    th.style.padding = '6px 10px';
+    th.style.padding = '4px 10px';
     th.style.textAlign = 'left';
     th.style.borderBottom = '2px solid var(--border)';
     th.style.color = 'var(--muted)';
@@ -196,7 +197,7 @@ export function renderEnemyDetails(enemy) {
     
     // Add radio button as first column
     const radioTd = document.createElement('td');
-    radioTd.style.padding = '6px 10px';
+    radioTd.style.padding = '4px 10px';
     radioTd.style.borderBottom = '1px solid var(--border)';
     radioTd.style.width = '30px';
     radioTd.style.textAlign = 'center';
@@ -207,8 +208,7 @@ export function renderEnemyDetails(enemy) {
     radio.value = zoneIndex;
     radio.id = `zone-${enemy.name}-${zoneIndex}`;
     radio.addEventListener('change', () => {
-      // Store selected zone for damage calculation
-      console.log('Selected zone:', zone);
+      renderCalculation();
     });
     
     radioTd.appendChild(radio);
@@ -216,7 +216,7 @@ export function renderEnemyDetails(enemy) {
     
     headers.forEach(header => {
       const td = document.createElement('td');
-      td.style.padding = '6px 10px';
+      td.style.padding = '4px 10px';
       td.style.borderBottom = '1px solid var(--border)';
       
       let value = zone[header];

@@ -10,14 +10,14 @@
   <header>
     <div class="logo">Super Calc</div>
     <nav class="tabs">
-      <button class="tab active" data-tab="weapons">Weapon Data</button>
+      <button class="tab" data-tab="weapons">Weapon Data</button>
       <button class="tab" data-tab="enemies">Enemy Data</button>
-      <button class="tab" data-tab="calculator">Damage Calculator</button>
+      <button class="tab active" data-tab="calculator">Damage Calculator</button>
     </nav>
   </header>
 
   <main>
-    <section id="tab-weapons" class="panel">
+    <section id="tab-weapons" class="panel hidden">
       <div class="source-links hidden">
         <a href="https://helldivers.wiki.gg/wiki/Damage_Comparison"
           target="_blank"
@@ -25,21 +25,6 @@
         <a href="https://helldivers.wiki.gg/wiki/1.004.100"
           target="_blank"
           rel="noopener noreferrer">Patch: 1.004.100</a>
-      </div>
-
-      <div id="dataControls" class="data-controls">
-        <select id="dataMode" class="select">
-          <option value="onlineCsv" selected>Online (CSV)</option>
-          <option value="file">Upload CSV/TSV</option>
-        </select>
-        <button class="button" id="reloadOnline">Reload</button>
-        <button class="button" id="chooseFile">Choose File</button>
-        <input type="file" id="fileInput" accept=".csv,.tsv,text/csv,text/tab-separated-values" class="hidden" />
-        <span id="statusMsg" class="status"></span>
-        <div id="loadingIndicator" class="loading-indicator hidden">
-          <div class="spinner"></div>
-          <span>Loading...</span>
-        </div>
       </div>
 
       <div class="filters">
@@ -99,7 +84,7 @@
     </section>
 
 
-    <section id="tab-calculator" class="panel hidden">
+    <section id="tab-calculator" class="panel">
       <div class="calculator-container">
         <!-- Weapon Section -->
         <div class="calculator-section">
@@ -109,10 +94,13 @@
               <input type="text" id="calculator-weapon-input" class="input" placeholder="Search and select a weapon..." autocomplete="off" />
               <div id="calculator-weapon-dropdown" class="calculator-dropdown hidden"></div>
             </div>
+            <div id="calculator-weapon-loading" class="loading-indicator hidden">
+              <div class="spinner"></div>
+              <span>Loading weapon data...</span>
+            </div>
           </div>
           
           <div class="calculator-details-panel">
-            <div class="label" style="margin-bottom: 8px;">Weapon Details</div>
             <div id="calculator-weapon-details"></div>
           </div>
         </div>
@@ -125,12 +113,17 @@
               <input type="text" id="calculator-enemy-input" class="input" placeholder="Search and select an enemy..." autocomplete="off" />
               <div id="calculator-enemy-dropdown" class="calculator-dropdown hidden"></div>
             </div>
+            <div id="calculator-enemy-loading" class="loading-indicator hidden">
+              <div class="spinner"></div>
+              <span>Loading enemy data...</span>
+            </div>
           </div>
           
           <div class="calculator-details-panel">
-            <div class="label" style="margin-bottom: 8px;">Enemy Details</div>
             <div id="calculator-enemy-details"></div>
           </div>
+          
+          <div id="calculator-result"></div>
         </div>
       </div>
     </section>

@@ -29,6 +29,18 @@ document.querySelectorAll('.tab').forEach(btn => {
     const tab = btn.dataset.tab;
     for (const k in sections) sections[k].classList.toggle('hidden', k !== tab);
     
+    // Initialize weapons UI when weapons tab is activated (if data is loaded)
+    if (tab === 'weapons') {
+      // Check if UI hasn't been initialized yet
+      const typeFilters = document.getElementById('typeFilters');
+      if (typeFilters && typeFilters.children.length === 0) {
+        buildTypeFilters();
+        buildSubFilters();
+        renderTable();
+        showSourceLink();
+      }
+    }
+    
     // Load enemy data when enemies tab is activated (only once)
     if (tab === 'enemies' && !enemyDataLoaded && !window.enemyDataLoaded) {
       const enemyStatusEl = document.getElementById('enemyStatusMsg');
@@ -53,6 +65,8 @@ document.querySelectorAll('.tab').forEach(btn => {
       // Just re-render if data is already loaded
       buildEnemyFactionFilters();
       renderEnemyTable();
+      const enemySourceEl = sections.enemies.querySelector('.source-links');
+      if (enemySourceEl) enemySourceEl.classList.remove('hidden');
     }
     
     // Initialize calculator when calculator tab is first activated
@@ -63,65 +77,16 @@ document.querySelectorAll('.tab').forEach(btn => {
   });
 });
 
-// Data source controls
-const dataModeSel = document.getElementById('dataMode');
-const chooseFileBtn = document.getElementById('chooseFile');
-const fileInput = document.getElementById('fileInput');
-const reloadOnlineBtn = document.getElementById('reloadOnline');
-
-function setStatus(msg, isError=false, showRetry=false){
-  const el = document.getElementById('statusMsg');
-  if (!el) return; 
-  
-  el.textContent = msg || ''; 
-  el.style.color = isError ? '#ff8080' : 'var(--muted)';
-  
-  // Add retry button for errors
-  if (isError && showRetry) {
-    const retryBtn = document.createElement('button');
-    retryBtn.textContent = 'Retry';
-    retryBtn.className = 'retry-btn';
-    retryBtn.style.marginLeft = '8px';
-    retryBtn.style.padding = '2px 8px';
-    retryBtn.style.fontSize = '12px';
-    retryBtn.style.border = '1px solid #ff8080';
-    retryBtn.style.background = 'transparent';
-    retryBtn.style.color = '#ff8080';
-    retryBtn.style.borderRadius = '3px';
-    retryBtn.style.cursor = 'pointer';
-    
-    retryBtn.addEventListener('click', async () => {
-      retryBtn.remove();
-      setStatus('Retrying...', false);
-      try {
-        await loadCSV(); 
-        initUI(); 
-        showSourceLink();
-        setStatus('Data loaded successfully', false);
-      } catch (err) {
-        console.error('Retry failed:', err);
-        setStatus('Retry failed. Try uploading a file.', true, true);
-        showDataControls();
-        dataModeSel.value = 'file';
-        chooseFileBtn.classList.remove('hidden');
-      }
-    });
-    
-    el.appendChild(retryBtn);
-  }
-}
-function hideDataControls(){ document.getElementById('dataControls').classList.add('hidden'); }
-function showDataControls(){ document.getElementById('dataControls').classList.remove('hidden'); }
-function hideSourceLink(){ sections.weapons.querySelector('.source-links')?.classList.add('hidden'); }
 function showSourceLink(){ sections.weapons.querySelector('.source-links')?.classList.remove('hidden'); }
+function hideSourceLink(){ sections.weapons.querySelector('.source-links')?.classList.add('hidden'); }
 
-function showLoading() {
-  const loadingEl = document.getElementById('loadingIndicator');
+function showLoading(indicatorId = 'loadingIndicator') {
+  const loadingEl = document.getElementById(indicatorId);
   if (loadingEl) loadingEl.classList.remove('hidden');
 }
 
-function hideLoading() {
-  const loadingEl = document.getElementById('loadingIndicator');
+function hideLoading(indicatorId = 'loadingIndicator') {
+  const loadingEl = document.getElementById(indicatorId);
   if (loadingEl) loadingEl.classList.add('hidden');
 }
 
@@ -138,65 +103,15 @@ function initUI(){
   }
   // Always render (will also render when filters already exist)
   renderTable();
-  // Hide controls after successful data load
-  hideDataControls();
-  // Debug marker
   console.debug('[initUI] UI initialized');
 }
-
-// keep native input hidden, only show our button in file mode
-dataModeSel.addEventListener('change', () => {
-  chooseFileBtn.classList.toggle('hidden', dataModeSel.value !== 'file');
-});
-reloadOnlineBtn.addEventListener('click', async () => {
-  try { 
-    setStatus('Loading data...', false);
-    showLoading();
-    await loadCSV(); 
-    initUI(); 
-    showSourceLink();
-    setStatus('Data loaded successfully', false);
-    hideLoading();
-  }
-  catch (err) { 
-    console.error(err); 
-    hideLoading();
-    setStatus('Online load failed. Try Upload.', true, true); 
-    showDataControls(); 
-    dataModeSel.value = 'file'; 
-    chooseFileBtn.classList.remove('hidden'); 
-  }
-});
-chooseFileBtn.addEventListener('click', () => fileInput.click());
-fileInput.addEventListener('change', () => {
-  const file = fileInput.files && fileInput.files[0]; 
-  if (!file) return;
-  
-  setStatus('Reading file...', false);
-  showLoading();
-  const reader = new FileReader();
-  reader.onload = () => { 
-    try { 
-      loadFromText(String(reader.result||'')); 
-      initUI(); 
-      hideSourceLink();
-      setStatus('File loaded successfully', false);
-      hideLoading();
-    } catch (err) { 
-      console.error(err); 
-      hideLoading();
-      setStatus('Failed to parse uploaded file.', true); 
-      showDataControls(); 
-    } 
-  };
-  reader.readAsText(file);
-});
 
 // Boot
 const TEST_MODE = new URLSearchParams(location.search).has('test');
 async function boot(){
   if (TEST_MODE) {
-    document.getElementById('testBadge').textContent = '• Test mode active (using mock data)';
+    const testBadge = document.getElementById('testBadge');
+    if (testBadge) testBadge.textContent = '• Test mode active (using mock data)';
     const headers = ['Type','Sub','Code','Name','Atk Type','Atk Name','DMG','DUR','AP','DF','ST','PF'];
     const rows = [
       { Type:'Primary', Sub:'AR', Code:'AR-23', Name:'Liberator', 'Atk Type':'projectile', 'Atk Name':'5.5x50mm FULL METAL JACKET_P', DMG:90, DUR:22, AP:2, DF:10, ST:15, PF:10 },
@@ -211,40 +126,51 @@ async function boot(){
     ingestMatrix([headers, ...rows.map(r => headers.map(h => r[h]))]);
     initUI(); 
     hideSourceLink();
+    hideLoading('calculator-weapon-loading');
     
     // Also load enemy data in test mode
     loadEnemyData().then(() => {
       window.enemyDataLoaded = true;
+      hideLoading('calculator-enemy-loading');
     }).catch(err => {
       console.error('Failed to load enemy data in test mode:', err);
+      hideLoading('calculator-enemy-loading');
     });
   } else {
+    // Show loading indicators on calculator (which opens first)
+    showLoading('calculator-weapon-loading');
+    showLoading('calculator-enemy-loading');
+    
     try { 
-      setStatus('Loading data...', false);
-      showLoading();
-      await loadCSV(); 
-      initUI(); 
-      showSourceLink();
+      await loadCSV();
+      hideLoading('calculator-weapon-loading');
       
-      // Also load enemy data
+      // Load enemy data
       try {
         await loadEnemyData();
         window.enemyDataLoaded = true;
+        hideLoading('calculator-enemy-loading');
       } catch (err) {
         console.error('Failed to load enemy data on boot:', err);
+        hideLoading('calculator-enemy-loading');
       }
       
-      setStatus('Data loaded successfully', false);
-      hideLoading();
+      // Only initialize weapons UI if weapons tab is visible (calculator tab is default now)
+      if (!sections.weapons.classList.contains('hidden')) {
+        initUI(); 
+        showSourceLink();
+      }
     }
     catch (err) { 
       console.error('CSV load failed:', err); 
-      hideLoading();
-      setStatus('Online load failed. Use Upload.', true, true); 
-      showDataControls(); 
-      dataModeSel.value = 'file'; 
-      chooseFileBtn.classList.remove('hidden'); 
+      hideLoading('calculator-weapon-loading');
     }
+  }
+  
+  // Initialize calculator since it's the default tab
+  if (!calculatorInitialized) {
+    setupCalculator();
+    calculatorInitialized = true;
   }
 }
 
