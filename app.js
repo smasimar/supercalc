@@ -1,13 +1,19 @@
-import { loadCSV, loadFromText, ingestMatrix } from './weapons/data.js';
+import { loadCSV, loadFromText, ingestMatrix, state as weaponsState } from './weapons/data.js';
 import { buildTypeFilters, buildSubFilters, renderTable } from './weapons/table.js';
 import { loadEnemyData } from './enemies/data.js';
 import { renderEnemyTable, setupEnemyTableSorting } from './enemies/table.js';
 import { buildEnemyFactionFilters } from './enemies/filters.js';
+import { setupCalculator } from './calculator/ui.js';
 import './weapons/filters.js'; // sets up event listeners for search & type/sub chips
 import './enemies/filters.js'; // sets up event listeners for enemy search
 
+// Expose weapons state globally for calculator rendering
+window._weaponsState = weaponsState;
+
 // Track if enemy data has been loaded
 let enemyDataLoaded = false;
+// Track if calculator has been initialized
+let calculatorInitialized = false;
 
 // Tabs
 const sections = {
@@ -24,7 +30,7 @@ document.querySelectorAll('.tab').forEach(btn => {
     for (const k in sections) sections[k].classList.toggle('hidden', k !== tab);
     
     // Load enemy data when enemies tab is activated (only once)
-    if (tab === 'enemies' && !enemyDataLoaded) {
+    if (tab === 'enemies' && !enemyDataLoaded && !window.enemyDataLoaded) {
       const enemyStatusEl = document.getElementById('enemyStatusMsg');
       const enemySourceEl = sections.enemies.querySelector('.source-links');
       try {
@@ -43,9 +49,16 @@ document.querySelectorAll('.tab').forEach(btn => {
           enemyStatusEl.style.color = '#ff8080';
         }
       }
-    } else if (tab === 'enemies' && enemyDataLoaded) {
+    } else if (tab === 'enemies' && (enemyDataLoaded || window.enemyDataLoaded)) {
       // Just re-render if data is already loaded
+      buildEnemyFactionFilters();
       renderEnemyTable();
+    }
+    
+    // Initialize calculator when calculator tab is first activated
+    if (tab === 'calculator' && !calculatorInitialized) {
+      setupCalculator();
+      calculatorInitialized = true;
     }
   });
 });
@@ -198,6 +211,13 @@ async function boot(){
     ingestMatrix([headers, ...rows.map(r => headers.map(h => r[h]))]);
     initUI(); 
     hideSourceLink();
+    
+    // Also load enemy data in test mode
+    loadEnemyData().then(() => {
+      window.enemyDataLoaded = true;
+    }).catch(err => {
+      console.error('Failed to load enemy data in test mode:', err);
+    });
   } else {
     try { 
       setStatus('Loading data...', false);
@@ -205,6 +225,15 @@ async function boot(){
       await loadCSV(); 
       initUI(); 
       showSourceLink();
+      
+      // Also load enemy data
+      try {
+        await loadEnemyData();
+        window.enemyDataLoaded = true;
+      } catch (err) {
+        console.error('Failed to load enemy data on boot:', err);
+      }
+      
       setStatus('Data loaded successfully', false);
       hideLoading();
     }

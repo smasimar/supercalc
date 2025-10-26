@@ -157,5 +157,79 @@ tbody tr:hover{background:rgba(255,255,255,.03)}
 .placeholder{padding:16px; color:var(--muted)}
 .test-badge{font-size:12px; color:var(--muted)}
 
+/* Calculator styles */
+.calculator-container{
+  padding:16px; display:flex; flex-direction:column; gap:24px
+}
+.calculator-section{
+  display:flex; flex-direction:column; gap:8px
+}
+.calculator-section .row .label{
+  min-width:60px
+}
+.calculator-selector{
+  position:relative; display:inline-block
+}
+.calculator-selector .input{
+  min-width:552px
+}
+.calculator-dropdown{
+  position:absolute; top:100%; left:0; background:#1b1b1b; border:2px solid var(--border); max-height:200px; overflow-y:auto; z-index:100; margin-top:2px; min-width:552px
+}
+.calculator-dropdown.hidden{display:none}
+.dropdown-item{
+  padding:8px 12px; cursor:pointer; border-bottom:1px solid var(--border); color:var(--text)
+}
+.dropdown-item:hover{background:#242424; color:var(--accent)}
+.dropdown-item:last-child{border-bottom:none}
+
+.calculator-details-panel{
+  background:#171717; border:2px solid var(--border); padding:12px; overflow:auto; width:100%
+}
+
+/* Calculator tables inherit same styling as main tables */
+.calculator-table thead th{
+  position:sticky; top:0; background:#202020; z-index:2; text-align:left; font-size:12px; letter-spacing:.3px; color:var(--muted); border-bottom:2px solid var(--border); padding:8px 10px; user-select:none; white-space:nowrap
+}
+.calculator-table tbody td{padding:8px 10px; border-bottom:1px solid var(--border)}
+.calculator-table tbody tr:hover{background:rgba(255,255,255,.03)}
+
+/* Styled checkboxes and radio buttons */
+.calculator-table input[type="checkbox"],
+.calculator-table input[type="radio"]{
+  appearance: none; -webkit-appearance: none;
+  width: 16px; height: 16px;
+  border: 2px solid var(--border);
+  background: #171717;
+  cursor: pointer;
+  position: relative;
+}
+.calculator-table input[type="radio"]{
+  border-radius: 50%;
+}
+.calculator-table input[type="checkbox"]:checked,
+.calculator-table input[type="radio"]:checked{
+  border-color: var(--accent);
+  background: var(--accent);
+}
+.calculator-table input[type="radio"]:checked::after{
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--bg);
+}
+.calculator-table input[type="checkbox"]:checked::after{
+  content: '✓';
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--bg);
+  font-weight: bold;
+  font-size: 12px;
+}
+
 
 

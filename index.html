@@ -99,7 +99,41 @@
     </section>
 
 
-    <section id="tab-calculator" class="panel hidden"><div class="filters"><div class="row"><span class="label">Damage Calculator</span></div></div><div class="placeholder">Coming soon :3</div></section>
+    <section id="tab-calculator" class="panel hidden">
+      <div class="calculator-container">
+        <!-- Weapon Section -->
+        <div class="calculator-section">
+          <div class="row">
+            <span class="label">Weapon:</span>
+            <div class="calculator-selector">
+              <input type="text" id="calculator-weapon-input" class="input" placeholder="Search and select a weapon..." autocomplete="off" />
+              <div id="calculator-weapon-dropdown" class="calculator-dropdown hidden"></div>
+            </div>
+          </div>
+          
+          <div class="calculator-details-panel">
+            <div class="label" style="margin-bottom: 8px;">Weapon Details</div>
+            <div id="calculator-weapon-details"></div>
+          </div>
+        </div>
+        
+        <!-- Enemy Section -->
+        <div class="calculator-section">
+          <div class="row">
+            <span class="label">Enemy:</span>
+            <div class="calculator-selector">
+              <input type="text" id="calculator-enemy-input" class="input" placeholder="Search and select an enemy..." autocomplete="off" />
+              <div id="calculator-enemy-dropdown" class="calculator-dropdown hidden"></div>
+            </div>
+          </div>
+          
+          <div class="calculator-details-panel">
+            <div class="label" style="margin-bottom: 8px;">Enemy Details</div>
+            <div id="calculator-enemy-details"></div>
+          </div>
+        </div>
+      </div>
+    </section>
 
     </main>
 
