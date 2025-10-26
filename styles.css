@@ -119,15 +119,43 @@ thead th.sort-desc::after,
   display: inline-block;
 }
 
-.data-controls{position:absolute; top:8px; right:10px; display:flex; gap:6px; align-items:center}
-/* Attribution link (top-right) */
-.source-link{position:absolute; top:8px; right:10px; font-size:12px; color:var(--muted); text-decoration:underline;}
-.source-link:hover{color:var(--accent)}
-/* Source links container for multiple links */
-.source-links{position:absolute; top:8px; right:10px; font-size:12px; display:flex; flex-direction:column; gap:4px; align-items:flex-end;}
-.source-links a{color:var(--muted); text-decoration:underline;}
-.source-links a:hover{color:var(--accent)}
-.hidden{display:none !important}
+/* Top-right positioned elements */
+.data-controls,
+.source-link,
+.source-links {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  font-size: 12px;
+}
+
+.data-controls {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.source-link,
+.source-links a {
+  color: var(--muted);
+  text-decoration: underline;
+}
+
+.source-link:hover,
+.source-links a:hover {
+  color: var(--accent);
+}
+
+.source-links {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: flex-end;
+}
+
+.hidden {
+  display: none !important;
+}
 
 .table-wrap{flex:1; min-height:0; overflow:auto; /* fill remaining space */}
 .table-wrap table{width:100%; border-collapse:separate; border-spacing:0; table-layout:auto}
@@ -137,25 +165,107 @@ td.trunc{ max-width:28ch; overflow:hidden; text-overflow:ellipsis; white-space:n
 @media (min-width: 1400px){ td.trunc{ max-width:36ch; } }
 @media (max-width: 900px){ td.trunc{ max-width:18ch; } }
 
-thead th{position:sticky; top:0; background:#202020; z-index:2; text-align:left; font-size:12px; letter-spacing:.3px; color:var(--muted); border-bottom:2px solid var(--border); padding:8px 10px; user-select:none; cursor:pointer; white-space:nowrap}
-thead th:hover{background:#242424; color:var(--accent)}
-tbody td{padding:8px 10px; border-bottom:1px solid var(--border)}
-tbody tr.group-start td{border-top:2px solid #3a3a3a}
-tbody tr:hover{background:rgba(255,255,255,.03)}
-.sort-indicator{opacity:.8; margin-left:6px; font-size:11px; color:var(--accent)}
+/* Table styling */
+thead th {
+  position: sticky;
+  top: 0;
+  background: #202020;
+  z-index: 2;
+  text-align: left;
+  font-size: 12px;
+  letter-spacing: .3px;
+  color: var(--muted);
+  border-bottom: 2px solid var(--border);
+  padding: 8px 10px;
+  user-select: none;
+  cursor: pointer;
+  white-space: nowrap;
+}
 
-.name-link{color:var(--accent); text-decoration:underline; text-underline-offset:2px}
-.name-link:hover{color:var(--accent-2)}
+thead th:hover {
+  background: #242424;
+  color: var(--accent);
+}
 
-.chiprow{display:flex; gap:6px; flex-wrap:wrap; align-items:center}
-.chip{cursor:pointer; border:2px solid var(--border); background:#171717; color:var(--muted); padding:6px 10px; border-radius:0; font-weight:700; font-size:12px; user-select:none; font-family:'FSSinclair', ui-sans-serif}
-.chip.active{background:#202020; color:var(--text); border-color:var(--accent)}
+tbody td {
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--border);
+}
 
-.num-orange{color:var(--orange)} .num-yellow{color:var(--yellow)} .num-cyan{color:var(--cyan)} .num-red{color:var(--red)}
-.ap-white{color:var(--text)} .ap-blue{color:#58a6ff} .ap-green{color:#4caf50} .ap-yellow{color:#f8f833} .ap-orange{color:#ff9a3c} .ap-red{color:#ff4b41}
+tbody tr.group-start td {
+  border-top: 2px solid #3a3a3a;
+}
 
-.placeholder{padding:16px; color:var(--muted)}
-.test-badge{font-size:12px; color:var(--muted)}
+tbody tr:hover {
+  background: rgba(255, 255, 255, .03);
+}
+
+.sort-indicator {
+  opacity: .8;
+  margin-left: 6px;
+  font-size: 11px;
+  color: var(--accent);
+}
+
+.name-link {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.name-link:hover {
+  color: var(--accent-2);
+}
+
+/* Filters and chips */
+.chiprow {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.chip {
+  cursor: pointer;
+  border: 2px solid var(--border);
+  background: #171717;
+  color: var(--muted);
+  padding: 6px 10px;
+  border-radius: 0;
+  font-weight: 700;
+  font-size: 12px;
+  user-select: none;
+  font-family: 'FSSinclair', ui-sans-serif;
+}
+
+.chip.active {
+  background: #202020;
+  color: var(--text);
+  border-color: var(--accent);
+}
+
+/* Color utilities */
+.num-orange { color: var(--orange); }
+.num-yellow { color: var(--yellow); }
+.num-cyan { color: var(--cyan); }
+.num-red { color: var(--red); }
+
+.ap-white { color: var(--text); }
+.ap-blue { color: #58a6ff; }
+.ap-green { color: #4caf50; }
+.ap-yellow { color: #f8f833; }
+.ap-orange { color: #ff9a3c; }
+.ap-red { color: #ff4b41; }
+
+.placeholder {
+  padding: 16px;
+  color: var(--muted);
+}
+
+.test-badge {
+  font-size: 12px;
+  color: var(--muted);
+}
 
 /* Calculator styles */
 .calculator-container{
@@ -174,7 +284,33 @@ tbody tr:hover{background:rgba(255,255,255,.03)}
   position:relative; display:inline-block
 }
 .calculator-selector .input{
-  min-width:552px
+  min-width:552px;
+  padding-right: 32px;
+}
+.calculator-clear-btn {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  background: transparent;
+  border: none;
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 1;
+  padding: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+.calculator-selector:has(.input:not(:placeholder-shown)) .calculator-clear-btn {
+  display: flex;
+}
+.calculator-clear-btn:hover {
+  color: var(--text);
 }
 .calculator-dropdown{
   position:absolute; top:100%; left:0; background:#1b1b1b; border:2px solid var(--border); max-height:300px; overflow-y:auto; z-index:1000; margin-top:2px; min-width:552px
@@ -249,5 +385,167 @@ tbody tr:hover{background:rgba(255,255,255,.03)}
   transform: scale(0.95);
 }
 
+/* Calculator result cards */
+.calc-attack-card,
+.calc-total-card {
+  padding: 12px;
+  border: 2px solid var(--border);
+  margin-bottom: 8px;
+  position: relative;
+}
 
+.calc-attack-card {
+  background: #171717;
+}
 
+.calc-total-card {
+  background: #202020;
+}
+
+.calc-attack-content {
+  width: calc(100% - 80px);
+}
+
+.calc-attack-name {
+  font-weight: bold;
+  margin-bottom: 6px;
+}
+
+.calc-damage-line {
+  margin-top: 6px;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.calc-damage-value {
+  color: var(--accent);
+}
+
+.calc-damage-value.muted {
+  color: var(--muted);
+}
+
+.calc-formula {
+  font-family: monospace;
+  color: var(--muted);
+  font-weight: normal;
+  margin-left: 8px;
+}
+
+.calc-main-damage-line {
+  margin-top: 4px;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.calc-main-damage-value {
+  color: var(--red);
+}
+
+.calc-main-damage-value.muted {
+  color: var(--muted);
+}
+
+.calc-hits-control {
+  position: absolute;
+  right: 12px;
+  top: 12px;
+  text-align: center;
+}
+
+.calc-hits-label {
+  font-size: 11px;
+  margin-bottom: 4px;
+  color: var(--muted);
+}
+
+.calc-hits-container {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.calc-hits-btn {
+  background: transparent;
+  border: none;
+  color: var(--text);
+  cursor: pointer;
+  font-size: 10px;
+  width: 20px;
+  height: 28px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.calc-hits-display {
+  width: 36px;
+  height: 28px;
+  line-height: 28px;
+  text-align: center;
+  background: #0d1117;
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-size: 14px;
+}
+
+.calc-total-damage {
+  font-weight: bold;
+  margin-bottom: 6px;
+  font-size: 14px;
+}
+
+.calc-combined-display {
+  display: flex;
+  gap: 24px;
+  align-items: baseline;
+  margin-top: 8px;
+}
+
+.calc-damage-section {
+  flex: 1;
+}
+
+.calc-section-label {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.calc-damage-fraction-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.calc-fraction {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+}
+
+.calc-fraction-numerator {
+  border-bottom: 1px solid var(--text);
+  padding-bottom: 2px;
+  min-width: 60px;
+  text-align: left;
+}
+
+.calc-fraction-denominator {
+  /* Empty for now */
+}
+
+.calc-result-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.calc-result-line {
+  font-size: 14px;
+}
+
+.calc-result-text {
+  font-size: 12px;
+  color: var(--muted);
+}

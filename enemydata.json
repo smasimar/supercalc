@@ -5,6 +5,17 @@
         {
           "AV": 4,
           "Con": 0,
+          "Dur%": 1.0,
+          "ExMult": "-",
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1.0,
+          "health": 400,
+          "zone_name": "Main"
+        },
+        {
+          "AV": 4,
+          "Con": 0,
           "Dur%": 0.0,
           "ExMult": "-",
           "ExTarget": "Main",
@@ -18,6 +29,17 @@
     },
     "Annihilator Tank": {
       "damageable_zones": [
+        {
+          "AV": 5,
+          "Con": 0,
+          "Dur%": 1.0,
+          "ExMult": "-",
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1.0,
+          "health": 3000,
+          "zone_name": "Main"
+        },
         {
           "AV": 5,
           "Con": 0,
@@ -96,6 +118,17 @@
           "Dur%": 0.0,
           "ExMult": "-",
           "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1.0,
+          "health": 125,
+          "zone_name": "Main"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0.0,
+          "ExMult": "-",
+          "ExTarget": "Main",
           "IsFatal": true,
           "MainCap": 1,
           "ToMain%": 1.0,
@@ -168,6 +201,17 @@
         {
           "AV": 4,
           "Con": 0,
+          "Dur%": 1.0,
+          "ExMult": "-",
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1.0,
+          "health": 400,
+          "zone_name": "Main"
+        },
+        {
+          "AV": 4,
+          "Con": 0,
           "Dur%": 0.0,
           "ExMult": "-",
           "ExTarget": "Main",
@@ -181,6 +225,17 @@
     },
     "Ballistic Missile": {
       "damageable_zones": [
+        {
+          "AV": 5,
+          "Con": 0,
+          "Dur%": 1.0,
+          "ExMult": "-",
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1.0,
+          "health": 2100,
+          "zone_name": "Main"
+        },
         {
           "AV": 3,
           "Con": 0,
@@ -198,6 +253,17 @@
     },
     "Barrager Tank": {
       "damageable_zones": [
+        {
+          "AV": 5,
+          "Con": 0,
+          "Dur%": 1.0,
+          "ExMult": "-",
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1.0,
+          "health": 3000,
+          "zone_name": "Main"
+        },
         {
           "AV": 5,
           "Con": 0,
@@ -270,6 +336,17 @@
     },
     "Berserker": {
       "damageable_zones": [
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0.0,
+          "ExMult": "-",
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1.0,
+          "health": 1000,
+          "zone_name": "Main"
+        },
         {
           "AV": 1,
           "Con": 0,
@@ -397,6 +474,17 @@
           "Dur%": 0.0,
           "ExMult": "-",
           "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1.0,
+          "health": 125,
+          "zone_name": "Main"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0.0,
+          "ExMult": "-",
+          "ExTarget": "Main",
           "IsFatal": true,
           "MainCap": 1,
           "ToMain%": 1.0,
@@ -472,6 +560,17 @@
           "Dur%": 1.0,
           "ExMult": "-",
           "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1.0,
+          "health": 2100,
+          "zone_name": "Main"
+        },
+        {
+          "AV": 5,
+          "Con": 0,
+          "Dur%": 1.0,
+          "ExMult": "-",
+          "ExTarget": "Main",
           "IsFatal": true,
           "MainCap": 1,
           "ToMain%": 1.0,
@@ -495,6 +594,17 @@
     },
     "Commissar": {
       "damageable_zones": [
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0.0,
+          "ExMult": "-",
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1.0,
+          "health": 125,
+          "zone_name": "Main"
+        },
         {
           "AV": 1,
           "Con": 0,
@@ -570,6 +680,17 @@
     },
     "Conflagration Devastator": {
       "damageable_zones": [
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0.0,
+          "ExMult": "-",
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1.0,
+          "health": 750,
+          "zone_name": "Main"
+        },
         {
           "AV": 1,
           "Con": 0,
@@ -715,6 +836,17 @@
     },
     "Devastator": {
       "damageable_zones": [
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0.0,
+          "ExMult": "-",
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1.0,
+          "health": 750,
+          "zone_name": "Main"
+        },
         {
           "AV": 1,
           "Con": 0,
@@ -880,6 +1012,17 @@
           "ExTarget": "Main",
           "MainCap": 1,
           "ToMain%": 1.0,
+          "health": 3500,
+          "zone_name": "Main"
+        },
+        {
+          "AV": 5,
+          "Con": 0,
+          "Dur%": 1.0,
+          "ExMult": "-",
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1.0,
           "health": -1,
           "zone_name": "body"
         },
@@ -947,6 +1090,17 @@
     },
     "Factory Strider": {
       "damageable_zones": [
+        {
+          "AV": 4,
+          "Con": 0,
+          "Dur%": 1.0,
+          "ExMult": 0.6,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1.0,
+          "health": 10000,
+          "zone_name": "Main"
+        },
         {
           "AV": 5,
           "Con": 0,
@@ -1325,11 +1479,34 @@
       "health": 10000
     },
     "Factory Strider Gatling Gun": {
-      "damageable_zones": [],
+      "damageable_zones": [
+        {
+          "AV": 3,
+          "Con": 0,
+          "Dur%": 1.0,
+          "ExMult": "-",
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1.0,
+          "health": 300,
+          "zone_name": "Main"
+        }
+      ],
       "health": 300
     },
     "Fusion Autocannon": {
       "damageable_zones": [
+        {
+          "AV": 5,
+          "Con": 0,
+          "Dur%": 1.0,
+          "ExMult": "-",
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1.0,
+          "health": 2100,
+          "zone_name": "Main"
+        },
         {
           "AV": 5,
           "Con": 0,
@@ -1358,11 +1535,34 @@
       "health": 2100
     },
     "Fusion Repeater": {
-      "damageable_zones": [],
+      "damageable_zones": [
+        {
+          "AV": 3,
+          "Con": 0,
+          "Dur%": 1.0,
+          "ExMult": "-",
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1.0,
+          "health": 500,
+          "zone_name": "Main"
+        }
+      ],
       "health": 500
     },
     "Gunship": {
       "damageable_zones": [
+        {
+          "AV": 3,
+          "Con": 0,
+          "Dur%": 0.0,
+          "ExMult": "-",
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1.0,
+          "health": 950,
+          "zone_name": "Main"
+        },
         {
           "AV": 3,
           "Con": 0,
@@ -1424,6 +1624,17 @@
     },
     "Heavy Devastator": {
       "damageable_zones": [
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0.0,
+          "ExMult": "-",
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1.0,
+          "health": 750,
+          "zone_name": "Main"
+        },
         {
           "AV": 1,
           "Con": 0,
@@ -1587,6 +1798,17 @@
           "Dur%": 1.0,
           "ExMult": "-",
           "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1.0,
+          "health": 2100,
+          "zone_name": "Main"
+        },
+        {
+          "AV": 5,
+          "Con": 0,
+          "Dur%": 1.0,
+          "ExMult": "-",
+          "ExTarget": "Main",
           "IsFatal": true,
           "MainCap": 1,
           "ToMain%": 1.0,
@@ -1613,6 +1835,17 @@
         {
           "AV": 4,
           "Con": 0,
+          "Dur%": 0.0,
+          "ExMult": "-",
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1.0,
+          "health": 500,
+          "zone_name": "Main"
+        },
+        {
+          "AV": 4,
+          "Con": 0,
           "Dur%": 0.8,
           "ExMult": 0.4,
           "ExTarget": "Part",
@@ -1626,6 +1859,17 @@
     },
     "Hulk": {
       "damageable_zones": [
+        {
+          "AV": 4,
+          "Con": 0,
+          "Dur%": 0.6,
+          "ExMult": "-",
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1.0,
+          "health": 1800,
+          "zone_name": "Main"
+        },
         {
           "AV": 4,
           "Con": 0,
@@ -1704,6 +1948,17 @@
         {
           "AV": 4,
           "Con": 0,
+          "Dur%": 0.6,
+          "ExMult": "-",
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1.0,
+          "health": 1800,
+          "zone_name": "Main"
+        },
+        {
+          "AV": 4,
+          "Con": 0,
           "Dur%": 0.7,
           "ExMult": "-",
           "ExTarget": "Main",
@@ -1776,6 +2031,17 @@
     },
     "Hulk Firebomber": {
       "damageable_zones": [
+        {
+          "AV": 4,
+          "Con": 0,
+          "Dur%": 0.6,
+          "ExMult": "-",
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1.0,
+          "health": 1800,
+          "zone_name": "Main"
+        },
         {
           "AV": 4,
           "Con": 0,
@@ -1854,6 +2120,17 @@
         {
           "AV": 4,
           "Con": 0,
+          "Dur%": 0.6,
+          "ExMult": "-",
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1.0,
+          "health": 1800,
+          "zone_name": "Main"
+        },
+        {
+          "AV": 4,
+          "Con": 0,
           "Dur%": 0.7,
           "ExMult": "-",
           "ExTarget": "Main",
@@ -1929,6 +2206,17 @@
         {
           "AV": 4,
           "Con": 0,
+          "Dur%": 0.6,
+          "ExMult": "-",
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1.0,
+          "health": 1800,
+          "zone_name": "Main"
+        },
+        {
+          "AV": 4,
+          "Con": 0,
           "Dur%": 0.7,
           "ExMult": "-",
           "ExTarget": "Main",
@@ -2001,6 +2289,17 @@
     },
     "Incendiary MG Devastator": {
       "damageable_zones": [
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0.0,
+          "ExMult": "-",
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1.0,
+          "health": 750,
+          "zone_name": "Main"
+        },
         {
           "AV": 1,
           "Con": 0,
@@ -2164,6 +2463,17 @@
           "Dur%": 0.0,
           "ExMult": "-",
           "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1.0,
+          "health": 125,
+          "zone_name": "Main"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0.0,
+          "ExMult": "-",
+          "ExTarget": "Main",
           "IsFatal": true,
           "MainCap": 1,
           "ToMain%": 1.0,
@@ -2233,6 +2543,17 @@
     },
     "Marauder": {
       "damageable_zones": [
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0.0,
+          "ExMult": "-",
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1.0,
+          "health": 125,
+          "zone_name": "Main"
+        },
         {
           "AV": 0,
           "Con": 0,
@@ -2314,6 +2635,17 @@
           "Dur%": 0.0,
           "ExMult": "-",
           "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1.0,
+          "health": 125,
+          "zone_name": "Main"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0.0,
+          "ExMult": "-",
+          "ExTarget": "Main",
           "IsFatal": true,
           "MainCap": 1,
           "ToMain%": 1.0,
@@ -2383,6 +2715,17 @@
     },
     "Raider": {
       "damageable_zones": [
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0.0,
+          "ExMult": "-",
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1.0,
+          "health": 125,
+          "zone_name": "Main"
+        },
         {
           "AV": 0,
           "Con": 0,
@@ -2459,6 +2802,17 @@
     "Reinforced Scout Strider": {
       "damageable_zones": [
         {
+          "AV": 4,
+          "Con": 0,
+          "Dur%": 0.0,
+          "ExMult": "-",
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1.0,
+          "health": 500,
+          "zone_name": "Main"
+        },
+        {
           "AV": 2,
           "Con": 0,
           "Dur%": 0.75,
@@ -2511,6 +2865,17 @@
     },
     "Rocket Devastator": {
       "damageable_zones": [
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0.0,
+          "ExMult": "-",
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1.0,
+          "health": 750,
+          "zone_name": "Main"
+        },
         {
           "AV": 1,
           "Con": 0,
@@ -2684,6 +3049,17 @@
           "Dur%": 0.0,
           "ExMult": "-",
           "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1.0,
+          "health": 125,
+          "zone_name": "Main"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0.0,
+          "ExMult": "-",
+          "ExTarget": "Main",
           "IsFatal": true,
           "MainCap": 1,
           "ToMain%": 1.0,
@@ -2760,6 +3136,17 @@
           "Dur%": 0.0,
           "ExMult": "-",
           "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1.0,
+          "health": 125,
+          "zone_name": "Main"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0.0,
+          "ExMult": "-",
+          "ExTarget": "Main",
           "IsFatal": true,
           "MainCap": 1,
           "ToMain%": 1.0,
@@ -2830,6 +3217,17 @@
     "Scout Strider": {
       "damageable_zones": [
         {
+          "AV": 4,
+          "Con": 0,
+          "Dur%": 0.0,
+          "ExMult": "-",
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1.0,
+          "health": 500,
+          "zone_name": "Main"
+        },
+        {
           "AV": 2,
           "Con": 0,
           "Dur%": 0.75,
@@ -2882,6 +3280,17 @@
     },
     "Shredder Tank": {
       "damageable_zones": [
+        {
+          "AV": 5,
+          "Con": 0,
+          "Dur%": 1.0,
+          "ExMult": "-",
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1.0,
+          "health": 3000,
+          "zone_name": "Main"
+        },
         {
           "AV": 5,
           "Con": 0,
@@ -2960,6 +3369,17 @@
           "Dur%": 0.0,
           "ExMult": "-",
           "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1.0,
+          "health": 125,
+          "zone_name": "Main"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0.0,
+          "ExMult": "-",
+          "ExTarget": "Main",
           "IsFatal": true,
           "MainCap": 1,
           "ToMain%": 1.0,
@@ -3029,6 +3449,17 @@
     },
     "War Strider": {
       "damageable_zones": [
+        {
+          "AV": 4,
+          "Con": 0,
+          "Dur%": 1.0,
+          "ExMult": "-",
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1.0,
+          "health": 3500,
+          "zone_name": "Main"
+        },
         {
           "AV": 4,
           "Con": 0,
@@ -3187,11 +3618,34 @@
   },
   "Illuminate": {
     "Cannon Turret": {
-      "damageable_zones": [],
+      "damageable_zones": [
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0.0,
+          "ExMult": "-",
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1.0,
+          "health": 2100,
+          "zone_name": "Main"
+        }
+      ],
       "health": 2100
     },
     "Crescent Overseer": {
       "damageable_zones": [
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0.0,
+          "ExMult": "-",
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1.0,
+          "health": 600,
+          "zone_name": "Main"
+        },
         {
           "AV": 3,
           "Con": 0,
@@ -3486,6 +3940,17 @@
     },
     "Elevated Overseer": {
       "damageable_zones": [
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0.0,
+          "ExMult": "-",
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1.0,
+          "health": 450,
+          "zone_name": "Main"
+        },
         {
           "AV": 2,
           "Con": 0,
@@ -3796,6 +4261,17 @@
           "AV": 0,
           "Con": 0,
           "Dur%": 0.4,
+          "ExMult": "-",
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1.0,
+          "health": 5000,
+          "zone_name": "Main"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0.4,
           "ExMult": 0.75,
           "ExTarget": "Part",
           "MainCap": 0,
@@ -3951,6 +4427,17 @@
     },
     "Harvester": {
       "damageable_zones": [
+        {
+          "AV": 4,
+          "Con": 0,
+          "Dur%": 0.7,
+          "ExMult": "-",
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1.0,
+          "health": 3000,
+          "zone_name": "Main"
+        },
         {
           "AV": 4,
           "Con": 0,
@@ -4344,6 +4831,17 @@
     "Leviathan": {
       "damageable_zones": [
         {
+          "AV": 4,
+          "Con": 0,
+          "Dur%": 0.0,
+          "ExMult": "-",
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1.0,
+          "health": 15000,
+          "zone_name": "Main"
+        },
+        {
           "AV": 5,
           "Con": 0,
           "Dur%": 0.0,
@@ -4501,11 +4999,34 @@
       "health": 15000
     },
     "Lightning Spire": {
-      "damageable_zones": [],
+      "damageable_zones": [
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0.0,
+          "ExMult": "-",
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1.0,
+          "health": 500,
+          "zone_name": "Main"
+        }
+      ],
       "health": 500
     },
     "Overseer": {
       "damageable_zones": [
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0.0,
+          "ExMult": "-",
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1.0,
+          "health": 600,
+          "zone_name": "Main"
+        },
         {
           "AV": 3,
           "Con": 0,
@@ -4808,6 +5329,17 @@
           "ExTarget": "Main",
           "MainCap": 1,
           "ToMain%": 1.0,
+          "health": 800,
+          "zone_name": "Main"
+        },
+        {
+          "AV": 3,
+          "Con": 0,
+          "Dur%": 0.7,
+          "ExMult": "-",
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1.0,
           "health": -1,
           "zone_name": "back_body"
         },
@@ -4871,6 +5403,17 @@
     },
     "Voteless": {
       "damageable_zones": [
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0.0,
+          "ExMult": "-",
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1.0,
+          "health": 160,
+          "zone_name": "Main"
+        },
         {
           "AV": 1,
           "Con": 0,
@@ -4956,6 +5499,17 @@
     },
     "Warp Ship": {
       "damageable_zones": [
+        {
+          "AV": 5,
+          "Con": 0,
+          "Dur%": 1.0,
+          "ExMult": "-",
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1.0,
+          "health": 3500,
+          "zone_name": "Main"
+        },
         {
           "AV": 5,
           "Con": 0,
@@ -5051,6 +5605,17 @@
     "Watcher": {
       "damageable_zones": [
         {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0.0,
+          "ExMult": "-",
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1.0,
+          "health": 600,
+          "zone_name": "Main"
+        },
+        {
           "AV": 2,
           "Con": 0,
           "Dur%": 0.0,
@@ -5124,6 +5689,17 @@
   "Terminid": {
     "Alpha Commander": {
       "damageable_zones": [
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0.7,
+          "ExMult": "-",
+          "ExTarget": "Part",
+          "MainCap": 1,
+          "ToMain%": 1.0,
+          "health": 1000,
+          "zone_name": "Main"
+        },
         {
           "AV": 2,
           "Con": 300,
@@ -5207,6 +5783,17 @@
     },
     "Bile Spewer": {
       "damageable_zones": [
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0.5,
+          "ExMult": "-",
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1.0,
+          "health": 750,
+          "zone_name": "Main"
+        },
         {
           "AV": 2,
           "Con": 0,
@@ -5310,6 +5897,17 @@
           "Dur%": 0.0,
           "ExMult": "-",
           "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1.0,
+          "health": 60,
+          "zone_name": "Main"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0.0,
+          "ExMult": "-",
+          "ExTarget": "Main",
           "IsFatal": true,
           "MainCap": 1,
           "ToMain%": 0.3,
@@ -5393,6 +5991,17 @@
     },
     "Bile Titan": {
       "damageable_zones": [
+        {
+          "AV": 4,
+          "Con": 0,
+          "Dur%": 1.0,
+          "ExMult": 0.5,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1.0,
+          "health": 6500,
+          "zone_name": "Main"
+        },
         {
           "AV": 4,
           "Con": 0,
@@ -5693,6 +6302,17 @@
       "damageable_zones": [
         {
           "AV": 1,
+          "Con": 0,
+          "Dur%": 0.2,
+          "ExMult": "-",
+          "ExTarget": "Part",
+          "MainCap": 1,
+          "ToMain%": 1.0,
+          "health": 325,
+          "zone_name": "Main"
+        },
+        {
+          "AV": 1,
           "Con": 200,
           "Dur%": 0.2,
           "ExMult": "-",
@@ -5776,6 +6396,17 @@
       "damageable_zones": [
         {
           "AV": 2,
+          "Con": 0,
+          "Dur%": 0.6,
+          "ExMult": "-",
+          "ExTarget": "Part",
+          "MainCap": 1,
+          "ToMain%": 1.0,
+          "health": 800,
+          "zone_name": "Main"
+        },
+        {
+          "AV": 2,
           "Con": 300,
           "Dur%": 0.6,
           "ExMult": "-",
@@ -5857,6 +6488,17 @@
     },
     "Charger": {
       "damageable_zones": [
+        {
+          "AV": 4,
+          "Con": 0,
+          "Dur%": 1.0,
+          "ExMult": 0.75,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1.0,
+          "health": 2400,
+          "zone_name": "Main"
+        },
         {
           "AV": 4,
           "Con": 0,
@@ -6063,6 +6705,17 @@
           "Con": 0,
           "Dur%": 1.0,
           "ExMult": 0.75,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1.0,
+          "health": 3000,
+          "zone_name": "Main"
+        },
+        {
+          "AV": 4,
+          "Con": 0,
+          "Dur%": 1.0,
+          "ExMult": 0.75,
           "ExTarget": "Part",
           "IsFatal": true,
           "MainCap": 0,
@@ -6259,6 +6912,17 @@
     },
     "Dragonroach": {
       "damageable_zones": [
+        {
+          "AV": 4,
+          "Con": 0,
+          "Dur%": 1.0,
+          "ExMult": 0.5,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1.0,
+          "health": 6500,
+          "zone_name": "Main"
+        },
         {
           "AV": 4,
           "Con": 0,
@@ -6606,6 +7270,17 @@
     "Hive Guard": {
       "damageable_zones": [
         {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0.3,
+          "ExMult": "-",
+          "ExTarget": "Part",
+          "MainCap": 1,
+          "ToMain%": 1.0,
+          "health": 500,
+          "zone_name": "Main"
+        },
+        {
           "AV": 3,
           "Con": 200,
           "Dur%": 0.35,
@@ -6688,6 +7363,17 @@
     },
     "Hive Lord": {
       "damageable_zones": [
+        {
+          "AV": 5,
+          "Con": 0,
+          "Dur%": 0.0,
+          "ExMult": 0.75,
+          "ExTarget": "Part",
+          "MainCap": 1,
+          "ToMain%": 1.0,
+          "health": 150000,
+          "zone_name": "Main"
+        },
         {
           "AV": 6,
           "Con": 0,
@@ -7117,6 +7803,17 @@
           "Dur%": 0.0,
           "ExMult": "-",
           "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1.0,
+          "health": 160,
+          "zone_name": "Main"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0.0,
+          "ExMult": "-",
+          "ExTarget": "Main",
           "IsFatal": true,
           "MainCap": 1,
           "ToMain%": 1.0,
@@ -7216,6 +7913,17 @@
     },
     "Impaler": {
       "damageable_zones": [
+        {
+          "AV": 4,
+          "Con": 0,
+          "Dur%": 1.0,
+          "ExMult": "-",
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1.0,
+          "health": 4000,
+          "zone_name": "Main"
+        },
         {
           "AV": 1,
           "Con": 0,
@@ -7482,6 +8190,17 @@
         {
           "AV": 2,
           "Con": 0,
+          "Dur%": 0.5,
+          "ExMult": "-",
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1.0,
+          "health": 750,
+          "zone_name": "Main"
+        },
+        {
+          "AV": 2,
+          "Con": 0,
           "Dur%": 0.0,
           "ExMult": "-",
           "ExTarget": "Main",
@@ -7582,6 +8301,17 @@
           "Dur%": 0.0,
           "ExMult": "-",
           "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1.0,
+          "health": 60,
+          "zone_name": "Main"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0.0,
+          "ExMult": "-",
+          "ExTarget": "Main",
           "IsFatal": true,
           "MainCap": 1,
           "ToMain%": 0.3,
@@ -7665,6 +8395,17 @@
     },
     "Predator Hunter": {
       "damageable_zones": [
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0.0,
+          "ExMult": "-",
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1.0,
+          "health": 175,
+          "zone_name": "Main"
+        },
         {
           "AV": 0,
           "Con": 0,
@@ -7770,6 +8511,17 @@
     },
     "Predator Stalker": {
       "damageable_zones": [
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0.5,
+          "ExMult": "-",
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1.0,
+          "health": 650,
+          "zone_name": "Main"
+        },
         {
           "AV": 1,
           "Con": 0,
@@ -7886,6 +8638,17 @@
     },
     "Rupture Charger": {
       "damageable_zones": [
+        {
+          "AV": 4,
+          "Con": 0,
+          "Dur%": 1.0,
+          "ExMult": 0.75,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1.0,
+          "health": 2400,
+          "zone_name": "Main"
+        },
         {
           "AV": 5,
           "Con": 0,
@@ -8110,6 +8873,17 @@
     "Rupture Spewer": {
       "damageable_zones": [
         {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0.5,
+          "ExMult": "-",
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1.0,
+          "health": 750,
+          "zone_name": "Main"
+        },
+        {
           "AV": 3,
           "Con": 0,
           "Dur%": 0.0,
@@ -8207,6 +8981,17 @@
     "Rupture Warrior": {
       "damageable_zones": [
         {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0.2,
+          "ExMult": "-",
+          "ExTarget": "Part",
+          "MainCap": 1,
+          "ToMain%": 1.0,
+          "health": 250,
+          "zone_name": "Main"
+        },
+        {
           "AV": 3,
           "Con": 160,
           "Dur%": 0.2,
@@ -8289,6 +9074,17 @@
     },
     "Scavenger": {
       "damageable_zones": [
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0.0,
+          "ExMult": "-",
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1.0,
+          "health": 80,
+          "zone_name": "Main"
+        },
         {
           "AV": 0,
           "Con": 0,
@@ -8384,6 +9180,17 @@
           "Dur%": 0.0,
           "ExMult": "-",
           "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1.0,
+          "health": 80,
+          "zone_name": "Main"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0.0,
+          "ExMult": "-",
+          "ExTarget": "Main",
           "MainCap": 0,
           "ToMain%": 0.4,
           "health": 30,
@@ -8430,6 +9237,17 @@
     },
     "Spore Burst Hunter": {
       "damageable_zones": [
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0.35,
+          "ExMult": "-",
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1.0,
+          "health": 160,
+          "zone_name": "Main"
+        },
         {
           "AV": 0,
           "Con": 0,
@@ -8541,6 +9359,17 @@
           "Dur%": 0.0,
           "ExMult": "-",
           "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1.0,
+          "health": 60,
+          "zone_name": "Main"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0.0,
+          "ExMult": "-",
+          "ExTarget": "Main",
           "IsFatal": true,
           "MainCap": 1,
           "ToMain%": 0.3,
@@ -8626,6 +9455,17 @@
       "damageable_zones": [
         {
           "AV": 1,
+          "Con": 0,
+          "Dur%": 0.5,
+          "ExMult": "-",
+          "ExTarget": "Part",
+          "MainCap": 1,
+          "ToMain%": 1.0,
+          "health": 325,
+          "zone_name": "Main"
+        },
+        {
+          "AV": 1,
           "Con": 200,
           "Dur%": 0.4,
           "ExMult": "-",
@@ -8707,6 +9547,17 @@
     },
     "Spore Charger": {
       "damageable_zones": [
+        {
+          "AV": 4,
+          "Con": 0,
+          "Dur%": 1.0,
+          "ExMult": 0.75,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1.0,
+          "health": 2400,
+          "zone_name": "Main"
+        },
         {
           "AV": 4,
           "Con": 0,
@@ -8993,6 +9844,17 @@
           "ExTarget": "Main",
           "MainCap": 1,
           "ToMain%": 1.0,
+          "health": 800,
+          "zone_name": "Main"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0.5,
+          "ExMult": "-",
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1.0,
           "health": -1,
           "zone_name": "hitzone_l_back_leg"
         },
@@ -9101,6 +9963,17 @@
     },
     "Warrior": {
       "damageable_zones": [
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0.2,
+          "ExMult": "-",
+          "ExTarget": "Part",
+          "MainCap": 1,
+          "ToMain%": 1.0,
+          "health": 325,
+          "zone_name": "Main"
+        },
         {
           "AV": 1,
           "Con": 200,

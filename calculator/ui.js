@@ -23,8 +23,26 @@ export function setupCalculator() {
 function setupWeaponSelector() {
   const weaponInput = document.getElementById('calculator-weapon-input');
   const weaponDropdown = document.getElementById('calculator-weapon-dropdown');
+  const weaponSelector = weaponInput?.parentElement;
   
-  if (!weaponInput || !weaponDropdown) return;
+  if (!weaponInput || !weaponDropdown || !weaponSelector) return;
+  
+  // Add clear button
+  const clearBtn = document.createElement('button');
+  clearBtn.className = 'calculator-clear-btn';
+  clearBtn.textContent = '×';
+  clearBtn.type = 'button';
+  clearBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    weaponInput.value = '';
+    calculatorState.selectedWeapon = null;
+    const resultContainer = document.getElementById('calculator-result');
+    if (resultContainer) resultContainer.innerHTML = '';
+    const detailsContainer = document.getElementById('calculator-weapon-details');
+    if (detailsContainer) detailsContainer.innerHTML = '';
+    populateDropdown('');
+  });
+  weaponSelector.appendChild(clearBtn);
   
   let isOpen = false;
   let filteredOptions = [];
@@ -143,8 +161,26 @@ function setupWeaponSelector() {
 function setupEnemySelector() {
   const enemyInput = document.getElementById('calculator-enemy-input');
   const enemyDropdown = document.getElementById('calculator-enemy-dropdown');
+  const enemySelector = enemyInput?.parentElement;
   
-  if (!enemyInput || !enemyDropdown) return;
+  if (!enemyInput || !enemyDropdown || !enemySelector) return;
+  
+  // Add clear button
+  const clearBtn = document.createElement('button');
+  clearBtn.className = 'calculator-clear-btn';
+  clearBtn.textContent = '×';
+  clearBtn.type = 'button';
+  clearBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    enemyInput.value = '';
+    calculatorState.selectedEnemy = null;
+    const resultContainer = document.getElementById('calculator-result');
+    if (resultContainer) resultContainer.innerHTML = '';
+    const detailsContainer = document.getElementById('calculator-enemy-details');
+    if (detailsContainer) detailsContainer.innerHTML = '';
+    populateDropdown('');
+  });
+  enemySelector.appendChild(clearBtn);
   
   let isOpen = false;
   let filteredOptions = [];
@@ -181,7 +217,7 @@ function setupEnemySelector() {
     filteredOptions.forEach((enemy, index) => {
       const item = document.createElement('div');
       item.className = 'dropdown-item';
-      item.innerHTML = `<strong>[${enemy.health} HP]</strong> ${enemy.name} <span style="color:var(--muted); font-size:11px;">(${enemy.faction})</span>`;
+      item.innerHTML = `${enemy.name} <span style="color:var(--muted); font-size:11px;">(${enemy.faction})</span>`;
       item.addEventListener('click', () => {
         selectEnemy(enemy);
         closeDropdown();
@@ -203,7 +239,7 @@ function setupEnemySelector() {
   
   function selectEnemy(enemy) {
     calculatorState.selectedEnemy = enemy;
-    enemyInput.value = `[${enemy.health} HP] ${enemy.name}`;
+    enemyInput.value = enemy.name;
     renderEnemyDetails(enemy);
     // Clear calculation when enemy changes
     const resultContainer = document.getElementById('calculator-result');

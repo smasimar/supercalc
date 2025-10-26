@@ -236,6 +236,18 @@ def parse_enemy_units(src: dict) -> dict:
                     if tz:  # drop empty dicts
                         zones.append(tz)
 
+        # Process default_damageable_zone_info into a zone named "Main"
+        default_zone_info = payload.get("default_damageable_zone_info")
+        if isinstance(default_zone_info, dict):
+            main_zone = transform_zone(default_zone_info)
+            if main_zone:
+                main_zone["zone_name"] = "Main"
+                # Override health with unit's main health
+                unit_health = payload.get("health")
+                if unit_health is not None:
+                    main_zone["health"] = unit_health
+                zones.insert(0, main_zone)
+
         # Build a trimmed view of the payload we care about
         current = {
             "health": payload.get("health"),

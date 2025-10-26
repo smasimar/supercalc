@@ -73,7 +73,7 @@ export function renderEnemyTable() {
       // First column: Unit name (only for first zone, spans all rows)
       if (zoneIndex === 0) {
         const unitTd = document.createElement('td');
-        unitTd.textContent = `[${unit.health} HP] ${unit.name}`;
+        unitTd.textContent = unit.name;
         unitTd.rowSpan = zones.length;
         unitTd.style.verticalAlign = 'top';
         unitTd.style.fontWeight = 'bold';

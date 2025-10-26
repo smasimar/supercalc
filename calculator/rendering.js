@@ -60,6 +60,7 @@ export function renderWeaponDetails(weapon) {
   
   weapon.rows.forEach((row, rowIndex) => {
     const tr = document.createElement('tr');
+    tr.style.cursor = 'pointer';
     
     const atkClass = atkTypeKey ? classifyAtkType(row, atkTypeKey) : null;
     
@@ -76,6 +77,15 @@ export function renderWeaponDetails(weapon) {
     checkbox.dataset.rowIndex = rowIndex;
     checkbox.addEventListener('change', () => {
       renderCalculation();
+    });
+    
+    // Make entire row clickable
+    tr.addEventListener('click', (e) => {
+      // Don't trigger if clicking on the checkbox itself
+      if (e.target !== checkbox) {
+        checkbox.checked = !checkbox.checked;
+        renderCalculation();
+      }
     });
     
     checkboxTd.appendChild(checkbox);
@@ -194,6 +204,7 @@ export function renderEnemyDetails(enemy) {
   
   enemy.zones.forEach((zone, zoneIndex) => {
     const tr = document.createElement('tr');
+    tr.style.cursor = 'pointer';
     
     // Add radio button as first column
     const radioTd = document.createElement('td');
@@ -209,6 +220,15 @@ export function renderEnemyDetails(enemy) {
     radio.id = `zone-${enemy.name}-${zoneIndex}`;
     radio.addEventListener('change', () => {
       renderCalculation();
+    });
+    
+    // Make entire row clickable
+    tr.addEventListener('click', (e) => {
+      // Don't trigger if clicking on the radio button itself
+      if (e.target !== radio) {
+        radio.checked = true;
+        renderCalculation();
+      }
     });
     
     radioTd.appendChild(radio);
