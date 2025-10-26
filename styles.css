@@ -123,6 +123,10 @@ thead th.sort-desc::after,
 /* Attribution link (top-right) */
 .source-link{position:absolute; top:8px; right:10px; font-size:12px; color:var(--muted); text-decoration:underline;}
 .source-link:hover{color:var(--accent)}
+/* Source links container for multiple links */
+.source-links{position:absolute; top:8px; right:10px; font-size:12px; display:flex; flex-direction:column; gap:4px; align-items:flex-end;}
+.source-links a{color:var(--muted); text-decoration:underline;}
+.source-links a:hover{color:var(--accent)}
 .hidden{display:none !important}
 
 .table-wrap{flex:1; min-height:0; overflow:auto; /* fill remaining space */}

@@ -6,6 +6,9 @@ import { buildEnemyFactionFilters } from './enemies/filters.js';
 import './weapons/filters.js'; // sets up event listeners for search & type/sub chips
 import './enemies/filters.js'; // sets up event listeners for enemy search
 
+// Track if enemy data has been loaded
+let enemyDataLoaded = false;
+
 // Tabs
 const sections = {
   weapons: document.getElementById('tab-weapons'),
@@ -20,10 +23,10 @@ document.querySelectorAll('.tab').forEach(btn => {
     const tab = btn.dataset.tab;
     for (const k in sections) sections[k].classList.toggle('hidden', k !== tab);
     
-    // Load enemy data when enemies tab is activated
-    if (tab === 'enemies') {
+    // Load enemy data when enemies tab is activated (only once)
+    if (tab === 'enemies' && !enemyDataLoaded) {
       const enemyStatusEl = document.getElementById('enemyStatusMsg');
-      const enemySourceEl = document.getElementById('enemySourceLink');
+      const enemySourceEl = sections.enemies.querySelector('.source-links');
       try {
         if (enemyStatusEl) enemyStatusEl.textContent = 'Loading enemy data...';
         await loadEnemyData();
@@ -32,6 +35,7 @@ document.querySelectorAll('.tab').forEach(btn => {
         setupEnemyTableSorting();
         if (enemyStatusEl) enemyStatusEl.textContent = '';
         if (enemySourceEl) enemySourceEl.classList.remove('hidden');
+        enemyDataLoaded = true;
       } catch (err) {
         console.error('Failed to load enemy data:', err);
         if (enemyStatusEl) {
@@ -39,6 +43,9 @@ document.querySelectorAll('.tab').forEach(btn => {
           enemyStatusEl.style.color = '#ff8080';
         }
       }
+    } else if (tab === 'enemies' && enemyDataLoaded) {
+      // Just re-render if data is already loaded
+      renderEnemyTable();
     }
   });
 });
@@ -92,8 +99,8 @@ function setStatus(msg, isError=false, showRetry=false){
 }
 function hideDataControls(){ document.getElementById('dataControls').classList.add('hidden'); }
 function showDataControls(){ document.getElementById('dataControls').classList.remove('hidden'); }
-function hideSourceLink(){ document.getElementById('sourceLink').classList.add('hidden'); }
-function showSourceLink(){ document.getElementById('sourceLink').classList.remove('hidden'); }
+function hideSourceLink(){ sections.weapons.querySelector('.source-links')?.classList.add('hidden'); }
+function showSourceLink(){ sections.weapons.querySelector('.source-links')?.classList.remove('hidden'); }
 
 function showLoading() {
   const loadingEl = document.getElementById('loadingIndicator');
