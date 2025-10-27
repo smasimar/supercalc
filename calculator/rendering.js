@@ -1,5 +1,5 @@
 // calculator/rendering.js — render selected weapon and enemy details
-import { classifyAtkType, atkColorClass, apColorClass, dfColorClass } from '../colors.js';
+import { classifyAtkType, atkColorClass, apColorClass, dfColorClass, durPercentageColor, armorValueColor } from '../colors.js';
 import { renderCalculation } from './calculation.js';
 
 export function renderWeaponDetails(weapon) {
@@ -257,38 +257,10 @@ export function renderEnemyDetails(enemy) {
       } else if (header === 'Dur%') {
         const durValue = value || 0;
         td.textContent = (durValue * 100).toFixed(0) + '%';
-        
-        // Color gradient from white (0%) to red (100%)
-        // 0.0 = white, 0.5 = orange, 1.0 = red
-        if (durValue === 0) {
-          td.style.color = 'var(--text)'; // white
-        } else if (durValue < 0.5) {
-          // White to yellow transition (0-50%)
-          const ratio = durValue * 2; // 0 to 1
-          td.style.color = `rgba(${255}, ${255}, ${255 - Math.floor(ratio * 155)}, 1)`;
-        } else if (durValue < 0.75) {
-          // Yellow to orange transition (50-75%)
-          const ratio = (durValue - 0.5) * 4; // 0 to 1
-          td.style.color = `rgba(255, ${255 - Math.floor(ratio * 55)}, 0, 1)`;
-        } else {
-          // Orange to red transition (75-100%)
-          const ratio = (durValue - 0.75) * 4; // 0 to 1
-          // End color: #c8442e (rgb(200, 68, 46))
-          const r = Math.floor(255 - ratio * 55);
-          const g = Math.floor(200 - ratio * 132);
-          const b = Math.floor(ratio * 46);
-          td.style.color = `rgba(${r}, ${g}, ${b}, 1)`;
-        }
+        td.style.color = durPercentageColor(durValue);
       } else if (header === 'AV') {
         td.textContent = value || 0;
-        // Apply AP coloring
-        const armorValue = value || 0;
-        if (armorValue <= 0) td.style.color = 'var(--text)';
-        else if (armorValue <= 2) td.style.color = '#58a6ff';
-        else if (armorValue === 3) td.style.color = '#4caf50';
-        else if (armorValue === 4) td.style.color = '#f8f833';
-        else if (armorValue === 5) td.style.color = '#ff9a3c';
-        else if (armorValue >= 6) td.style.color = '#ff4b41';
+        td.style.color = armorValueColor(value);
       } else if (header === 'IsFatal') {
         td.textContent = value ? 'Yes' : 'No';
         if (value) td.style.color = 'var(--red)';

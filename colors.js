@@ -41,3 +41,39 @@ export function dfColorClass(val){
   if (n === 30) return 'num-yellow';
   return '';
 }
+
+// Get color for durability percentage (0.0 to 1.0)
+// Returns RGBA string from white to yellow to orange to red
+export function durPercentageColor(durValue){
+  if (durValue === 0) return 'var(--text)'; // white
+  
+  if (durValue < 0.5) {
+    // White to yellow transition (0-50%)
+    const ratio = durValue * 2; // 0 to 1
+    return `rgba(255, 255, ${255 - Math.floor(ratio * 155)}, 1)`;
+  } else if (durValue < 0.75) {
+    // Yellow to orange transition (50-75%)
+    const ratio = (durValue - 0.5) * 4; // 0 to 1
+    return `rgba(255, ${255 - Math.floor(ratio * 55)}, 0, 1)`;
+  } else {
+    // Orange to red transition (75-100%)
+    const ratio = (durValue - 0.75) * 4; // 0 to 1
+    // End color: #c8442e (rgb(200, 68, 46))
+    const r = Math.floor(255 - ratio * 55);
+    const g = Math.floor(200 - ratio * 132);
+    const b = Math.floor(ratio * 46);
+    return `rgba(${r}, ${g}, ${b}, 1)`;
+  }
+}
+
+// Get color for armor value (AV)
+export function armorValueColor(avValue){
+  const armorValue = avValue || 0;
+  if (armorValue <= 0) return 'var(--text)';
+  if (armorValue <= 2) return '#58a6ff';
+  if (armorValue === 3) return '#4caf50';
+  if (armorValue === 4) return '#f8f833';
+  if (armorValue === 5) return '#ff9a3c';
+  if (armorValue >= 6) return '#ff4b41';
+  return 'var(--text)';
+}

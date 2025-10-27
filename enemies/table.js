@@ -1,5 +1,6 @@
 // enemies/table.js — enemy table rendering and sorting
 import { enemyState } from './data.js';
+import { durPercentageColor, armorValueColor } from '../colors.js';
 
 export function setupEnemyTableSorting() {
   const sortableHeaders = document.querySelectorAll('#enemyTable th.sortable');
@@ -105,28 +106,7 @@ export function renderEnemyTable() {
       const durTd = document.createElement('td');
       const durValue = zone['Dur%'] || 0;
       durTd.textContent = (durValue * 100).toFixed(0) + '%';
-      
-      // Color gradient from white (0%) to red (100%)
-      // 0.0 = white, 0.5 = orange, 1.0 = red
-      if (durValue === 0) {
-        durTd.style.color = 'var(--text)'; // white
-      } else if (durValue < 0.5) {
-        // White to yellow transition (0-50%)
-        const ratio = durValue * 2; // 0 to 1
-        durTd.style.color = `rgba(${255}, ${255}, ${255 - Math.floor(ratio * 155)}, 1)`;
-      } else if (durValue < 0.75) {
-        // Yellow to orange transition (50-75%)
-        const ratio = (durValue - 0.5) * 4; // 0 to 1
-        durTd.style.color = `rgba(255, ${255 - Math.floor(ratio * 55)}, 0, 1)`;
-      } else {
-        // Orange to red transition (75-100%)
-        const ratio = (durValue - 0.75) * 4; // 0 to 1
-        // End color: #c8442e (rgb(200, 68, 46))
-        const r = Math.floor(255 - ratio * 55);
-        const g = Math.floor(200 - ratio * 132);
-        const b = Math.floor(ratio * 46);
-        durTd.style.color = `rgba(${r}, ${g}, ${b}, 1)`;
-      }
+      durTd.style.color = durPercentageColor(durValue);
       tr.appendChild(durTd);
       
       // AV (Armor Value) with AP coloring scheme
