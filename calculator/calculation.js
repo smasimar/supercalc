@@ -386,6 +386,40 @@ export function renderCalculation() {
     
     zoneDamageDisplay.appendChild(fraction);
     zoneDamageDisplay.appendChild(result);
+
+    // If the zone has Constitution, also show shots required to deplete it
+    if (zoneCon > 0 && attacksToKillWithCon !== null) {
+      const conFraction = document.createElement('div');
+      conFraction.className = 'calc-fraction';
+
+      const conNumerator = document.createElement('div');
+      conNumerator.className = 'calc-fraction-numerator';
+      conNumerator.textContent = `${zoneHealth + zoneCon}`;
+
+      const conDenominator = document.createElement('div');
+      conDenominator.className = 'calc-fraction-denominator';
+      conDenominator.textContent = `${totalDamagePerCycle.toFixed(2)}`;
+
+      conFraction.appendChild(conNumerator);
+      conFraction.appendChild(conDenominator);
+
+      const conResult = document.createElement('div');
+      conResult.className = 'calc-result-wrapper';
+
+      const conResultLine = document.createElement('div');
+      conResultLine.className = 'calc-result-line';
+      conResultLine.textContent = `= ${((zoneHealth + zoneCon) / totalDamagePerCycle).toFixed(2)} (${attacksToKillWithCon}) shots`;
+
+      const conShotsText = document.createElement('div');
+      conShotsText.className = 'calc-result-text';
+      conShotsText.textContent = 'shots to deplete constitution';
+
+      conResult.appendChild(conResultLine);
+      conResult.appendChild(conShotsText);
+
+      zoneDamageDisplay.appendChild(conFraction);
+      zoneDamageDisplay.appendChild(conResult);
+    }
     zoneDamageDisplay.classList.add('calc-damage-value');
   } else {
     zoneDamageDisplay.textContent = `${totalDamagePerCycle.toFixed(2)}`;
