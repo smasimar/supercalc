@@ -267,8 +267,8 @@ def parse_enemy_units(src: dict) -> dict:
 
 def main():
     ap = argparse.ArgumentParser(description="Extract enemy units grouped by faction with health and damageable_zones.")
-    ap.add_argument("-i", "--input", default="Filtered_Health_01.004.100.json", help="Path to master JSON")
-    ap.add_argument("-o", "--output", default="enemy_units_by_faction.json", help="Path to write grouped JSON")
+    ap.add_argument("-i", "--input", default="Filtered_Health.json", help="Path to master JSON")
+    ap.add_argument("-o", "--output", default="enemydata.json", help="Path to write grouped JSON")
     args = ap.parse_args()
 
     with open(args.input, "r", encoding="utf-8") as f:
