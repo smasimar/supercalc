@@ -47,6 +47,7 @@ Run:
 """
 
 import json
+import os
 import re
 import argparse
 from typing import Union
@@ -267,11 +268,36 @@ def parse_enemy_units(src: dict) -> dict:
 
 def main():
     ap = argparse.ArgumentParser(description="Extract enemy units grouped by faction with health and damageable_zones.")
-    ap.add_argument("-i", "--input", default="Filtered_Health_01.004.100.json", help="Path to master JSON")
-    ap.add_argument("-o", "--output", default="enemy_units_by_faction.json", help="Path to write grouped JSON")
+    ap.add_argument("-i", "--input", default="Filtered_Health.json", help="Path to master JSON")
+    ap.add_argument("-o", "--output", default="enemydata.json", help="Path to write grouped JSON")
     args = ap.parse_args()
 
-    with open(args.input, "r", encoding="utf-8") as f:
+    # Validate input file path
+    if not args.input or not args.input.strip():
+        ap.error("Input file path cannot be empty")
+    
+    input_path = args.input.strip()
+    if not os.path.exists(input_path):
+        ap.error(f"Input file not found: {input_path}")
+    
+    if not os.path.isfile(input_path):
+        ap.error(f"Input path is not a file: {input_path}")
+
+    # Validate output file path
+    if not args.output or not args.output.strip():
+        ap.error("Output file path cannot be empty")
+    
+    output_path = args.output.strip()
+    output_dir = os.path.dirname(output_path)
+    
+    # Check if output directory exists or can be created
+    if output_dir and not os.path.exists(output_dir):
+        try:
+            os.makedirs(output_dir, exist_ok=True)
+        except OSError as e:
+            ap.error(f"Cannot create output directory '{output_dir}': {e}")
+
+    with open(input_path, "r", encoding="utf-8") as f:
         data = json.load(f)
 
     result = parse_enemy_units(data)
@@ -279,11 +305,11 @@ def main():
     # Convert defaultdicts to plain dicts for serialization
     result_out = {fac: dict(units) for fac, units in result.items()}
 
-    with open(args.output, "w", encoding="utf-8") as f:
+    with open(output_path, "w", encoding="utf-8") as f:
         json.dump(result_out, f, ensure_ascii=False, indent=2, sort_keys=True)
 
     total_units = sum(len(units) for units in result_out.values())
-    print(f"Wrote {args.output} with {total_units} units across {len(result_out)} factions.")
+    print(f"Wrote {output_path} with {total_units} units across {len(result_out)} factions.")
     for fac in sorted(result_out.keys()):
         print(f"- {fac}: {len(result_out[fac])}")
 
