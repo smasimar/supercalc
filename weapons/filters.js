@@ -1,6 +1,6 @@
 // weapons/filters.js — search and reset controls
-import { state } from './data.js';
-import { applyFilters, sortAndRenderBody } from './table.js';
+import { state, savePinnedWeapons } from './data.js';
+import { applyFilters, sortAndRenderBody, renderTable } from './table.js';
 import { debounce } from '../utils.js';
 
 window._searchQuery = '';
@@ -12,7 +12,7 @@ if (searchEl) {
   }, 50); // 50ms debounce
   
   searchEl.addEventListener('input', (e) => {
-    window._searchQuery = (e.target.value || '').trim().toLowerCase();
+    window._searchQuery = (e.target.value || '').trim();
     debouncedApplyFilters();
   });
 }
@@ -46,6 +46,17 @@ if (resetEl) {
     });
     
     // Reapply filters to reset state
+    applyFilters();
+    renderTable();
+  });
+}
+
+// Clear all pins button
+const clearPinsEl = document.getElementById('clearPins');
+if (clearPinsEl) {
+  clearPinsEl.addEventListener('click', () => {
+    state.pinnedWeapons.clear();
+    savePinnedWeapons();
     applyFilters();
     renderTable();
   });

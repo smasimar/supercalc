@@ -13,6 +13,8 @@ export const state = {
   typeIndex: new Map(),
   subIndex: new Map(),
   searchIndex: new Map(),
+  // Pinned weapons (Set of weapon names)
+  pinnedWeapons: new Set(),
   keys: {
     typeKey: null,
     subKey: null,
@@ -25,6 +27,31 @@ export const state = {
     apKey: null,
   },
 };
+
+// Load pinned weapons from localStorage
+function loadPinnedWeapons() {
+  try {
+    const saved = localStorage.getItem('weaponPins');
+    if (saved) {
+      const pins = JSON.parse(saved);
+      state.pinnedWeapons = new Set(pins);
+    }
+  } catch (e) {
+    console.warn('Failed to load pinned weapons:', e);
+  }
+}
+
+// Save pinned weapons to localStorage
+export function savePinnedWeapons() {
+  try {
+    localStorage.setItem('weaponPins', JSON.stringify(Array.from(state.pinnedWeapons)));
+  } catch (e) {
+    console.warn('Failed to save pinned weapons:', e);
+  }
+}
+
+// Initialize pinned weapons on module load
+loadPinnedWeapons();
 
 export function parseDelimited(text, delimiter=',') {
   const rows = []; let cur = [], cell = ''; let inQuotes = false;

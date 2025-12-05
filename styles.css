@@ -267,6 +267,35 @@ tbody tr:hover {
   color: var(--muted);
 }
 
+/* Pin button styling - CSS-based, no emoji */
+.pin-btn {
+  width: 18px;
+  height: 18px;
+  padding: 0;
+  margin: 0;
+  background: transparent;
+  border: 2px solid var(--muted);
+  border-radius: 50%;
+  cursor: pointer;
+  opacity: 0.5;
+  position: relative;
+  transition: opacity 0.15s ease;
+}
+
+.pin-btn:hover {
+  opacity: 1;
+}
+
+.pin-btn.pinned {
+  background: var(--accent);
+  border-color: var(--accent);
+  opacity: 1;
+}
+
+.pin-btn.pinned:hover {
+  opacity: 0.8;
+}
+
 /* Calculator styles */
 .calculator-container{
   padding:16px; display:flex; flex-direction:column; gap:24px; position:relative

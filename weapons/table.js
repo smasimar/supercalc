@@ -1,5 +1,5 @@
 // table.js — render, grouping, sorting, filters
-import { state } from './data.js';
+import { state, savePinnedWeapons } from './data.js';
 import { classifyAtkType, atkColorClass, apColorClass, dfColorClass } from '../colors.js';
 
 export function isNumber(v){ return v !== null && v !== '' && !isNaN(Number(v)); }
@@ -29,6 +29,15 @@ export function renderTable(){
   if (!thead) return;
   thead.innerHTML = '';
   const trh = document.createElement('tr');
+  
+  // Add pin column header
+  const pinTh = document.createElement('th');
+  pinTh.style.width = '30px';
+  pinTh.style.textAlign = 'center';
+  pinTh.style.padding = '4px';
+  pinTh.title = 'Pin weapon';
+  trh.appendChild(pinTh);
+  
   state.headers.forEach(h => {
     const th = document.createElement('th');
     th.textContent = h; 
@@ -61,15 +70,23 @@ export function sortAndRenderBody(){
   const source = state.filterActive ? state.filteredGroups : state.groups;
   let ordered = [...source];
 
-  if (state.sortKey) {
+  // Separate pinned and unpinned weapons
+  const pinned = ordered.filter(g => state.pinnedWeapons.has(g.name));
+  const unpinned = ordered.filter(g => !state.pinnedWeapons.has(g.name));
+
+  // Sort each group separately
+  const sortGroups = (groups) => {
+    if (!state.sortKey) return groups;
     const numeric = guessNumericColumn(state.sortKey);
-    ordered.sort((a, b) => {
+    return groups.sort((a, b) => {
       const va = groupSortValue(a, state.sortKey, numeric);
       const vb = groupSortValue(b, state.sortKey, numeric);
       if (numeric) return state.sortDir === 'asc' ? (va - vb) : (vb - va);
       return state.sortDir === 'asc' ? String(va).localeCompare(String(vb)) : String(vb).localeCompare(String(va));
     });
-  }
+  };
+
+  ordered = [...sortGroups(pinned), ...sortGroups(unpinned)];
 
   const wikiUrlForName = (name) => {
     if (!name) return null;
@@ -81,6 +98,36 @@ export function sortAndRenderBody(){
     g.rows.forEach((r, idx) => {
       const tr = document.createElement('tr');
       if (idx === 0) tr.classList.add('group-start');
+      
+      // Add pin button column (only for first row of each group)
+      const pinTd = document.createElement('td');
+      pinTd.style.textAlign = 'center';
+      pinTd.style.padding = '4px';
+      pinTd.style.width = '30px';
+      
+      if (idx === 0) {
+        const pinBtn = document.createElement('button');
+        pinBtn.type = 'button';
+        const isPinned = state.pinnedWeapons.has(g.name);
+        pinBtn.className = 'pin-btn' + (isPinned ? ' pinned' : '');
+        pinBtn.title = isPinned ? 'Unpin weapon' : 'Pin weapon';
+        
+        pinBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          if (state.pinnedWeapons.has(g.name)) {
+            state.pinnedWeapons.delete(g.name);
+          } else {
+            state.pinnedWeapons.add(g.name);
+          }
+          savePinnedWeapons();
+          applyFilters();
+          renderTable();
+        });
+        
+        pinTd.appendChild(pinBtn);
+      }
+      tr.appendChild(pinTd);
+      
       const atkClass = classifyAtkType(r, state.keys.atkTypeKey);
       state.headers.forEach(h => {
         const td = document.createElement('td');
@@ -131,6 +178,45 @@ export function sortAndRenderBody(){
   });
 }
 
+/**
+ * Evaluate a search query with OR (|) and AND (&) operators.
+ * Default behavior (space-separated) is AND.
+ * AND has higher precedence than OR (binds tighter).
+ * 
+ * Examples:
+ * - "rifle" -> matches if "rifle" is found
+ * - "rifle pistol" -> matches if both "rifle" AND "pistol" are found
+ * - "rifle | pistol" -> matches if "rifle" OR "pistol" is found
+ * - "rifle & pistol" -> matches if both "rifle" AND "pistol" are found
+ * - "rifle | pistol & grenade" -> matches if ("rifle" OR "pistol") AND "grenade"
+ * 
+ * Note: searchText is already lowercase from the index, query is converted to lowercase for matching
+ */
+function evaluateSearchQuery(query, searchText) {
+  if (!query || !searchText) return false;
+  
+  const qLower = query.toLowerCase().trim();
+  if (!qLower) return false;
+  
+  // Handle AND operators (&) first (higher precedence) - split by &, all parts must match
+  if (qLower.includes('&')) {
+    const andParts = qLower.split('&').map(part => part.trim()).filter(part => part.length > 0);
+    // All AND parts must match
+    return andParts.every(part => evaluateSearchQuery(part, searchText));
+  }
+  
+  // Handle OR operators (|) - split by |, each part is evaluated separately
+  if (qLower.includes('|')) {
+    const orParts = qLower.split('|').map(part => part.trim()).filter(part => part.length > 0);
+    // At least one OR part must match
+    return orParts.some(part => evaluateSearchQuery(part, searchText));
+  }
+  
+  // Default: space-separated words are AND (all must match)
+  const words = qLower.split(/\s+/).filter(word => word.length > 0);
+  return words.every(word => searchText.includes(word));
+}
+
 export function applyFilters(){
   const typeContainer = document.getElementById('typeFilters');
   const subContainer  = document.getElementById('subFilters');
@@ -141,8 +227,14 @@ export function applyFilters(){
   const subFilterActive  = !!(subContainer  && activeSubs.length);
   const hasSearch = (window._searchQuery || '').length > 0;
 
+  // Get pinned weapons (always included regardless of filters)
+  const pinnedGroups = state.groups.filter(g => state.pinnedWeapons.has(g.name));
+
   if (!typeFilterActive && !subFilterActive && !hasSearch) {
-    state.filterActive = false; state.filteredGroups = []; sortAndRenderBody(); return;
+    state.filterActive = false; 
+    state.filteredGroups = [];
+    sortAndRenderBody(); 
+    return;
   }
 
   const q = window._searchQuery || '';
@@ -184,13 +276,15 @@ export function applyFilters(){
       const searchText = state.searchIndex.get(g);
       if (!searchText) return false;
       
-      // Split query into individual words and check if ALL words are found
-      const queryWords = q.trim().split(/\s+/).filter(word => word.length > 0);
-      return queryWords.every(word => searchText.includes(word));
+      return evaluateSearchQuery(q, searchText);
     });
   }
 
-  state.filteredGroups = filteredGroups;
+  // Merge filtered groups with pinned groups (pinned weapons always visible)
+  const filteredSet = new Set(filteredGroups);
+  pinnedGroups.forEach(pinned => filteredSet.add(pinned));
+  
+  state.filteredGroups = Array.from(filteredSet);
   state.filterActive = true; 
   sortAndRenderBody();
 }
