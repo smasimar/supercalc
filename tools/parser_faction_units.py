@@ -77,6 +77,23 @@ def normalize_faction(raw: str):
 
 # --- Core parsing ----------------------------------------------------------
 
+def round_float(value: Any) -> Union[int, float]:
+    """Round float values to 2 decimal places. Returns int if value is whole number, float otherwise."""
+    if isinstance(value, float):
+        rounded = round(value, 2)
+        # Return as int if it's a whole number (e.g., 1.0 -> 1, but 0.4 -> 0.4)
+        return int(rounded) if rounded == int(rounded) else rounded
+    elif isinstance(value, (int, bool)):
+        return value
+    else:
+        # Try to convert to float and round
+        try:
+            fval = float(value)
+            rounded = round(fval, 2)
+            return int(rounded) if rounded == int(rounded) else rounded
+        except (ValueError, TypeError):
+            return value
+
 def sanitize_string(s: str) -> str:
     if "^_^" in s:
         s = s.split("^_^", 1)[0]
@@ -161,14 +178,15 @@ def transform_zone(zone: Dict[str, Any]) -> Dict[str, Any]:
     if "affected_by_explosions" in src:
         out["ExTarget"] = normalize_ex_target(src["affected_by_explosions"])
 
+    # Percentage values: round to 2 decimal places
     if "affects_main_health" in src:
-        out["ToMain%"] = src["affects_main_health"]
+        out["ToMain%"] = round_float(src["affects_main_health"])
 
     if "main_health_affect_capped_by_zone_health" in src:
         out["MainCap"] = src["main_health_affect_capped_by_zone_health"]
 
     if "projectile_durable_resistance" in src:
-        out["Dur%"] = src["projectile_durable_resistance"]
+        out["Dur%"] = round_float(src["projectile_durable_resistance"])
 
     if "explosion_damage_multiplier" in src:
         edm = src["explosion_damage_multiplier"]
@@ -177,7 +195,7 @@ def transform_zone(zone: Dict[str, Any]) -> Dict[str, Any]:
             if edm_val == -1.0:
                 out["ExMult"] = "-"
             elif edm_val != 0.0:
-                out["ExMult"] = edm_val
+                out["ExMult"] = round_float(edm_val)
             # 0.0 → omit
         except Exception:
             s = sanitize_string(str(edm))
