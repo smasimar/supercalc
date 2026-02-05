@@ -10,6 +10,23 @@ import './enemies/filters.js'; // sets up event listeners for enemy search
 // Expose weapons state globally for calculator rendering
 window._weaponsState = weaponsState;
 
+// Update patch/version ticker links when we know the sheet/patch version
+function updatePatchTicker() {
+  const patch = weaponsState.patchVersion;
+  if (!patch) return;
+
+  const href = `https://helldivers.wiki.gg/wiki/${encodeURIComponent(patch)}`;
+
+  const weaponPatchLink = document.querySelector('#tab-weapons .source-links a[data-role=\"patch-link\"]');
+  const enemyPatchLink = document.querySelector('#tab-enemies .source-links a[data-role=\"patch-link\"]');
+
+  [weaponPatchLink, enemyPatchLink].forEach(link => {
+    if (!link) return;
+    link.href = href;
+    link.textContent = `Patch: ${patch}`;
+  });
+}
+
 // Track if enemy data has been loaded
 let enemyDataLoaded = false;
 // Track if calculator has been initialized
@@ -124,6 +141,9 @@ async function boot(){
       { Type:'Stratagem', Sub:'ORB', Code:'-', Name:'ORBITAL PRECISION STRIKE', 'Atk Type':'explosion', 'Atk Name':'380mm HE CANNON ROUND_P_IE', DMG:1000, DUR:1000, AP:6, DF:50, ST:70, PF:60 }
     ];
     ingestMatrix([headers, ...rows.map(r => headers.map(h => r[h]))]);
+    // Use a clear label for mock data
+    weaponsState.patchVersion = 'TEST DATA';
+    updatePatchTicker();
     initUI(); 
     hideSourceLink();
     hideLoading('calculator-weapon-loading');
@@ -143,6 +163,7 @@ async function boot(){
     
     try { 
       await loadCSV();
+      updatePatchTicker();
       hideLoading('calculator-weapon-loading');
       
       // Load enemy data

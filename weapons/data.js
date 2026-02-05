@@ -15,6 +15,8 @@ export const state = {
   searchIndex: new Map(),
   // Pinned weapons (Set of weapon names)
   pinnedWeapons: new Set(),
+  // Patch / sheet metadata (e.g. \"1.005.002\" when the sheet is named with the patch)
+  patchVersion: null,
   keys: {
     typeKey: null,
     subKey: null,
@@ -150,6 +152,37 @@ export function ingestHeadersAndRows(newHeaders, newRows) {
 export async function loadCSV(){
   const res = await fetch(PUBLISHED_CSV_URL, { cache: 'no-store' });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+  // Try to infer the patch version from the published sheet's filename.
+  // Google Sheets typically sets Content-Disposition like:
+  //   attachment; filename=\"Book name - 1.005.002.csv\"
+  // We treat the sheet name (last part before .csv) as the patch.
+  try {
+    const disposition = res.headers.get('Content-Disposition') || res.headers.get('content-disposition');
+    if (disposition) {
+      const match = disposition.match(/filename=\"?([^\";]+)\"?/i);
+      if (match && match[1]) {
+        const filename = match[1].trim();
+        const base = filename.replace(/\.csv$/i, '').trim();
+
+        // First, try to pull out a version-like token (e.g. 1.006.001) from the filename
+        const versionMatch = base.match(/\d+\.\d+\.\d+/);
+        if (versionMatch) {
+          state.patchVersion = versionMatch[0];
+        } else {
+          // Fallback: keep previous behaviour of using the last " - " segment
+          const parts = base.split(' - ');
+          const sheetName = parts.length > 1 ? parts[parts.length - 1] : base;
+          if (sheetName) {
+            state.patchVersion = sheetName.trim();
+          }
+        }
+      }
+    }
+  } catch (e) {
+    console.warn('Failed to parse patch version from Content-Disposition header:', e);
+  }
+
   const text = await res.text();
   const firstLine = text.split(/\r?\n/)[0] || '';
   const delimiter = (firstLine.split('\t').length - 1) > (firstLine.split(',').length - 1) ? '\t' : ',';
