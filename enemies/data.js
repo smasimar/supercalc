@@ -14,7 +14,7 @@ export const enemyState = {
 export async function loadEnemyData() {
   try {
     // Add cache-busting timestamp to ensure fresh data
-    const response = await fetch(`./enemydata.json?t=${Date.now()}`);
+    const response = await fetch(`./enemies/enemydata.json?t=${Date.now()}`);
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     const data = await response.json();
     processEnemyData(data);

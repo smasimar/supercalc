@@ -10,7 +10,7 @@ import './enemies/filters.js'; // sets up event listeners for enemy search
 // Expose weapons state globally for calculator rendering
 window._weaponsState = weaponsState;
 
-// Update patch/version ticker links when we know the sheet/patch version
+// Update weapon data patch/version ticker link when we know the sheet/patch version
 function updatePatchTicker() {
   const patch = weaponsState.patchVersion;
   if (!patch) return;
@@ -18,13 +18,10 @@ function updatePatchTicker() {
   const href = `https://helldivers.wiki.gg/wiki/${encodeURIComponent(patch)}`;
 
   const weaponPatchLink = document.querySelector('#tab-weapons .source-links a[data-role=\"patch-link\"]');
-  const enemyPatchLink = document.querySelector('#tab-enemies .source-links a[data-role=\"patch-link\"]');
-
-  [weaponPatchLink, enemyPatchLink].forEach(link => {
-    if (!link) return;
-    link.href = href;
-    link.textContent = `Patch: ${patch}`;
-  });
+  if (weaponPatchLink) {
+    weaponPatchLink.href = href;
+    weaponPatchLink.textContent = `Patch: ${patch}`;
+  }
 }
 
 // Track if enemy data has been loaded
