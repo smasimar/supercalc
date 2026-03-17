@@ -28,6 +28,7 @@ export const state = {
     dmgKey: null,
     durKey: null,
     apKey: null,
+    rpmKey: null,
   },
 };
 
@@ -154,6 +155,7 @@ function buildIndexes() {
 export function ingestHeadersAndRows(newHeaders, newRows) {
   state.headers = newHeaders; state.rows = newRows;
   const lower = (s) => String(s||'').toLowerCase();
+  const normalize = (s) => lower(s).replace(/[^a-z0-9]+/g, '');
   const { keys } = state;
   keys.typeKey = state.headers.find(h => lower(h) === 'type') || state.headers.find(h => lower(h).includes('weapon') && lower(h).includes('type')) || null;
   keys.subKey  = state.headers.find(h => ['sub','subtype'].includes(lower(h)) || lower(h).includes('sub ')) || null;
@@ -164,17 +166,20 @@ export function ingestHeadersAndRows(newHeaders, newRows) {
   keys.dmgKey = state.headers.find(h => ['damage','dmg','dmG'].includes(lower(h))) || null;
   keys.durKey = state.headers.find(h => ['dur','duration'].includes(lower(h))) || null;
   keys.apKey  = state.headers.find(h => lower(h) === 'ap' || (lower(h).includes('armor') && lower(h).includes('pen'))) || null;
+  keys.rpmKey = state.headers.find(h => ['rpm', 'rof', 'firerate', 'rateoffire', 'roundsperminute'].includes(normalize(h))) || null;
 
   // Build groups by Name
   const map = new Map(); let index = 0;
   for (const row of state.rows) {
     const name = (row[keys.nameKey] ?? '').toString();
-    if (!map.has(name)) { map.set(name, { name, rows: [], index: index++, type: null, sub: null }); }
+    if (!map.has(name)) { map.set(name, { name, rows: [], index: index++, type: null, sub: null, code: null, rpm: null }); }
     map.get(name).rows.push(row);
   }
   for (const g of map.values()) {
     if (keys.typeKey) { for (const r of g.rows) { const v = r[keys.typeKey]; if (v != null && String(v).trim() !== '') { g.type = String(v).trim(); break; } } }
     if (keys.subKey)  { for (const r of g.rows) { const v = r[keys.subKey]; if (v != null && String(v).trim() !== '') { g.sub  = String(v).trim(); break; } } }
+    if (keys.codeKey) { for (const r of g.rows) { const v = r[keys.codeKey]; if (v != null && String(v).trim() !== '') { g.code = String(v).trim(); break; } } }
+    if (keys.rpmKey)  { for (const r of g.rows) { const v = parseFloat(r[keys.rpmKey]); if (Number.isFinite(v) && v > 0) { g.rpm = v; break; } } }
   }
   state.groups = Array.from(map.values());
   state.filteredGroups = [];

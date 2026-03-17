@@ -21,6 +21,7 @@ export function getWeaponOptions() {
       type: group.type,
       sub: group.sub,
       code: group.code,
+      rpm: group.rpm,
       rows: group.rows // Keep all attack rows
     }))
     .sort((a, b) => {

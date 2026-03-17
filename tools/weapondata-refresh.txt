@@ -29,10 +29,28 @@ Refresh workflow
 
 2. Replace `weapons\weapondata.csv` with that export.
 
-3. Apply any local augmentations that are not present in the sheet yet, such as
-   an `RPM` column for TTK calculations.
+3. Generate a fresh `filediver` entity/component dump:
 
-4. Run tests before committing.
+       Set-Location C:\GitHub\filediver
+       go run .\cmd\tools\components\entity-component-settings-json-dumper > C:\temp\entity-component-settings.json
+
+4. Merge RPM values from the dump into the checked-in CSV:
+
+       Set-Location C:\GitHub\supercalc
+       python .\tools\merge_weapon_rpm_from_filediver.py --dump C:\temp\entity-component-settings.json --csv .\weapons\weapondata.csv
+
+5. Review unresolved rows and odd values.
+
+6. Use wiki raw JSON only as a fallback/audit source for gaps that `filediver`
+   does not cover cleanly. The current best raw source is:
+
+       https://helldivers.wiki.gg/wiki/Module:Decodedata-Weapons/data.json?action=raw
+
+   You can pass it directly to the merge helper when you want wiki backfills:
+
+       python .\tools\merge_weapon_rpm_from_filediver.py --dump C:\temp\entity-component-settings.json --csv .\weapons\weapondata.csv --wiki-url https://helldivers.wiki.gg/wiki/Module:Decodedata-Weapons/data.json?action=raw
+
+7. Run tests before committing.
 
 
 RPM column notes
@@ -45,8 +63,15 @@ The loader already recognizes these header variants:
 - `Rate of Fire`
 - `Rounds per Minute`
 
-So the simplest future path is to add an `RPM` column directly to
-`weapons\weapondata.csv`.
+The preferred current path is:
+
+- keep `RPM` in `weapons\weapondata.csv`
+- populate it automatically from `filediver` where possible
+- use wiki data only for backfills or validation
+
+The first pass should accept a clear/default scalar RPM even if it does not
+perfectly model bolt cycling or animation timing. Continuous beam and spray
+weapons can stay blank until they have a better cadence model.
 
 
 Patch metadata
