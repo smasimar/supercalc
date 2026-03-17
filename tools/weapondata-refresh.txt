@@ -1,0 +1,59 @@
+Weapon data refresh notes
+=========================
+
+Source of truth
+---------------
+The app now loads weapon data from the checked-in file:
+
+    weapons\weapondata.csv
+
+That file is the source of truth for the app. The old Google Sheets export is
+now just an import source, not the runtime dependency.
+
+
+Why this changed
+----------------
+Previously the app fetched a live CSV from Google Sheets at runtime. That made
+the site dependent on an external spreadsheet and made it awkward to add local
+fields like `RPM` for TTK work.
+
+Keeping the CSV in-repo makes the app self-contained and lets future edits be
+reviewed and committed alongside code changes.
+
+
+Refresh workflow
+----------------
+1. Download the latest Google Sheets CSV export from:
+
+       https://docs.google.com/spreadsheets/d/e/2PACX-1vTeLqZ5-maEmzrM6SUDMRXpHEhV0tQImiBdgMCil9lSA11IiY_nGdamE54W7DAiSXn1XuJljdF4P537/pub?gid=0&single=true&output=csv
+
+2. Replace `weapons\weapondata.csv` with that export.
+
+3. Apply any local augmentations that are not present in the sheet yet, such as
+   an `RPM` column for TTK calculations.
+
+4. Run tests before committing.
+
+
+RPM column notes
+----------------
+The loader already recognizes these header variants:
+
+- `RPM`
+- `ROF`
+- `Fire Rate`
+- `Rate of Fire`
+- `Rounds per Minute`
+
+So the simplest future path is to add an `RPM` column directly to
+`weapons\weapondata.csv`.
+
+
+Patch metadata
+--------------
+Because the app now loads a stable local filename, it no longer relies on the
+Google Sheets response headers to infer patch metadata.
+
+If you temporarily point the app at a versioned filename, the loader can still
+extract a version token like `1.006.003` from the filename, but the stable
+checked-in path should remain `weapons\weapondata.csv`.

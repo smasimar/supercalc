@@ -12,16 +12,21 @@ window._weaponsState = weaponsState;
 
 // Update weapon data patch/version ticker link when we know the sheet/patch version
 function updatePatchTicker() {
+  const weaponPatchLink = document.querySelector('#tab-weapons .source-links a[data-role=\"patch-link\"]');
+  if (!weaponPatchLink) return;
+
   const patch = weaponsState.patchVersion;
-  if (!patch) return;
+  if (!patch) {
+    weaponPatchLink.classList.add('hidden');
+    weaponPatchLink.removeAttribute('href');
+    weaponPatchLink.textContent = 'Patch: (from weapon data)';
+    return;
+  }
 
   const href = `https://helldivers.wiki.gg/wiki/${encodeURIComponent(patch)}`;
-
-  const weaponPatchLink = document.querySelector('#tab-weapons .source-links a[data-role=\"patch-link\"]');
-  if (weaponPatchLink) {
-    weaponPatchLink.href = href;
-    weaponPatchLink.textContent = `Patch: ${patch}`;
-  }
+  weaponPatchLink.href = href;
+  weaponPatchLink.textContent = `Patch: ${patch}`;
+  weaponPatchLink.classList.remove('hidden');
 }
 
 // Track if enemy data has been loaded

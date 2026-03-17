@@ -1,0 +1,307 @@
+Enemy data refresh notes
+========================
+
+Purpose
+-------
+This repository's checked-in `enemies\enemydata.json` is not produced directly
+from the raw Helldivers 2 `data\` folder. The currently reproducible path is:
+
+1. Dump entity/component data from `filediver`
+2. Flatten the nested component payloads into the top-level shape expected by
+   `tools\parser_faction_units.py`
+3. Run `parser_faction_units.py`
+4. Review the generated output before replacing `enemies\enemydata.json`
+
+
+Important caveat
+----------------
+`filediver`'s `entity-component-settings-json-dumper` does detect the local
+Helldivers 2 install and load the string table, but the actual entity/component
+payload comes from embedded datalibrary blobs such as
+`datalibrary\generated_entities.dl_bin.gz`.
+
+Practical consequences:
+
+- A complete local `data\` folder is still useful for strings and lookup data
+- Missing units are not explained by an incomplete local install alone
+- A stale `filediver` datalibrary snapshot can still lag the latest game build
+- A current local `filediver` checkout is necessary, but not sufficient
+
+
+Verified reference run
+----------------------
+This workflow was verified on 2026-03-17 with:
+
+- `filediver` commit `66e376dabcbd5782e44c79961b74b86e135aaee8`
+- Go `go1.26.1`
+- `supercalc` `tools\parser_faction_units.py`
+
+On that date, the local `filediver` checkout matched GitHub HEAD, so the
+investigated gaps were not caused by an outdated clone.
+
+
+Step 1: dump entity component settings
+--------------------------------------
+PowerShell:
+
+    Set-Location C:\GitHub\filediver
+    go run .\cmd\tools\components\entity-component-settings-json-dumper > C:\temp\entity-component-settings.json
+
+
+Step 2: flatten the dump into parser_faction_units.py input shape
+-----------------------------------------------------------------
+`parser_faction_units.py` expects a top-level object keyed by `content\fac_*`
+paths with top-level fields like:
+
+- `loc_name`
+- `health`
+- `default_damageable_zone_info`
+- `damageable_zones`
+
+The `filediver` dump stores those fields inside:
+
+- `components.EncyclopediaEntryComponentData`
+- `components.HealthComponentData`
+
+When flattening, use this fallback order:
+
+1. Name
+   - `EncyclopediaEntryComponentData.loc_name`
+   - fallback: `EncyclopediaEntryComponentData.loc_name_upper` converted to
+     title case
+
+2. Faction / synthetic key
+   - top-level key if it already matches `content/fac_*`
+   - fallback: `UnitComponentData.unit_path`
+   - fallback: `LocalUnitComponentData.unit_path`
+   - fallback: `FactionComponentData.factions[0]`, mapped to `bugs`,
+     `cyborgs`, or `illuminate`, and then synthesized as
+     `content/fac_<bucket>/__unresolved__/<hash>`
+
+3. Payload fields
+   - `HealthComponentData.health`
+   - `HealthComponentData.default_damageable_zone_info`
+   - `HealthComponentData.damageable_zones`
+
+Copy-paste Python snippet:
+
+    import json
+    import re
+    from pathlib import Path
+
+    DUMP = Path(r"C:\temp\entity-component-settings.json")
+    FLAT = Path(r"C:\temp\entity-component-settings-flat.json")
+
+    PATH_MAP = {
+        "bugs": "bugs",
+        "cyborgs": "cyborgs",
+        "illuminate": "illuminate",
+    }
+    COMP_MAP = {
+        "FactionType_Bugs": "bugs",
+        "FactionType_Cyborg": "cyborgs",
+        "FactionType_Illuminate": "illuminate",
+    }
+
+    def titlecase_upper(value):
+        if not isinstance(value, str) or not value.strip():
+            return None
+        return value.strip().title()
+
+    data = json.loads(DUMP.read_text(encoding="utf-8"))
+    out = {}
+
+    for key, payload in data.items():
+        if not isinstance(payload, dict):
+            continue
+
+        components = payload.get("components")
+        if not isinstance(components, dict):
+            continue
+
+        entry = components.get("EncyclopediaEntryComponentData")
+        health = components.get("HealthComponentData")
+        if not isinstance(entry, dict) or not isinstance(health, dict):
+            continue
+
+        loc_name = entry.get("loc_name") or titlecase_upper(entry.get("loc_name_upper"))
+        if not loc_name:
+            continue
+
+        canonical_key = key if isinstance(key, str) else ""
+        bucket = None
+
+        match = re.search(r"content/fac_([^/]+)/", canonical_key)
+        if match:
+            bucket = PATH_MAP.get(match.group(1))
+
+        if bucket is None:
+            for component_name in ("UnitComponentData", "LocalUnitComponentData"):
+                component = components.get(component_name)
+                unit_path = component.get("unit_path") if isinstance(component, dict) else None
+                if not isinstance(unit_path, str):
+                    continue
+                match = re.search(r"content/fac_([^/]+)/", unit_path)
+                if match:
+                    bucket = PATH_MAP.get(match.group(1))
+                    canonical_key = f"{unit_path}__{key}"
+                    break
+
+        if bucket is None:
+            faction_component = components.get("FactionComponentData")
+            factions = faction_component.get("factions") if isinstance(faction_component, dict) else None
+            if factions:
+                bucket = COMP_MAP.get(factions[0])
+                if bucket:
+                    canonical_key = f"content/fac_{bucket}/__unresolved__/{key}"
+
+        if bucket is None:
+            continue
+
+        out[canonical_key] = {
+            "loc_name": loc_name,
+            "health": health.get("health"),
+            "default_damageable_zone_info": health.get("default_damageable_zone_info"),
+            "damageable_zones": health.get("damageable_zones"),
+        }
+
+    FLAT.write_text(
+        json.dumps(out, ensure_ascii=False, indent=2, sort_keys=True),
+        encoding="utf-8",
+    )
+    print(f"Wrote {FLAT}")
+
+
+Step 3: run the existing parser
+-------------------------------
+PowerShell:
+
+    Set-Location C:\GitHub\supercalc
+    python .\tools\parser_faction_units.py --input C:\temp\entity-component-settings-flat.json --output C:\temp\enemydata-from-filediver.json
+
+
+Step 4: review before checking in
+---------------------------------
+Do not blindly overwrite `enemies\enemydata.json`.
+
+The generated file is good review input, but it still needs curation.
+
+
+What the 2026-03-17 investigation found
+---------------------------------------
+Naive flattening
+  Rule: only keep entries whose top-level key already starts with `content/fac_`
+  Result: 72 units total
+  - Automaton: 34
+  - Illuminate: 11
+  - Terminid: 27
+
+Hybrid flattening
+  Rule: use top-level key first, then `UnitComponentData.unit_path`,
+  `LocalUnitComponentData.unit_path`, and finally `FactionComponentData`
+  fallbacks, plus a `loc_name_upper` fallback
+  Result: 91 units total
+  - Automaton: 44
+  - Illuminate: 15
+  - Terminid: 32
+
+Checked-in file today
+  Current `enemies\enemydata.json`: 83 units total
+  - Automaton: 42
+  - Illuminate: 13
+  - Terminid: 28
+
+
+Why the first pass looked like 11 units were missing
+----------------------------------------------------
+The initial gaps were mostly adapter issues, not missing game files:
+
+- Many units exist in the raw `filediver` dump but use unresolved hashed
+  top-level keys instead of `content/fac_*`
+- `Shredder Tank` has `loc_name_upper` and `loc_name_plural`, but no `loc_name`
+- `Heavy Fusion Cannon` has a usable `UnitComponentData.unit_path`, but no
+  `FactionComponentData`
+
+In other words, the raw dump often had the data; the missing units came from
+assuming that a valid entry must already have both:
+
+- a resolved `content/fac_*` top-level key
+- a populated `loc_name`
+
+
+Missing / extra units after hybrid flattening
+---------------------------------------------
+Old-only (still not reproduced automatically)
+
+- Automaton: `Factory Strider Gatling Gun`
+
+Hybrid-only (present in generated output, absent from checked-in file)
+
+- Automaton: `Automaton Dropship`, `Bulk Fabricator`, `Fabricator`
+- Illuminate: `Gazer`, `Overship`
+- Terminid: `Gatling Sentry`, `Infested Tower`, `Shrieker Nest`, `Spore Lung`
+
+Interpretation:
+
+- `Factory Strider Gatling Gun` does not appear as a named top-level entity in
+  the current `filediver` dump. Treat it as a manual or curated entry until a
+  better upstream source is identified.
+- The hybrid-only units are probably valid objects, but they change the scope
+  of what counts as an "enemy" target in this repository. Review them manually
+  before adding them.
+
+
+Known overlap differences that need review
+------------------------------------------
+Most overlapping units differ only in serialization details such as:
+
+- `MainCap: 1` versus `MainCap: true`
+- omitted default `ExMult: 1`
+
+The 2026-03-17 run also found a small number of meaningful differences:
+
+- `Automaton -> Heavy Fusion Repeater`
+  - checked-in health: `500`
+  - hybrid output health: `300`
+  - checked-in zones: `2`
+  - hybrid output zones: `1`
+
+- `Terminid -> Bile Spitter`
+  - checked-in zones: `8`
+  - hybrid output zones: `4`
+
+- `Terminid -> Pouncer`
+  - checked-in zones: `8`
+  - hybrid output zones: `4`
+
+- `Terminid -> Scavenger`
+  - checked-in zones: `8`
+  - hybrid output zones: `4`
+
+- `Terminid -> Spore Burst Scavenger`
+  - checked-in zones: `8`
+  - hybrid output zones: `4`
+
+These need a human decision before replacing the checked-in data.
+
+
+Specific answers from the investigation
+---------------------------------------
+- The local `filediver` checkout was not outdated; it matched GitHub HEAD.
+- The local game `data\` folder is not the main reason units looked missing.
+- Agitators are present in the generated output.
+- `Agitator` health from the verified run: `750`
+
+
+Recommended workflow for future refreshes
+-----------------------------------------
+1. Update `filediver` to latest GitHub HEAD
+2. Re-run the entity dump
+3. Flatten using the hybrid rules above
+4. Run `tools\parser_faction_units.py`
+5. Diff the generated output against `enemies\enemydata.json`
+6. Manually review:
+   - `Factory Strider Gatling Gun`
+   - any new hybrid-only units
+   - meaningful stat / zone-count differences
+7. Only then update the checked-in file
