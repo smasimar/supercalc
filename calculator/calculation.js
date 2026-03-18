@@ -1,5 +1,20 @@
 // calculator/calculation.js — damage calculation logic
 import { calculatorState } from './data.js';
+import { buildKillSummary, formatTtkSeconds } from './summary.js';
+
+function appendTtkLine(resultWrapper, ttkSeconds, hasRpm) {
+  const ttkLine = document.createElement('div');
+  ttkLine.className = 'calc-ttk-line';
+
+  if (ttkSeconds === null) {
+    ttkLine.textContent = hasRpm ? 'TTK unavailable' : 'TTK unavailable (no RPM)';
+    ttkLine.classList.add('muted');
+  } else {
+    ttkLine.textContent = `TTK: ${formatTtkSeconds(ttkSeconds)}`;
+  }
+
+  resultWrapper.appendChild(ttkLine);
+}
 
 export function calculateDamage() {
   const weapon = calculatorState.selectedWeapon;
@@ -139,6 +154,7 @@ export function renderCalculation() {
   }
   
   // Get zone info for calculations
+  const weapon = calculatorState.selectedWeapon;
   const enemy = calculatorState.selectedEnemy;
   const selectedRadio = document.querySelector(`input[name^="enemy-zone-"]:checked`);
   const zoneIndex = selectedRadio ? parseInt(selectedRadio.value) : 0;
@@ -168,20 +184,14 @@ export function renderCalculation() {
     attack.hits = hits;
   });
   
-  let attacksToKill = null;
-  let attacksToKillWithCon = null;
-  let attacksToKillMain = null;
-  
-  if (totalDamagePerCycle > 0) {
-    attacksToKill = Math.ceil(zoneHealth / totalDamagePerCycle);
-    if (zoneCon > 0) {
-      attacksToKillWithCon = Math.ceil((zoneHealth + zoneCon) / totalDamagePerCycle);
-    }
-  }
-  
-  if (totalDamageToMainPerCycle > 0 && enemyMainHealth > 0) {
-    attacksToKillMain = Math.ceil(enemyMainHealth / totalDamageToMainPerCycle);
-  }
+  const killSummary = buildKillSummary({
+    zoneHealth,
+    zoneCon,
+    enemyMainHealth,
+    totalDamagePerCycle,
+    totalDamageToMainPerCycle,
+    rpm: weapon?.rpm
+  });
   
   // Show each attack's detailed calculation
   results.attackDetails.forEach((attack, index) => {
@@ -355,7 +365,7 @@ export function renderCalculation() {
   const zoneDamageDisplay = document.createElement('div');
   zoneDamageDisplay.className = 'calc-damage-fraction-wrapper';
   
-  if (totalDamagePerCycle > 0) {
+  if (totalDamagePerCycle > 0 && killSummary.zoneShotsToKill !== null) {
     const fraction = document.createElement('div');
     fraction.className = 'calc-fraction';
     
@@ -375,7 +385,7 @@ export function renderCalculation() {
     
     const resultLine = document.createElement('div');
     resultLine.className = 'calc-result-line';
-    resultLine.textContent = `= ${(zoneHealth / totalDamagePerCycle).toFixed(2)} (${attacksToKill}) shots`;
+    resultLine.textContent = `= ${(zoneHealth / totalDamagePerCycle).toFixed(2)} (${killSummary.zoneShotsToKill}) shots`;
     
     const shotsText = document.createElement('div');
     shotsText.className = 'calc-result-text';
@@ -383,12 +393,13 @@ export function renderCalculation() {
     
     result.appendChild(resultLine);
     result.appendChild(shotsText);
+    appendTtkLine(result, killSummary.zoneTtkSeconds, killSummary.hasRpm);
     
     zoneDamageDisplay.appendChild(fraction);
     zoneDamageDisplay.appendChild(result);
 
     // If the zone has Constitution, also show shots required to deplete it
-    if (zoneCon > 0 && attacksToKillWithCon !== null) {
+    if (zoneCon > 0 && killSummary.zoneShotsToKillWithCon !== null) {
       const conFraction = document.createElement('div');
       conFraction.className = 'calc-fraction';
 
@@ -408,7 +419,7 @@ export function renderCalculation() {
 
       const conResultLine = document.createElement('div');
       conResultLine.className = 'calc-result-line';
-      conResultLine.textContent = `= ${((zoneHealth + zoneCon) / totalDamagePerCycle).toFixed(2)} (${attacksToKillWithCon}) shots`;
+      conResultLine.textContent = `= ${((zoneHealth + zoneCon) / totalDamagePerCycle).toFixed(2)} (${killSummary.zoneShotsToKillWithCon}) shots`;
 
       const conShotsText = document.createElement('div');
       conShotsText.className = 'calc-result-text';
@@ -416,6 +427,7 @@ export function renderCalculation() {
 
       conResult.appendChild(conResultLine);
       conResult.appendChild(conShotsText);
+      appendTtkLine(conResult, killSummary.zoneTtkSecondsWithCon, killSummary.hasRpm);
 
       zoneDamageDisplay.appendChild(conFraction);
       zoneDamageDisplay.appendChild(conResult);
@@ -441,7 +453,7 @@ export function renderCalculation() {
   const mainDamageDisplay = document.createElement('div');
   mainDamageDisplay.className = 'calc-damage-fraction-wrapper';
   
-  if (totalDamageToMainPerCycle > 0 && enemyMainHealth > 0) {
+  if (totalDamageToMainPerCycle > 0 && enemyMainHealth > 0 && killSummary.mainShotsToKill !== null) {
     const fraction = document.createElement('div');
     fraction.className = 'calc-fraction';
     
@@ -461,7 +473,7 @@ export function renderCalculation() {
     
     const resultLine = document.createElement('div');
     resultLine.className = 'calc-result-line';
-    resultLine.textContent = `= ${(enemyMainHealth / totalDamageToMainPerCycle).toFixed(2)} (${attacksToKillMain}) shots`;
+    resultLine.textContent = `= ${(enemyMainHealth / totalDamageToMainPerCycle).toFixed(2)} (${killSummary.mainShotsToKill}) shots`;
     
     const shotsText = document.createElement('div');
     shotsText.className = 'calc-result-text';
@@ -469,6 +481,7 @@ export function renderCalculation() {
     
     result.appendChild(resultLine);
     result.appendChild(shotsText);
+    appendTtkLine(result, killSummary.mainTtkSeconds, killSummary.hasRpm);
     
     mainDamageDisplay.appendChild(fraction);
     mainDamageDisplay.appendChild(result);
