@@ -8,7 +8,10 @@ import {
   formatTtkSeconds
 } from '../calculator/summary.js';
 import {
+  getZoneDisplayedTtkSeconds,
+  getZoneOutcomeLabel,
   getZoneOutcomeKind,
+  getZoneOutcomeShortLabel,
   summarizeZoneDamage
 } from '../calculator/zone-damage.js';
 
@@ -41,6 +44,10 @@ test('buildKillSummary keeps Liberator Carbine sample under one second', () => {
 test('calculateTtkSeconds returns zero for a one-cycle kill', () => {
   assert.equal(calculateTtkSeconds(1, 760), 0);
   assert.equal(formatTtkSeconds(calculateTtkSeconds(1, 760)), '0.00s');
+});
+
+test('calculateTtkSeconds returns null when shots-to-kill is unavailable', () => {
+  assert.equal(calculateTtkSeconds(null, 760), null);
 });
 
 test('buildKillSummary omits TTK when RPM is missing', () => {
@@ -113,7 +120,7 @@ test('summarizeZoneDamage keeps shots but omits ttk without rpm', () => {
   assert.equal(summary.killSummary.zoneTtkSeconds, null);
 });
 
-test('getZoneOutcomeKind marks non-fatal zones with main transfer as main-relevant', () => {
+test('getZoneOutcomeKind marks parts that break before a main kill as limb-relevant', () => {
   const summary = summarizeZoneDamage({
     zone: {
       health: 300,
@@ -143,7 +150,83 @@ test('getZoneOutcomeKind marks non-fatal zones with main transfer as main-releva
       totalDamageToMainPerCycle: summary.totalDamageToMainPerCycle,
       killSummary: summary.killSummary
     }),
+    'limb'
+  );
+});
+
+test('getZoneDisplayedTtkSeconds hides limb-only paths even when the part breaks quickly', () => {
+  const summary = summarizeZoneDamage({
+    zone: {
+      health: 100,
+      Con: 0,
+      AV: 1,
+      'Dur%': 0,
+      'ToMain%': 0.5,
+      ExTarget: 'Part',
+      ExMult: 1,
+      IsFatal: false
+    },
+    enemyMainHealth: 200,
+    selectedAttacks: [{
+      'Atk Name': 'Burst',
+      'Atk Type': 'Projectile',
+      DMG: 100,
+      DUR: 0,
+      AP: 2
+    }],
+    rpm: 60
+  });
+
+  assert.equal(summary.killSummary.zoneTtkSeconds, 0);
+  assert.equal(
+    getZoneDisplayedTtkSeconds(
+      getZoneOutcomeKind({
+        zone: { IsFatal: false },
+        totalDamagePerCycle: summary.totalDamagePerCycle,
+        totalDamageToMainPerCycle: summary.totalDamageToMainPerCycle,
+        killSummary: summary.killSummary
+      }),
+      summary.killSummary
+    ),
+    null
+  );
+});
+
+test('getZoneOutcomeKind keeps main label when the part can kill main before it breaks', () => {
+  const summary = summarizeZoneDamage({
+    zone: {
+      health: 300,
+      Con: 0,
+      AV: 1,
+      'Dur%': 0,
+      'ToMain%': 1,
+      ExTarget: 'Part',
+      ExMult: 1,
+      IsFatal: false
+    },
+    enemyMainHealth: 200,
+    selectedAttacks: [{
+      'Atk Name': 'Burst',
+      'Atk Type': 'Projectile',
+      DMG: 100,
+      DUR: 0,
+      AP: 2
+    }],
+    rpm: 920
+  });
+
+  assert.equal(
+    getZoneOutcomeKind({
+      zone: { IsFatal: false },
+      totalDamagePerCycle: summary.totalDamagePerCycle,
+      totalDamageToMainPerCycle: summary.totalDamageToMainPerCycle,
+      killSummary: summary.killSummary
+    }),
     'main'
+  );
+  assert.equal(
+    getZoneDisplayedTtkSeconds('main', summary.killSummary),
+    summary.killSummary.mainTtkSeconds
   );
 });
 
@@ -206,6 +289,7 @@ test('summarizeZoneDamage returns no part shots when selected attacks cannot pen
 
   assert.equal(summary.totalDamagePerCycle, 0);
   assert.equal(summary.killSummary.zoneShotsToKill, null);
+  assert.equal(summary.killSummary.zoneTtkSeconds, null);
   assert.equal(
     getZoneOutcomeKind({
       zone: { IsFatal: false },
@@ -215,4 +299,58 @@ test('summarizeZoneDamage returns no part shots when selected attacks cannot pen
     }),
     null
   );
+});
+
+test('fatal zones with zero damage still behave as impossible, not instant kills', () => {
+  const summary = summarizeZoneDamage({
+    zone: {
+      health: 425,
+      Con: 0,
+      AV: 3,
+      'Dur%': 0.3,
+      'ToMain%': 1,
+      ExTarget: 'Main',
+      ExMult: 1,
+      IsFatal: true
+    },
+    enemyMainHealth: 750,
+    selectedAttacks: [{
+      'Atk Name': '5.5x50mm FULL METAL JACKET_P',
+      'Atk Type': 'projectile',
+      DMG: 90,
+      DUR: 22,
+      AP: 2
+    }],
+    rpm: 920
+  });
+
+  const outcomeKind = getZoneOutcomeKind({
+    zone: { IsFatal: true },
+    totalDamagePerCycle: summary.totalDamagePerCycle,
+    totalDamageToMainPerCycle: summary.totalDamageToMainPerCycle,
+    killSummary: summary.killSummary
+  });
+
+  assert.equal(summary.totalDamagePerCycle, 0);
+  assert.equal(summary.killSummary.zoneShotsToKill, null);
+  assert.equal(summary.killSummary.zoneTtkSeconds, null);
+  assert.equal(outcomeKind, null);
+  assert.equal(getZoneDisplayedTtkSeconds(outcomeKind, summary.killSummary), null);
+});
+
+test('zone outcome labels expose short and expanded badge text', () => {
+  assert.equal(getZoneOutcomeLabel('fatal'), 'Fatal');
+  assert.equal(getZoneOutcomeLabel('main'), 'Main');
+  assert.equal(getZoneOutcomeLabel('limb'), 'Limb');
+  assert.equal(getZoneOutcomeLabel('utility'), 'Non-lethal');
+
+  assert.equal(getZoneOutcomeShortLabel('fatal'), 'F');
+  assert.equal(getZoneOutcomeShortLabel('main'), 'M');
+  assert.equal(getZoneOutcomeShortLabel('limb'), 'L');
+  assert.equal(getZoneOutcomeShortLabel('utility'), 'N');
+
+  assert.equal(getZoneDisplayedTtkSeconds('fatal', { zoneTtkSeconds: 0, mainTtkSeconds: 2 }), 0);
+  assert.equal(getZoneDisplayedTtkSeconds('main', { zoneTtkSeconds: 2, mainTtkSeconds: 1 }), 1);
+  assert.equal(getZoneDisplayedTtkSeconds('limb', { zoneTtkSeconds: 0, mainTtkSeconds: 1 }), null);
+  assert.equal(getZoneDisplayedTtkSeconds('utility', { zoneTtkSeconds: 0, mainTtkSeconds: null }), null);
 });

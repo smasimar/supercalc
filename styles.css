@@ -592,8 +592,14 @@ tbody tr:hover {
 }
 
 .calculator-table tbody td.calc-derived-cell {
-  vertical-align: top;
+  vertical-align: middle;
   white-space: nowrap;
+}
+
+.calc-derived-inline {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
 }
 
 .calc-derived-value {
@@ -609,13 +615,44 @@ tbody tr:hover {
 .calc-zone-context {
   display: inline-flex;
   align-items: center;
-  margin-top: 4px;
-  padding: 1px 6px;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
   border: 1px solid var(--border);
   border-radius: 999px;
   font-size: 10px;
   font-weight: 700;
   letter-spacing: .2px;
+  overflow: hidden;
+  white-space: nowrap;
+  transition: padding .16s ease, background-color .16s ease, border-color .16s ease;
+}
+
+.calc-zone-context-short {
+  display: inline-block;
+  min-width: 1ch;
+  text-align: center;
+}
+
+.calc-zone-context-label {
+  max-width: 0;
+  opacity: 0;
+  overflow: hidden;
+  margin-left: 0;
+  transition: max-width .16s ease, opacity .16s ease, margin-left .16s ease;
+}
+
+.calc-zone-context:hover,
+.calc-zone-context:focus-visible {
+  padding-right: 8px;
+}
+
+.calc-zone-context:hover .calc-zone-context-label,
+.calc-zone-context:focus-visible .calc-zone-context-label {
+  max-width: 72px;
+  opacity: 1;
+  margin-left: 4px;
 }
 
 .calc-zone-context-fatal {
@@ -628,6 +665,12 @@ tbody tr:hover {
   color: var(--accent);
   border-color: rgba(88, 166, 255, 0.45);
   background: rgba(88, 166, 255, 0.08);
+}
+
+.calc-zone-context-limb {
+  color: #d2a8ff;
+  border-color: rgba(210, 168, 255, 0.45);
+  background: rgba(210, 168, 255, 0.08);
 }
 
 .calc-zone-context-utility {

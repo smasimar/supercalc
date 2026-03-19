@@ -118,15 +118,22 @@ export function summarizeZoneDamage({
 }
 
 export function getZoneOutcomeKind({ zone, totalDamagePerCycle, totalDamageToMainPerCycle, killSummary }) {
-  if (zone?.IsFatal) {
-    return 'fatal';
-  }
-
   if (!(totalDamagePerCycle > 0)) {
     return null;
   }
 
+  if (zone?.IsFatal) {
+    return 'fatal';
+  }
+
   if (totalDamageToMainPerCycle > 0 && killSummary?.mainShotsToKill !== null) {
+    if (
+      killSummary?.zoneShotsToKill !== null &&
+      killSummary.zoneShotsToKill < killSummary.mainShotsToKill
+    ) {
+      return 'limb';
+    }
+
     return 'main';
   }
 
@@ -142,8 +149,48 @@ export function getZoneOutcomeLabel(kind) {
     return 'Main';
   }
 
+  if (kind === 'limb') {
+    return 'Limb';
+  }
+
   if (kind === 'utility') {
     return 'Non-lethal';
+  }
+
+  return null;
+}
+
+export function getZoneOutcomeShortLabel(kind) {
+  if (kind === 'fatal') {
+    return 'F';
+  }
+
+  if (kind === 'main') {
+    return 'M';
+  }
+
+  if (kind === 'limb') {
+    return 'L';
+  }
+
+  if (kind === 'utility') {
+    return 'N';
+  }
+
+  return null;
+}
+
+export function getZoneDisplayedTtkSeconds(kind, killSummary) {
+  if (!killSummary) {
+    return null;
+  }
+
+  if (kind === 'fatal') {
+    return killSummary.zoneTtkSeconds;
+  }
+
+  if (kind === 'main') {
+    return killSummary.mainTtkSeconds;
   }
 
   return null;

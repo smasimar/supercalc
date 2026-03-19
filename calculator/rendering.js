@@ -3,7 +3,7 @@ import { classifyAtkType, atkColorClass, apColorClass, dfColorClass, durPercenta
 import { calculatorState } from './data.js';
 import { getSelectedWeaponAttacks, renderCalculation } from './calculation.js';
 import { formatTtkSeconds } from './summary.js';
-import { getZoneOutcomeKind, getZoneOutcomeLabel, summarizeZoneDamage } from './zone-damage.js';
+import { getZoneDisplayedTtkSeconds, getZoneOutcomeKind, getZoneOutcomeLabel, getZoneOutcomeShortLabel, summarizeZoneDamage } from './zone-damage.js';
 
 export function renderWeaponDetails(weapon) {
   const container = document.getElementById('calculator-weapon-details');
@@ -158,13 +158,25 @@ export function renderWeaponDetails(weapon) {
 
 function appendOutcomeBadge(cell, outcomeKind) {
   const outcomeLabel = getZoneOutcomeLabel(outcomeKind);
+  const shortLabel = getZoneOutcomeShortLabel(outcomeKind);
   if (!outcomeLabel) {
     return;
   }
 
-  const badge = document.createElement('div');
+  const badge = document.createElement('span');
   badge.className = `calc-zone-context calc-zone-context-${outcomeKind}`;
-  badge.textContent = outcomeLabel;
+  badge.title = outcomeLabel;
+
+  const shortText = document.createElement('span');
+  shortText.className = 'calc-zone-context-short';
+  shortText.textContent = shortLabel || outcomeLabel.charAt(0);
+
+  const fullText = document.createElement('span');
+  fullText.className = 'calc-zone-context-label';
+  fullText.textContent = outcomeLabel;
+
+  badge.appendChild(shortText);
+  badge.appendChild(fullText);
   cell.appendChild(badge);
 }
 
@@ -296,8 +308,11 @@ export function renderEnemyDetails(enemy) {
           }
         }
       } else if (header === 'TTK') {
-        const ttkSeconds = zoneSummary?.killSummary?.zoneTtkSeconds;
-        const ttkValue = document.createElement('div');
+        const ttkSeconds = getZoneDisplayedTtkSeconds(outcomeKind, zoneSummary?.killSummary);
+        const ttkContent = document.createElement('div');
+        ttkContent.className = 'calc-derived-inline';
+
+        const ttkValue = document.createElement('span');
         ttkValue.className = 'calc-derived-value';
         ttkValue.textContent = ttkSeconds === null ? '-' : formatTtkSeconds(ttkSeconds);
         if (ttkSeconds === null) {
@@ -305,13 +320,18 @@ export function renderEnemyDetails(enemy) {
         }
 
         td.classList.add('calc-derived-cell');
-        td.appendChild(ttkValue);
-        appendOutcomeBadge(td, outcomeKind);
+        ttkContent.appendChild(ttkValue);
+        appendOutcomeBadge(ttkContent, outcomeKind);
+        td.appendChild(ttkContent);
 
-        if (zoneSummary?.killSummary?.zoneShotsToKill !== null && ttkSeconds === null && !zoneSummary.killSummary.hasRpm) {
-          td.title = 'TTK unavailable without RPM';
-        } else if (selectedAttacks.length > 0 && !(zoneSummary?.totalDamagePerCycle > 0)) {
+        if (selectedAttacks.length > 0 && !(zoneSummary?.totalDamagePerCycle > 0)) {
           td.title = 'Selected attacks do not damage this part';
+        } else if (outcomeKind === 'limb') {
+          td.title = 'This part breaks before it can kill main';
+        } else if (outcomeKind === 'utility') {
+          td.title = 'Destroying this part does not kill the enemy';
+        } else if (ttkSeconds === null && zoneSummary?.killSummary?.hasRpm === false) {
+          td.title = 'TTK unavailable without RPM';
         }
       } else if (header === 'zone_name') {
         td.textContent = value || '';
