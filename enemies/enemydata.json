@@ -361,6 +361,21 @@
       ],
       "health": 125
     },
+    "Automaton Dropship": {
+      "damageable_zones": [
+        {
+          "AV": 5,
+          "Con": 0,
+          "Dur%": 1,
+          "ExTarget": "Main",
+          "MainCap": true,
+          "ToMain%": 1,
+          "health": 1000,
+          "zone_name": "Main"
+        }
+      ],
+      "health": 1000
+    },
     "Automaton Mortar Emplacement": {
       "damageable_zones": [
         {
@@ -717,6 +732,32 @@
         }
       ],
       "health": 125
+    },
+    "Bulk Fabricator": {
+      "damageable_zones": [
+        {
+          "AV": 5,
+          "Con": 0,
+          "Dur%": 1,
+          "ExTarget": "Main",
+          "MainCap": true,
+          "ToMain%": 1,
+          "health": 4000,
+          "zone_name": "Main"
+        },
+        {
+          "AV": 4,
+          "Con": 0,
+          "Dur%": 1,
+          "ExTarget": "Part",
+          "IsFatal": true,
+          "MainCap": false,
+          "ToMain%": 0,
+          "health": 400,
+          "zone_name": "insides"
+        }
+      ],
+      "health": 4000
     },
     "Cannon Turret": {
       "damageable_zones": [
@@ -1253,6 +1294,32 @@
         }
       ],
       "health": 3500
+    },
+    "Fabricator": {
+      "damageable_zones": [
+        {
+          "AV": 5,
+          "Con": 0,
+          "Dur%": 1,
+          "ExTarget": "Main",
+          "MainCap": true,
+          "ToMain%": 1,
+          "health": 1500,
+          "zone_name": "Main"
+        },
+        {
+          "AV": 4,
+          "Con": 0,
+          "Dur%": 1,
+          "ExTarget": "Part",
+          "IsFatal": true,
+          "MainCap": false,
+          "ToMain%": 0,
+          "health": 400,
+          "zone_name": "insides"
+        }
+      ],
+      "health": 1500
     },
     "Factory Strider": {
       "damageable_zones": [
@@ -5058,6 +5125,54 @@
       ],
       "health": 5000
     },
+    "Gazer": {
+      "damageable_zones": [
+        {
+          "AV": 5,
+          "Con": 0,
+          "Dur%": 1,
+          "ExTarget": "Main",
+          "MainCap": true,
+          "ToMain%": 1,
+          "health": 900,
+          "zone_name": "Main"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExTarget": "Part",
+          "IsFatal": true,
+          "MainCap": true,
+          "ToMain%": 1,
+          "health": 700,
+          "zone_name": "0x6d417d28"
+        },
+        {
+          "AV": 5,
+          "Con": 0,
+          "Dur%": 0,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": true,
+          "ToMain%": 1,
+          "health": 900,
+          "zone_name": "0xf3e71f7b"
+        },
+        {
+          "AV": 5,
+          "Con": 0,
+          "Dur%": 0,
+          "ExTarget": "Part",
+          "IsFatal": true,
+          "MainCap": true,
+          "ToMain%": 1,
+          "health": 900,
+          "zone_name": "0x01970f62"
+        }
+      ],
+      "health": 900
+    },
     "Harvester": {
       "damageable_zones": [
         {
@@ -8253,7 +8368,7 @@
           "zone_name": "hitzone_r_rear_leg"
         },
         {
-          "AV": 3,
+          "AV": 1,
           "Con": 0,
           "Dur%": 0,
           "ExMult": 1,
@@ -8264,7 +8379,7 @@
           "zone_name": "hitzone_r_front_leg"
         },
         {
-          "AV": 3,
+          "AV": 1,
           "Con": 0,
           "Dur%": 0,
           "ExMult": 1,
@@ -8275,25 +8390,25 @@
           "zone_name": "hitzone_l_front_leg"
         },
         {
-          "AV": 2,
+          "AV": 3,
           "Con": 0,
           "Dur%": 0,
           "ExMult": 1,
           "ExTarget": "Main",
           "MainCap": 0,
-          "ToMain%": 0.25,
-          "health": 100,
+          "ToMain%": 0.45,
+          "health": 125,
           "zone_name": "r_claw"
         },
         {
-          "AV": 2,
+          "AV": 3,
           "Con": 0,
           "Dur%": 0,
           "ExMult": 1,
           "ExTarget": "Main",
           "MainCap": 0,
-          "ToMain%": 0.25,
-          "health": 100,
+          "ToMain%": 0.45,
+          "health": 125,
           "zone_name": "l_claw"
         }
       ],
@@ -9122,6 +9237,31 @@
         }
       ],
       "health": 4000
+    },
+    "Infested Tower": {
+      "damageable_zones": [
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 1,
+          "ExTarget": "Main",
+          "MainCap": true,
+          "ToMain%": 1,
+          "health": 15000,
+          "zone_name": "Main"
+        },
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 1,
+          "ExTarget": "Main",
+          "MainCap": true,
+          "ToMain%": 1,
+          "health": -1,
+          "zone_name": "all"
+        }
+      ],
+      "health": 15000
     },
     "Nursing Spewer": {
       "damageable_zones": [
@@ -10173,6 +10313,31 @@
       ],
       "health": 80
     },
+    "Shrieker Nest": {
+      "damageable_zones": [
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 1,
+          "ExTarget": "Main",
+          "MainCap": true,
+          "ToMain%": 1,
+          "health": 2500,
+          "zone_name": "Main"
+        },
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 1,
+          "ExTarget": "Main",
+          "MainCap": true,
+          "ToMain%": 1,
+          "health": -1,
+          "zone_name": "all"
+        }
+      ],
+      "health": 2500
+    },
     "Spore Burst Hunter": {
       "damageable_zones": [
         {
@@ -10771,6 +10936,21 @@
         }
       ],
       "health": 2400
+    },
+    "Spore Lung": {
+      "damageable_zones": [
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 1,
+          "ExTarget": "Main",
+          "MainCap": true,
+          "ToMain%": 1,
+          "health": 30000,
+          "zone_name": "Main"
+        }
+      ],
+      "health": 30000
     },
     "Stalker": {
       "damageable_zones": [

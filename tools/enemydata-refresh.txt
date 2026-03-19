@@ -3,14 +3,16 @@ Enemy data refresh notes
 
 Purpose
 -------
-This repository's checked-in `enemies\enemydata.json` is not produced directly
-from the raw Helldivers 2 `data\` folder. The currently reproducible path is:
+This repository's checked-in `enemies\enemydata.json` is curated review output,
+not a direct export from the raw Helldivers 2 `data\` folder.
+
+The repeatable workflow is now:
 
 1. Dump entity/component data from `filediver`
-2. Flatten the nested component payloads into the top-level shape expected by
-   `tools\parser_faction_units.py`
-3. Run `parser_faction_units.py`
-4. Review the generated output before replacing `enemies\enemydata.json`
+2. Flatten it with `tools\flatten_entity_component_settings.py`
+3. Parse it with `tools\parser_faction_units.py`
+4. Review it with `tools\compare_enemydata.py`
+5. Curate the checked-in file instead of blindly overwriting it
 
 
 Important caveat
@@ -30,7 +32,7 @@ Practical consequences:
 
 Verified reference run
 ----------------------
-This workflow was verified on 2026-03-17 with:
+This workflow was first verified on 2026-03-17 with:
 
 - `filediver` commit `66e376dabcbd5782e44c79961b74b86e135aaee8`
 - Go `go1.26.1`
@@ -39,137 +41,45 @@ This workflow was verified on 2026-03-17 with:
 On that date, the local `filediver` checkout matched GitHub HEAD, so the
 investigated gaps were not caused by an outdated clone.
 
+The workflow was re-run on 2026-03-19 using the same `filediver` commit through
+an explicit Go path:
+
+    C:\Program Files\Go\bin\go.exe
+
+That re-run reproduced the same hybrid-only units as the 2026-03-17 check.
+
+The workflow was then re-run on 2026-03-19 after updating `filediver` to:
+
+- `76b9b7e0f38a11a02a8cb2d985eda3653babc94c`
+- release tag `v0.7.19`
+
+That newer run uses the checked-in flattener and diff helper documented below.
+
 
 Step 1: dump entity component settings
 --------------------------------------
 PowerShell:
 
     Set-Location C:\GitHub\filediver
-    go run .\cmd\tools\components\entity-component-settings-json-dumper > C:\temp\entity-component-settings.json
+    & 'C:\Program Files\Go\bin\go.exe' run .\cmd\tools\components\entity-component-settings-json-dumper > C:\temp\entity-component-settings.json
 
 
 Step 2: flatten the dump into parser_faction_units.py input shape
 -----------------------------------------------------------------
-`parser_faction_units.py` expects a top-level object keyed by `content\fac_*`
-paths with top-level fields like:
+PowerShell:
 
-- `loc_name`
-- `health`
-- `default_damageable_zone_info`
-- `damageable_zones`
+    Set-Location C:\GitHub\supercalc
+    python .\tools\flatten_entity_component_settings.py --input C:\temp\entity-component-settings.json --output C:\temp\entity-component-settings-flat.json
 
-The `filediver` dump stores those fields inside:
+This script handles both the older direct-component shape and the newer nested
+`components.*` shape, plus these key fallbacks:
 
-- `components.EncyclopediaEntryComponentData`
-- `components.HealthComponentData`
-
-When flattening, use this fallback order:
-
-1. Name
-   - `EncyclopediaEntryComponentData.loc_name`
-   - fallback: `EncyclopediaEntryComponentData.loc_name_upper` converted to
-     title case
-
-2. Faction / synthetic key
-   - top-level key if it already matches `content/fac_*`
-   - fallback: `UnitComponentData.unit_path`
-   - fallback: `LocalUnitComponentData.unit_path`
-   - fallback: `FactionComponentData.factions[0]`, mapped to `bugs`,
-     `cyborgs`, or `illuminate`, and then synthesized as
-     `content/fac_<bucket>/__unresolved__/<hash>`
-
-3. Payload fields
-   - `HealthComponentData.health`
-   - `HealthComponentData.default_damageable_zone_info`
-   - `HealthComponentData.damageable_zones`
-
-Copy-paste Python snippet:
-
-    import json
-    import re
-    from pathlib import Path
-
-    DUMP = Path(r"C:\temp\entity-component-settings.json")
-    FLAT = Path(r"C:\temp\entity-component-settings-flat.json")
-
-    PATH_MAP = {
-        "bugs": "bugs",
-        "cyborgs": "cyborgs",
-        "illuminate": "illuminate",
-    }
-    COMP_MAP = {
-        "FactionType_Bugs": "bugs",
-        "FactionType_Cyborg": "cyborgs",
-        "FactionType_Illuminate": "illuminate",
-    }
-
-    def titlecase_upper(value):
-        if not isinstance(value, str) or not value.strip():
-            return None
-        return value.strip().title()
-
-    data = json.loads(DUMP.read_text(encoding="utf-8"))
-    out = {}
-
-    for key, payload in data.items():
-        if not isinstance(payload, dict):
-            continue
-
-        components = payload.get("components")
-        if not isinstance(components, dict):
-            continue
-
-        entry = components.get("EncyclopediaEntryComponentData")
-        health = components.get("HealthComponentData")
-        if not isinstance(entry, dict) or not isinstance(health, dict):
-            continue
-
-        loc_name = entry.get("loc_name") or titlecase_upper(entry.get("loc_name_upper"))
-        if not loc_name:
-            continue
-
-        canonical_key = key if isinstance(key, str) else ""
-        bucket = None
-
-        match = re.search(r"content/fac_([^/]+)/", canonical_key)
-        if match:
-            bucket = PATH_MAP.get(match.group(1))
-
-        if bucket is None:
-            for component_name in ("UnitComponentData", "LocalUnitComponentData"):
-                component = components.get(component_name)
-                unit_path = component.get("unit_path") if isinstance(component, dict) else None
-                if not isinstance(unit_path, str):
-                    continue
-                match = re.search(r"content/fac_([^/]+)/", unit_path)
-                if match:
-                    bucket = PATH_MAP.get(match.group(1))
-                    canonical_key = f"{unit_path}__{key}"
-                    break
-
-        if bucket is None:
-            faction_component = components.get("FactionComponentData")
-            factions = faction_component.get("factions") if isinstance(faction_component, dict) else None
-            if factions:
-                bucket = COMP_MAP.get(factions[0])
-                if bucket:
-                    canonical_key = f"content/fac_{bucket}/__unresolved__/{key}"
-
-        if bucket is None:
-            continue
-
-        out[canonical_key] = {
-            "loc_name": loc_name,
-            "health": health.get("health"),
-            "default_damageable_zone_info": health.get("default_damageable_zone_info"),
-            "damageable_zones": health.get("damageable_zones"),
-        }
-
-    FLAT.write_text(
-        json.dumps(out, ensure_ascii=False, indent=2, sort_keys=True),
-        encoding="utf-8",
-    )
-    print(f"Wrote {FLAT}")
+- top-level `content/fac_*` key when already resolved
+- `UnitComponentData.unit_path`
+- `LocalUnitComponentData.unit_path`
+- synthesized `content/fac_<bucket>/__unresolved__/<hash>` fallback from
+  `FactionComponentData`
+- `loc_name_upper` fallback when `loc_name` is missing
 
 
 Step 3: run the existing parser
@@ -182,9 +92,22 @@ PowerShell:
 
 Step 4: review before checking in
 ---------------------------------
-Do not blindly overwrite `enemies\enemydata.json`.
+PowerShell:
 
-The generated file is good review input, but it still needs curation.
+    Set-Location C:\GitHub\supercalc
+    python .\tools\compare_enemydata.py --generated C:\temp\enemydata-from-filediver.json --report C:\temp\enemydata-report.json --normalized-generated C:\temp\enemydata-normalized.json
+
+Do not blindly overwrite `enemies\enemydata.json`. The generated file is review
+input, not the checked-in source of truth.
+
+The comparison helper:
+
+- normalizes `MainCap` bool vs int noise
+- treats missing `ExMult` as default `1`
+- reports added units, missing/manual-only units, and stat-changed units
+- reports name-only zone churn separately
+- carries forward existing readable zone names only when a generated hashed zone
+  has a unique safe signature match
 
 
 What the 2026-03-17 investigation found
@@ -205,8 +128,8 @@ Hybrid flattening
   - Illuminate: 15
   - Terminid: 32
 
-Checked-in file today
-  Current `enemies\enemydata.json`: 83 units total
+Checked-in file at that time
+  `enemies\enemydata.json`: 83 units total
   - Automaton: 42
   - Illuminate: 13
   - Terminid: 28
@@ -250,6 +173,12 @@ Interpretation:
   of what counts as an "enemy" target in this repository. Review them manually
   before adding them.
 
+2026-03-19 curation decision:
+
+- add: `Automaton Dropship`, `Bulk Fabricator`, `Fabricator`, `Gazer`,
+  `Infested Tower`, `Shrieker Nest`, `Spore Lung`
+- exclude for now: `Overship`, `Gatling Sentry`
+
 
 Known overlap differences that need review
 ------------------------------------------
@@ -258,13 +187,23 @@ Most overlapping units differ only in serialization details such as:
 - `MainCap: 1` versus `MainCap: true`
 - omitted default `ExMult: 1`
 
-The 2026-03-17 run also found a small number of meaningful differences:
+The verified runs found a small number of meaningful differences:
+
+- `Automaton -> Devastator`
+  - one overlapping zone changed from:
+    - checked-in: `health 500`, `AV 1`, `ToMain% 0`
+    - hybrid output: `health 600`, `AV 2`, `ToMain% 0.4`
 
 - `Automaton -> Heavy Fusion Repeater`
   - checked-in health: `500`
   - hybrid output health: `300`
   - checked-in zones: `2`
   - hybrid output zones: `1`
+
+- `Automaton -> Trooper`
+  - one overlapping zone changed from:
+    - checked-in: `health 90`, `AV 0`
+    - hybrid output: `health 30`, `AV 2`
 
 - `Terminid -> Bile Spitter`
   - checked-in zones: `8`
@@ -282,12 +221,83 @@ The 2026-03-17 run also found a small number of meaningful differences:
   - checked-in zones: `8`
   - hybrid output zones: `4`
 
-These need a human decision before replacing the checked-in data.
+Most other overlapping differences observed in the reruns were zone label noise or
+missing `ExMult` values in the generated output. Those should be treated as
+adapter/source-shape differences until proven otherwise.
+
+These meaningful stat or zone-count changes need a human decision before
+replacing the checked-in data.
+
+
+Latest upstream-derived review summary
+--------------------------------------
+The 2026-03-19 run against `filediver` `76b9b7e` / `v0.7.19` produced:
+
+- generated output: `94` units total
+  - Automaton: `44`
+  - Illuminate: `18`
+  - Terminid: `32`
+- checked-in file at comparison time: `90` units total
+- comparison summary:
+  - added units: `5`
+  - missing/manual-only units: `1`
+  - stat-changed units: `25`
+  - name-only units: `29`
+  - safe aliases applied by the review helper: `34`
+
+Added units in the generated output:
+
+- Illuminate: `Gatekeeper`, `Obtruder`, `Overship`, `Veracitor`
+- Terminid: `Gatling Sentry`
+
+Current-only / manual entry:
+
+- Automaton: `Factory Strider Gatling Gun`
+
+Interpretation:
+
+- the updated upstream dump now surfaces more candidate units than the older
+  hybrid workflow
+- `Overship` and `Gatling Sentry` are still intentionally excluded unless that
+  scope decision changes
+- the new Illuminate additions (`Gatekeeper`, `Obtruder`, `Veracitor`) need
+  manual review before they should be added to the checked-in dataset
+- the report should be treated as the review queue, not as an auto-apply list
+
+
+Hive Guard curation note
+------------------------
+The updated upstream-derived data did show a real `Hive Guard` change.
+
+Curated interpretation applied to `enemies\enemydata.json`:
+
+- rear legs unchanged:
+  - `health 125`
+  - `AV 1`
+  - `ToMain% 0.35`
+- front legs reduced:
+  - `health 125`
+  - `AV 1`
+  - `ToMain% 0.45`
+- claws increased:
+  - `health 125`
+  - `AV 3`
+  - `ToMain% 0.45`
+
+Why this was curated manually:
+
+- the generated upstream output used opaque hash names for the new `AV 1 /
+  ToMain 0.45` pair
+- the raw generated `r_claw` / `l_claw` zones now carry the old front-leg stat
+  profile
+- preserving readable front-leg labels in the checked-in file is more useful
+  than checking in the raw hashed names verbatim
 
 
 Specific answers from the investigation
 ---------------------------------------
-- The local `filediver` checkout was not outdated; it matched GitHub HEAD.
+- The older local `filediver` checkout was outdated relative to the later
+  `76b9b7e` update that changed the embedded datalibrary.
 - The local game `data\` folder is not the main reason units looked missing.
 - Agitators are present in the generated output.
 - `Agitator` health from the verified run: `750`
@@ -297,11 +307,13 @@ Recommended workflow for future refreshes
 -----------------------------------------
 1. Update `filediver` to latest GitHub HEAD
 2. Re-run the entity dump
-3. Flatten using the hybrid rules above
+3. Run `tools\flatten_entity_component_settings.py`
 4. Run `tools\parser_faction_units.py`
-5. Diff the generated output against `enemies\enemydata.json`
+5. Run `tools\compare_enemydata.py`
 6. Manually review:
    - `Factory Strider Gatling Gun`
-   - any new hybrid-only units
-   - meaningful stat / zone-count differences
+   - any newly surfaced units
+   - `stat_changed_units`
+   - `name_only_units`
+   - any zones whose generated names are still opaque hashes
 7. Only then update the checked-in file
