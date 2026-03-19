@@ -265,6 +265,52 @@ Interpretation:
 - the report should be treated as the review queue, not as an auto-apply list
 
 
+Current branch curation status
+------------------------------
+On branch `3-refresh-enemydata`, the checked-in file has now been updated to
+include the three new Illuminate patch units:
+
+- `Gatekeeper`
+- `Obtruder`
+- `Veracitor`
+
+Current comparison summary after those additions:
+
+- checked-in file: `93` units total
+- generated file: `94` units total
+- added units still excluded from the checked-in file: `2`
+  - `Overship`
+  - `Gatling Sentry`
+- current-only / manual entry: `Factory Strider Gatling Gun`
+- remaining report totals:
+  - stat-changed units: `22`
+  - name-only units: `31`
+  - safe aliases applied by the review helper: `36`
+
+Why the three Illuminate additions were accepted despite opaque zone names:
+
+- they are legitimate new patch enemies rather than edge-case props or
+  deployables
+- their top-level unit names are stable and useful even if some sub-zone labels
+  are still hashed
+- waiting for perfect zone labels would block broader enemy coverage for no
+  gameplay gain
+
+Additional branch curation applied after review:
+
+- `Automaton -> Devastator`
+  - kept the readable `backpack` label
+  - updated it from `500 HP / AV 1 / ToMain 0` to
+    `600 HP / AV 2 / ToMain 0.4`
+
+- `Automaton -> Trooper`
+  - the generated data keeps `leg_left` as-is
+  - the old `leg_right` weak point is replaced by a new `backpack` weak point
+  - applied checked-in change:
+    - removed `leg_right` as `90 HP / AV 0 / ToMain 0.65`
+    - added `backpack` as `30 HP / AV 2 / ToMain 0.65`
+
+
 Hive Guard curation note
 ------------------------
 The updated upstream-derived data did show a real `Hive Guard` change.
@@ -292,6 +338,27 @@ Why this was curated manually:
   profile
 - preserving readable front-leg labels in the checked-in file is more useful
   than checking in the raw hashed names verbatim
+
+
+Other remaining diffs worth watching
+------------------------------------
+The latest upstream report still contains many `stat_changed_units`, but not all
+of them are equally trustworthy. The clearest remaining HP / AV / transfer
+changes are:
+
+- `Automaton -> Heavy Fusion Repeater`
+  - top-level health changes from `500` to `300`
+  - checked-in shape has two `500 HP / AV 4 / ToMain 1` zones (`Main`, `gun`)
+  - generated shape collapses to one `300 HP / AV 3 / ToMain 1` zone (`Main`)
+
+Everything else currently in `stat_changed_units` needs more caution:
+
+- several Automaton and Terminid entries appear to be part regrouping plus hash
+  renaming rather than clean top-level HP changes
+- `Illuminate -> Fleshmob` and `Illuminate -> Leviathan` still look mixed
+  between real part remapping and generated-name churn
+- the Charger / Titan / Hive Lord family diffs are currently better treated as
+  review candidates than as auto-apply gameplay changes
 
 
 Specific answers from the investigation
