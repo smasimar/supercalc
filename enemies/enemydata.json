@@ -361,21 +361,6 @@
       ],
       "health": 125
     },
-    "Automaton Dropship": {
-      "damageable_zones": [
-        {
-          "AV": 5,
-          "Con": 0,
-          "Dur%": 1,
-          "ExTarget": "Main",
-          "MainCap": true,
-          "ToMain%": 1,
-          "health": 1000,
-          "zone_name": "Main"
-        }
-      ],
-      "health": 1000
-    },
     "Automaton Mortar Emplacement": {
       "damageable_zones": [
         {
