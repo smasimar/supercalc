@@ -1,6 +1,9 @@
 // calculator/rendering.js — render selected weapon and enemy details
 import { classifyAtkType, atkColorClass, apColorClass, dfColorClass, durPercentageColor, armorValueColor } from '../colors.js';
-import { renderCalculation } from './calculation.js';
+import { calculatorState } from './data.js';
+import { getSelectedWeaponAttacks, renderCalculation } from './calculation.js';
+import { formatTtkSeconds } from './summary.js';
+import { getZoneOutcomeKind, getZoneOutcomeLabel, summarizeZoneDamage } from './zone-damage.js';
 
 export function renderWeaponDetails(weapon) {
   const container = document.getElementById('calculator-weapon-details');
@@ -76,6 +79,9 @@ export function renderWeaponDetails(weapon) {
     checkbox.id = `weapon-attack-${rowIndex}`;
     checkbox.dataset.rowIndex = rowIndex;
     checkbox.addEventListener('change', () => {
+      if (calculatorState.selectedEnemy) {
+        renderEnemyDetails(calculatorState.selectedEnemy);
+      }
       renderCalculation();
     });
     
@@ -84,6 +90,9 @@ export function renderWeaponDetails(weapon) {
       // Don't trigger if clicking on the checkbox itself
       if (e.target !== checkbox) {
         checkbox.checked = !checkbox.checked;
+        if (calculatorState.selectedEnemy) {
+          renderEnemyDetails(calculatorState.selectedEnemy);
+        }
         renderCalculation();
       }
     });
@@ -147,10 +156,25 @@ export function renderWeaponDetails(weapon) {
   container.appendChild(table);
 }
 
+function appendOutcomeBadge(cell, outcomeKind) {
+  const outcomeLabel = getZoneOutcomeLabel(outcomeKind);
+  if (!outcomeLabel) {
+    return;
+  }
+
+  const badge = document.createElement('div');
+  badge.className = `calc-zone-context calc-zone-context-${outcomeKind}`;
+  badge.textContent = outcomeLabel;
+  cell.appendChild(badge);
+}
+
 export function renderEnemyDetails(enemy) {
   const container = document.getElementById('calculator-enemy-details');
   if (!container) return;
   
+  const previousSelectedRadio = container.querySelector('input[type="radio"]:checked');
+  const previousSelectedZoneIndex = previousSelectedRadio ? parseInt(previousSelectedRadio.value, 10) : null;
+
   container.innerHTML = '';
   
   if (!enemy || !enemy.zones || enemy.zones.length === 0) {
@@ -180,7 +204,7 @@ export function renderEnemyDetails(enemy) {
   radioTh.style.width = '30px';
   headerRow.appendChild(radioTh);
   
-  const headers = ['zone_name', 'health', 'Con', 'Dur%', 'AV', 'IsFatal', 'ExTarget', 'ExMult', 'ToMain%', 'MainCap'];
+  const headers = ['zone_name', 'health', 'Con', 'Dur%', 'AV', 'IsFatal', 'ExTarget', 'ExMult', 'ToMain%', 'MainCap', 'Shots', 'TTK'];
   
   headers.forEach(header => {
     const th = document.createElement('th');
@@ -188,6 +212,7 @@ export function renderEnemyDetails(enemy) {
     let label = header;
     if (header === 'zone_name') label = 'Zone Name';
     else if (header === 'health') label = 'Health';
+    else if (header === 'Shots') label = 'Shots';
     th.textContent = label;
     th.style.padding = '4px 10px';
     th.style.textAlign = 'left';
@@ -201,10 +226,25 @@ export function renderEnemyDetails(enemy) {
   
   // Body
   const tbody = document.createElement('tbody');
+  const selectedWeapon = calculatorState.selectedWeapon;
+  const selectedAttacks = getSelectedWeaponAttacks(selectedWeapon);
+  const enemyMainHealth = parseInt(enemy.health) || 0;
   
   enemy.zones.forEach((zone, zoneIndex) => {
     const tr = document.createElement('tr');
     tr.style.cursor = 'pointer';
+    const zoneSummary = summarizeZoneDamage({
+      zone,
+      enemyMainHealth,
+      selectedAttacks,
+      rpm: selectedWeapon?.rpm
+    });
+    const outcomeKind = getZoneOutcomeKind({
+      zone,
+      totalDamagePerCycle: zoneSummary?.totalDamagePerCycle || 0,
+      totalDamageToMainPerCycle: zoneSummary?.totalDamageToMainPerCycle || 0,
+      killSummary: zoneSummary?.killSummary
+    });
     
     // Add radio button as first column
     const radioTd = document.createElement('td');
@@ -218,6 +258,9 @@ export function renderEnemyDetails(enemy) {
     radio.name = `enemy-zone-${enemy.name}`;
     radio.value = zoneIndex;
     radio.id = `zone-${enemy.name}-${zoneIndex}`;
+    if (previousSelectedZoneIndex === zoneIndex) {
+      radio.checked = true;
+    }
     radio.addEventListener('change', () => {
       renderCalculation();
     });
@@ -242,7 +285,35 @@ export function renderEnemyDetails(enemy) {
       let value = zone[header];
       
       // Formatting and coloring similar to enemy table
-      if (header === 'zone_name') {
+      if (header === 'Shots') {
+        const shotsToKill = zoneSummary?.killSummary?.zoneShotsToKill;
+        td.classList.add('calc-derived-cell');
+        td.textContent = shotsToKill === null ? '-' : String(shotsToKill);
+        if (shotsToKill === null) {
+          td.classList.add('muted');
+          if (selectedAttacks.length > 0 && !(zoneSummary?.totalDamagePerCycle > 0)) {
+            td.title = 'Selected attacks do not damage this part';
+          }
+        }
+      } else if (header === 'TTK') {
+        const ttkSeconds = zoneSummary?.killSummary?.zoneTtkSeconds;
+        const ttkValue = document.createElement('div');
+        ttkValue.className = 'calc-derived-value';
+        ttkValue.textContent = ttkSeconds === null ? '-' : formatTtkSeconds(ttkSeconds);
+        if (ttkSeconds === null) {
+          ttkValue.classList.add('muted');
+        }
+
+        td.classList.add('calc-derived-cell');
+        td.appendChild(ttkValue);
+        appendOutcomeBadge(td, outcomeKind);
+
+        if (zoneSummary?.killSummary?.zoneShotsToKill !== null && ttkSeconds === null && !zoneSummary.killSummary.hasRpm) {
+          td.title = 'TTK unavailable without RPM';
+        } else if (selectedAttacks.length > 0 && !(zoneSummary?.totalDamagePerCycle > 0)) {
+          td.title = 'Selected attacks do not damage this part';
+        }
+      } else if (header === 'zone_name') {
         td.textContent = value || '';
       } else if (header === 'health') {
         td.textContent = value === -1 ? '-' : value;

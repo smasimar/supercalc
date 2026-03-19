@@ -40,6 +40,9 @@ function setupWeaponSelector() {
     if (resultContainer) resultContainer.innerHTML = '';
     const detailsContainer = document.getElementById('calculator-weapon-details');
     if (detailsContainer) detailsContainer.innerHTML = '';
+    if (calculatorState.selectedEnemy) {
+      renderEnemyDetails(calculatorState.selectedEnemy);
+    }
     populateDropdown('');
   });
   weaponSelector.appendChild(clearBtn);
@@ -116,6 +119,9 @@ function setupWeaponSelector() {
     calculatorState.selectedWeapon = weapon;
     weaponInput.value = displayText || weapon.name;
     renderWeaponDetails(weapon);
+    if (calculatorState.selectedEnemy) {
+      renderEnemyDetails(calculatorState.selectedEnemy);
+    }
     // Clear calculation when weapon changes
     const resultContainer = document.getElementById('calculator-result');
     if (resultContainer) resultContainer.innerHTML = '';

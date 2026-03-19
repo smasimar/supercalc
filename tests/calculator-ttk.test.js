@@ -7,6 +7,10 @@ import {
   calculateTtkSeconds,
   formatTtkSeconds
 } from '../calculator/summary.js';
+import {
+  getZoneOutcomeKind,
+  summarizeZoneDamage
+} from '../calculator/zone-damage.js';
 
 test('calculateShotsToKill rounds up to the next full firing cycle', () => {
   assert.equal(calculateShotsToKill(300, 100), 3);
@@ -52,4 +56,163 @@ test('buildKillSummary omits TTK when RPM is missing', () => {
   assert.equal(summary.hasRpm, false);
   assert.equal(summary.zoneShotsToKill, 3);
   assert.equal(summary.zoneTtkSeconds, null);
+});
+
+test('summarizeZoneDamage computes row-level part shots and ttk from selected attacks', () => {
+  const summary = summarizeZoneDamage({
+    zone: {
+      health: 300,
+      Con: 0,
+      AV: 1,
+      'Dur%': 0,
+      'ToMain%': 0,
+      ExTarget: 'Part',
+      ExMult: 1,
+      IsFatal: false
+    },
+    enemyMainHealth: 1000,
+    selectedAttacks: [{
+      'Atk Name': 'Burst',
+      'Atk Type': 'Projectile',
+      DMG: 100,
+      DUR: 0,
+      AP: 2
+    }],
+    rpm: 60
+  });
+
+  assert.equal(summary.totalDamagePerCycle, 100);
+  assert.equal(summary.killSummary.zoneShotsToKill, 3);
+  assert.equal(summary.killSummary.zoneTtkSeconds, 2);
+});
+
+test('summarizeZoneDamage keeps shots but omits ttk without rpm', () => {
+  const summary = summarizeZoneDamage({
+    zone: {
+      health: 300,
+      Con: 0,
+      AV: 1,
+      'Dur%': 0,
+      'ToMain%': 0,
+      ExTarget: 'Part',
+      ExMult: 1,
+      IsFatal: false
+    },
+    enemyMainHealth: 1000,
+    selectedAttacks: [{
+      'Atk Name': 'Burst',
+      'Atk Type': 'Projectile',
+      DMG: 100,
+      DUR: 0,
+      AP: 2
+    }],
+    rpm: null
+  });
+
+  assert.equal(summary.killSummary.zoneShotsToKill, 3);
+  assert.equal(summary.killSummary.zoneTtkSeconds, null);
+});
+
+test('getZoneOutcomeKind marks non-fatal zones with main transfer as main-relevant', () => {
+  const summary = summarizeZoneDamage({
+    zone: {
+      health: 300,
+      Con: 0,
+      AV: 1,
+      'Dur%': 0,
+      'ToMain%': 0.5,
+      ExTarget: 'Part',
+      ExMult: 1,
+      IsFatal: false
+    },
+    enemyMainHealth: 200,
+    selectedAttacks: [{
+      'Atk Name': 'Burst',
+      'Atk Type': 'Projectile',
+      DMG: 100,
+      DUR: 0,
+      AP: 2
+    }],
+    rpm: 920
+  });
+
+  assert.equal(
+    getZoneOutcomeKind({
+      zone: { IsFatal: false },
+      totalDamagePerCycle: summary.totalDamagePerCycle,
+      totalDamageToMainPerCycle: summary.totalDamageToMainPerCycle,
+      killSummary: summary.killSummary
+    }),
+    'main'
+  );
+});
+
+test('getZoneOutcomeKind marks damageable non-fatal zones without main transfer as non-lethal', () => {
+  const summary = summarizeZoneDamage({
+    zone: {
+      health: 300,
+      Con: 0,
+      AV: 1,
+      'Dur%': 0,
+      'ToMain%': 0,
+      ExTarget: 'Part',
+      ExMult: 1,
+      IsFatal: false
+    },
+    enemyMainHealth: 200,
+    selectedAttacks: [{
+      'Atk Name': 'Burst',
+      'Atk Type': 'Projectile',
+      DMG: 100,
+      DUR: 0,
+      AP: 2
+    }],
+    rpm: 920
+  });
+
+  assert.equal(
+    getZoneOutcomeKind({
+      zone: { IsFatal: false },
+      totalDamagePerCycle: summary.totalDamagePerCycle,
+      totalDamageToMainPerCycle: summary.totalDamageToMainPerCycle,
+      killSummary: summary.killSummary
+    }),
+    'utility'
+  );
+});
+
+test('summarizeZoneDamage returns no part shots when selected attacks cannot penetrate the zone', () => {
+  const summary = summarizeZoneDamage({
+    zone: {
+      health: 300,
+      Con: 0,
+      AV: 3,
+      'Dur%': 0,
+      'ToMain%': 0,
+      ExTarget: 'Part',
+      ExMult: 1,
+      IsFatal: false
+    },
+    enemyMainHealth: 200,
+    selectedAttacks: [{
+      'Atk Name': 'Burst',
+      'Atk Type': 'Projectile',
+      DMG: 100,
+      DUR: 0,
+      AP: 1
+    }],
+    rpm: 920
+  });
+
+  assert.equal(summary.totalDamagePerCycle, 0);
+  assert.equal(summary.killSummary.zoneShotsToKill, null);
+  assert.equal(
+    getZoneOutcomeKind({
+      zone: { IsFatal: false },
+      totalDamagePerCycle: summary.totalDamagePerCycle,
+      totalDamageToMainPerCycle: summary.totalDamageToMainPerCycle,
+      killSummary: summary.killSummary
+    }),
+    null
+  );
 });

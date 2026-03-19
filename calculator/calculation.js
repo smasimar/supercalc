@@ -1,6 +1,7 @@
 // calculator/calculation.js — damage calculation logic
 import { calculatorState } from './data.js';
-import { buildKillSummary, formatTtkSeconds } from './summary.js';
+import { formatTtkSeconds } from './summary.js';
+import { summarizeZoneDamage } from './zone-damage.js';
 
 function appendTtkLine(resultWrapper, ttkSeconds, hasRpm) {
   const ttkLine = document.createElement('div');
@@ -37,104 +38,51 @@ export function calculateDamage() {
     return null;
   }
   
-  // Get selected attacks from weapon table
-  const selectedCheckboxes = document.querySelectorAll('#calculator-weapon-details input[type="checkbox"]:checked');
-  if (selectedCheckboxes.length === 0) {
+  const selectedAttacks = getSelectedWeaponAttacks(weapon);
+  if (selectedAttacks.length === 0) {
     return null;
   }
-  
+
+  return summarizeZoneDamage({
+    zone,
+    enemyMainHealth: parseInt(enemy.health) || 0,
+    selectedAttacks,
+    hitCounts: getExistingHitCounts(),
+    rpm: weapon?.rpm
+  });
+}
+
+export function getSelectedWeaponAttacks(weapon) {
+  if (!weapon || !weapon.rows) {
+    return [];
+  }
+
+  const selectedCheckboxes = document.querySelectorAll('#calculator-weapon-details input[type="checkbox"]:checked');
   const selectedAttacks = [];
-  selectedCheckboxes.forEach(checkbox => {
+
+  selectedCheckboxes.forEach((checkbox) => {
     const rowIndex = parseInt(checkbox.dataset.rowIndex || checkbox.id.split('-').pop());
-    if (weapon.rows && weapon.rows[rowIndex]) {
+    if (weapon.rows[rowIndex]) {
       selectedAttacks.push(weapon.rows[rowIndex]);
     }
   });
-  
-  // Sum damage from all selected attacks
-  let totalDamagePerCycle = 0;
-  const attackDetails = [];
-  
-  for (const attack of selectedAttacks) {
-    const ap = parseInt(attack.AP) || 0;
-    const av = parseInt(zone.AV) || 0;
-    
-    // Check AP vs AV
-    let damageMultiplier = 0;
-    if (ap < av) {
-      damageMultiplier = 0; // No damage
-    } else if (ap === av) {
-      damageMultiplier = 0.65; // 65% damage
-    } else {
-      damageMultiplier = 1.0; // 100% damage
+
+  return selectedAttacks;
+}
+
+function getExistingHitCounts() {
+  const hitCounts = [];
+
+  for (let i = 0; i < 100; i++) {
+    const existingElement = document.getElementById(`hits-display-${i}`);
+    if (!existingElement) {
+      continue;
     }
-    
-    // Get attack type
-    const attackType = attack['Atk Type'] || attack['Atk Type'] || '';
-    const isExplosion = attackType.toLowerCase().includes('explosion');
-    
-    // Check explosion modifier
-    let explosionModifier = 1.0;
-    if (isExplosion) {
-      if (zone.ExMult === '-' || zone.ExMult === null || zone.ExMult === undefined) {
-        explosionModifier = 0; // Zone takes no explosion damage
-      } else {
-        explosionModifier = parseFloat(zone.ExMult) || 1.0;
-      }
-    }
-    
-    // Calculate damage for this attack
-    const dmg = parseFloat(attack.DMG) || 0;
-    const dur = parseFloat(attack.DUR) || 0;
-    const durPercent = parseFloat(zone['Dur%']) || 0;
-    
-    // Store raw values for formula display
-    const rawBaseDamage = (dmg * (1 - durPercent)) + (dur * durPercent);
-    const damagePerAttack = rawBaseDamage * damageMultiplier * explosionModifier;
-    
-    // Calculate damage to main health
-    let damageToMain = 0;
-    const toMainPercent = parseFloat(zone['ToMain%']) || 0;
-    const mainCap = zone.MainCap || false;
-    
-    if (isExplosion) {
-      // For explosions, check ExTarget
-      const exTarget = zone.ExTarget || 'Part';
-      if (exTarget === 'Main') {
-        // If ExTarget is Main, the explosion deals ToMain% to main health
-        damageToMain = damagePerAttack * toMainPercent;
-      } else {
-        // If ExTarget is Part, the damage to the part is transferred to main (with ToMain%)
-        damageToMain = damagePerAttack * toMainPercent;
-      }
-    } else {
-      // For projectiles, always use ToMain%
-      damageToMain = damagePerAttack * toMainPercent;
-    }
-    
-    // Always add to details (even if 0 damage)
-    attackDetails.push({
-      name: attack['Atk Name'] || attack.Name || 'Unknown',
-      damage: damagePerAttack,
-      damageToMain: damageToMain,
-      dmg: dmg,
-      dur: dur,
-      durPercent: durPercent,
-      ap: ap,
-      av: av,
-      damageMultiplier: damageMultiplier,
-      explosionModifier: explosionModifier,
-      isExplosion: isExplosion,
-      rawBaseDamage: rawBaseDamage,
-      toMainPercent: toMainPercent,
-      exTarget: zone.ExTarget || '',
-      hits: 1 // Will be set by input field
-    });
+
+    hitCounts[i] = parseInt(existingElement.textContent) || 1;
   }
-  
-  return {
-    attackDetails: attackDetails
-  };
+
+  return hitCounts;
 }
 
 export function renderCalculation() {
@@ -153,48 +101,20 @@ export function renderCalculation() {
     return;
   }
   
-  // Get zone info for calculations
-  const weapon = calculatorState.selectedWeapon;
-  const enemy = calculatorState.selectedEnemy;
-  const selectedRadio = document.querySelector(`input[name^="enemy-zone-"]:checked`);
-  const zoneIndex = selectedRadio ? parseInt(selectedRadio.value) : 0;
-  const zone = enemy?.zones?.[zoneIndex];
-  const zoneHealth = zone ? parseInt(zone.health) || 0 : 0;
-  const zoneCon = zone ? parseInt(zone.Con) || 0 : 0;
-  const enemyMainHealth = enemy ? parseInt(enemy.health) || 0 : 0;
-  
-  // Preserve existing hit counts from previous render
-  const hitCounts = {};
-  for (let i = 0; i < 100; i++) {
-    const existingElement = document.getElementById(`hits-display-${i}`);
-    if (existingElement) {
-      hitCounts[i] = parseInt(existingElement.textContent) || 1;
-    }
-  }
-  
   container.innerHTML = '';
   
-  // Calculate total damage per cycle and attacks to kill
-  let totalDamagePerCycle = 0;
-  let totalDamageToMainPerCycle = 0;
-  results.attackDetails.forEach((attack, index) => {
-    const hits = hitCounts[index] || 1;
-    totalDamagePerCycle += attack.damage * hits;
-    totalDamageToMainPerCycle += (attack.damageToMain || 0) * hits;
-    attack.hits = hits;
-  });
-  
-  const killSummary = buildKillSummary({
+  const {
+    attackDetails,
+    totalDamagePerCycle,
+    totalDamageToMainPerCycle,
     zoneHealth,
     zoneCon,
     enemyMainHealth,
-    totalDamagePerCycle,
-    totalDamageToMainPerCycle,
-    rpm: weapon?.rpm
-  });
+    killSummary
+  } = results;
   
   // Show each attack's detailed calculation
-  results.attackDetails.forEach((attack, index) => {
+  attackDetails.forEach((attack, index) => {
     const attackCard = document.createElement('div');
     attackCard.className = 'calc-attack-card';
     attackCard.dataset.attackIndex = index;
@@ -213,14 +133,9 @@ export function renderCalculation() {
                        attack.ap === attack.av ? '0.65 (AP = AV)' : 
                        '1.0 (AP > AV)';
     
-    const exMultText = attack.isExplosion ? 
-      (attack.explosionModifier === 0 ? '0 (immune)' : attack.explosionModifier) : 
-      '1.0';
-    
     // Calculated damage to zone with inline calculation
     const damageResult = document.createElement('div');
     damageResult.className = 'calc-damage-line';
-    const perHitText = attack.hits !== 1 ? ' per hit' : '';
     
     const damageValue = document.createElement('span');
     damageValue.className = attack.damage > 0 ? 'calc-damage-value' : 'calc-damage-value muted';
@@ -233,8 +148,6 @@ export function renderCalculation() {
     // Calculate premultiplied values
     const dmgMultiplied = attack.dmg * (1 - attack.durPercent);
     const durMultiplied = attack.dur * attack.durPercent;
-    const baseDamage = dmgMultiplied + durMultiplied;
-    
     // Get AP multiplier value (without description for premult part)
     const apMultiplier = attack.ap < attack.av ? 0 : attack.ap === attack.av ? 0.65 : 1.0;
     const exMultValue = attack.isExplosion ? (attack.explosionModifier === 0 ? 0 : attack.explosionModifier) : 1.0;
