@@ -8,6 +8,7 @@ import {
   setSelectedEnemy,
   setSelectedWeapon
 } from './data.js';
+import { getEnemyDropdownQueryState } from './selector-utils.js';
 import { state as weaponsState } from '../weapons/data.js';
 import { enemyState } from '../enemies/data.js';
 import { renderWeaponDetails, renderEnemyDetails } from './rendering.js';
@@ -262,7 +263,13 @@ function setupEnemySelector() {
 
   function populateDropdown(query = '') {
     const options = getEnemyOptions();
-    const normalizedQuery = query.toLowerCase();
+    const {
+      effectiveQuery,
+      showOverviewOption
+    } = getEnemyDropdownQueryState(query, {
+      mode: calculatorState.mode,
+      compareView: calculatorState.compareView
+    });
 
     if (!options || options.length === 0) {
       enemyDropdown.innerHTML = '';
@@ -274,13 +281,13 @@ function setupEnemySelector() {
     }
 
     const filteredOptions = options.filter((enemy) =>
-      enemy.name.toLowerCase().includes(normalizedQuery) ||
-      enemy.faction.toLowerCase().includes(normalizedQuery)
+      enemy.name.toLowerCase().includes(effectiveQuery) ||
+      enemy.faction.toLowerCase().includes(effectiveQuery)
     );
 
     enemyDropdown.innerHTML = '';
 
-    if (calculatorState.mode === 'compare' && 'overview'.includes(normalizedQuery)) {
+    if (showOverviewOption) {
       const overviewItem = document.createElement('div');
       overviewItem.className = 'dropdown-item';
       overviewItem.innerHTML = 'Overview <span style="color:var(--muted); font-size:11px;">(all matching enemies)</span>';
