@@ -371,3 +371,35 @@ test('sortEnemyZoneRows groups compare rows by A outcome when no B column is act
   assert.equal(sorted[1].groupStart, true);
   assert.equal(sorted[2].groupStart, true);
 });
+
+test('sortEnemyZoneRows places one-sided compare rows below main outcomes and above kill and limb groups', () => {
+  const rows = [
+    makeSortRow(0, 'limb', { outcomeKindA: 'limb', diffTtk: 0.2 }),
+    makeSortRow(1, 'kill', { outcomeKindA: 'fatal', diffTtk: -0.2 }),
+    makeSortRow(2, 'main-transfer', { outcomeKindA: 'main', diffTtk: 0 }),
+    makeSortRow(3, 'b-only', {
+      outcomeKindA: null,
+      diffTtk: {
+        kind: 'one-sided',
+        sortValue: Number.NEGATIVE_INFINITY,
+        winner: 'B',
+        displayValue: 0.78
+      }
+    })
+  ];
+
+  const sorted = sortEnemyZoneRows(rows, {
+    mode: 'compare',
+    sortKey: 'ttkDiff',
+    sortDir: 'asc',
+    groupMode: 'outcome'
+  });
+
+  assert.deepEqual(
+    sorted.map((row) => row.zone.zone_name),
+    ['main-transfer', 'b-only', 'kill', 'limb']
+  );
+  assert.equal(sorted[1].groupStart, true);
+  assert.equal(sorted[2].groupStart, true);
+  assert.equal(sorted[3].groupStart, true);
+});

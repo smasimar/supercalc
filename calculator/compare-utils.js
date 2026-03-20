@@ -1,12 +1,21 @@
 import { getZoneDisplayedTtkSeconds, getZoneOutcomeKind, summarizeZoneDamage } from './zone-damage.js';
 
 const ATTACK_KEY_FIELDS = ['Atk Type', 'Atk Name', 'DMG', 'DUR', 'AP', 'DF', 'ST', 'PF'];
-const OUTCOME_GROUP_ORDER = {
+const SINGLE_OUTCOME_GROUP_ORDER = {
   fatal: 0,
   main: 1,
   limb: 2,
   utility: 3,
   none: 4
+};
+
+const COMPARE_OUTCOME_GROUP_ORDER = {
+  main: 0,
+  oneSided: 1,
+  fatal: 2,
+  limb: 3,
+  utility: 4,
+  none: 5
 };
 
 function normalizeText(value) {
@@ -127,8 +136,18 @@ function summarizeZoneForSlot({ zone, enemyMainHealth, weapon, selectedAttacks =
   };
 }
 
-function getOutcomeGroupValue(outcomeKind) {
-  return OUTCOME_GROUP_ORDER[outcomeKind || 'none'] ?? OUTCOME_GROUP_ORDER.none;
+function hasOneSidedDiff(metrics) {
+  return metrics?.diffShots?.kind === 'one-sided' || metrics?.diffTtkSeconds?.kind === 'one-sided';
+}
+
+function getOutcomeGroupValue(row, groupingSlot, mode) {
+  if (mode === 'compare' && hasOneSidedDiff(row?.metrics)) {
+    return COMPARE_OUTCOME_GROUP_ORDER.oneSided;
+  }
+
+  const outcomeKind = row?.metrics?.bySlot?.[groupingSlot]?.outcomeKind || 'none';
+  const orderMap = mode === 'compare' ? COMPARE_OUTCOME_GROUP_ORDER : SINGLE_OUTCOME_GROUP_ORDER;
+  return orderMap[outcomeKind] ?? orderMap.none;
 }
 
 export function getAttackRowKey(row) {
@@ -335,8 +354,8 @@ export function sortEnemyZoneRows(rows, {
     }
 
     if (groupingSlot) {
-      const leftGroup = getOutcomeGroupValue(left.metrics?.bySlot?.[groupingSlot]?.outcomeKind);
-      const rightGroup = getOutcomeGroupValue(right.metrics?.bySlot?.[groupingSlot]?.outcomeKind);
+      const leftGroup = getOutcomeGroupValue(left, groupingSlot, mode);
+      const rightGroup = getOutcomeGroupValue(right, groupingSlot, mode);
 
       if (leftGroup !== rightGroup) {
         return leftGroup - rightGroup;
@@ -364,8 +383,8 @@ export function sortEnemyZoneRows(rows, {
     }
 
     const previous = sortedRows[index - 1];
-    const previousGroup = getOutcomeGroupValue(previous.metrics?.bySlot?.[groupingSlot]?.outcomeKind);
-    const currentGroup = getOutcomeGroupValue(row.metrics?.bySlot?.[groupingSlot]?.outcomeKind);
+    const previousGroup = getOutcomeGroupValue(previous, groupingSlot, mode);
+    const currentGroup = getOutcomeGroupValue(row, groupingSlot, mode);
 
     return {
       ...row,
