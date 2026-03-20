@@ -50,12 +50,6 @@ const ENEMY_BASE_COLUMNS = [
   { key: 'MainCap', label: 'MainCap' }
 ];
 
-const OVERVIEW_COLUMNS = [
-  { key: 'faction', label: 'Faction' },
-  { key: 'enemy', label: 'Enemy' },
-  ...ENEMY_BASE_COLUMNS
-];
-
 function createPlaceholder(container, text) {
   const noData = document.createElement('div');
   noData.textContent = text;
@@ -473,8 +467,16 @@ function getEnemyColumns() {
 }
 
 function getOverviewColumns() {
+  const baseColumns = [
+    ...(calculatorState.overviewScope === 'All'
+      ? [{ key: 'faction', label: 'Faction' }]
+      : []),
+    { key: 'enemy', label: 'Enemy' },
+    ...ENEMY_BASE_COLUMNS
+  ];
+
   return [
-    ...OVERVIEW_COLUMNS,
+    ...baseColumns,
     { key: 'shotsA', label: 'A Shots' },
     { key: 'shotsB', label: 'B Shots' },
     { key: 'shotsDiff', label: 'Diff Shots' },
