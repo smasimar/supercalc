@@ -7,11 +7,12 @@ import {
   calculateTtkSeconds,
   formatTtkSeconds
 } from '../calculator/summary.js';
+import { tokenizeFormattedTtk } from '../calculator/ttk-formatting.js';
 import {
   getZoneDisplayedTtkSeconds,
+  getZoneOutcomeDescription,
   getZoneOutcomeLabel,
   getZoneOutcomeKind,
-  getZoneOutcomeShortLabel,
   summarizeZoneDamage
 } from '../calculator/zone-damage.js';
 
@@ -48,6 +49,31 @@ test('calculateTtkSeconds returns zero for a one-cycle kill', () => {
 
 test('calculateTtkSeconds returns null when shots-to-kill is unavailable', () => {
   assert.equal(calculateTtkSeconds(null, 760), null);
+});
+
+test('tokenizeFormattedTtk de-emphasizes insignificant zeroes while preserving digits', () => {
+  assert.deepEqual(
+    tokenizeFormattedTtk('10.05s'),
+    [
+      { text: '1', kind: 'significant' },
+      { text: '0', kind: 'default' },
+      { text: '.', kind: 'separator' },
+      { text: '0', kind: 'muted' },
+      { text: '5', kind: 'significant' },
+      { text: 's', kind: 'suffix' }
+    ]
+  );
+
+  assert.deepEqual(
+    tokenizeFormattedTtk('0.00s'),
+    [
+      { text: '0', kind: 'muted' },
+      { text: '.', kind: 'separator' },
+      { text: '0', kind: 'muted' },
+      { text: '0', kind: 'muted' },
+      { text: 's', kind: 'suffix' }
+    ]
+  );
 });
 
 test('buildKillSummary omits TTK when RPM is missing', () => {
@@ -154,7 +180,7 @@ test('getZoneOutcomeKind marks parts that break before a main kill as limb-relev
   );
 });
 
-test('getZoneDisplayedTtkSeconds hides limb-only paths even when the part breaks quickly', () => {
+test('getZoneDisplayedTtkSeconds uses part-break time for limb-only paths', () => {
   const summary = summarizeZoneDamage({
     zone: {
       health: 100,
@@ -188,7 +214,7 @@ test('getZoneDisplayedTtkSeconds hides limb-only paths even when the part breaks
       }),
       summary.killSummary
     ),
-    null
+    0
   );
 });
 
@@ -262,6 +288,7 @@ test('getZoneOutcomeKind marks damageable non-fatal zones without main transfer 
     }),
     'utility'
   );
+  assert.equal(getZoneDisplayedTtkSeconds('utility', summary.killSummary), summary.killSummary.zoneTtkSeconds);
 });
 
 test('summarizeZoneDamage returns no part shots when selected attacks cannot penetrate the zone', () => {
@@ -338,19 +365,19 @@ test('fatal zones with zero damage still behave as impossible, not instant kills
   assert.equal(getZoneDisplayedTtkSeconds(outcomeKind, summary.killSummary), null);
 });
 
-test('zone outcome labels expose short and expanded badge text', () => {
-  assert.equal(getZoneOutcomeLabel('fatal'), 'Fatal');
+test('zone outcome labels expose fixed badge text and row ttk semantics', () => {
+  assert.equal(getZoneOutcomeLabel('fatal'), 'Kill');
   assert.equal(getZoneOutcomeLabel('main'), 'Main');
   assert.equal(getZoneOutcomeLabel('limb'), 'Limb');
-  assert.equal(getZoneOutcomeLabel('utility'), 'Non-lethal');
+  assert.equal(getZoneOutcomeLabel('utility'), 'Part');
 
-  assert.equal(getZoneOutcomeShortLabel('fatal'), 'F');
-  assert.equal(getZoneOutcomeShortLabel('main'), 'M');
-  assert.equal(getZoneOutcomeShortLabel('limb'), 'L');
-  assert.equal(getZoneOutcomeShortLabel('utility'), 'N');
+  assert.equal(getZoneOutcomeDescription('fatal'), 'Killing this part kills the enemy');
+  assert.equal(getZoneOutcomeDescription('main'), 'This path kills through main health');
+  assert.equal(getZoneOutcomeDescription('limb'), 'This part can be removed before main would die');
+  assert.equal(getZoneOutcomeDescription('utility'), 'This part can be removed, but destroying it does not kill the enemy');
 
   assert.equal(getZoneDisplayedTtkSeconds('fatal', { zoneTtkSeconds: 0, mainTtkSeconds: 2 }), 0);
   assert.equal(getZoneDisplayedTtkSeconds('main', { zoneTtkSeconds: 2, mainTtkSeconds: 1 }), 1);
-  assert.equal(getZoneDisplayedTtkSeconds('limb', { zoneTtkSeconds: 0, mainTtkSeconds: 1 }), null);
-  assert.equal(getZoneDisplayedTtkSeconds('utility', { zoneTtkSeconds: 0, mainTtkSeconds: null }), null);
+  assert.equal(getZoneDisplayedTtkSeconds('limb', { zoneTtkSeconds: 0, mainTtkSeconds: 1 }), 0);
+  assert.equal(getZoneDisplayedTtkSeconds('utility', { zoneTtkSeconds: 0, mainTtkSeconds: null }), 0);
 });

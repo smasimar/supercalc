@@ -142,7 +142,7 @@ export function getZoneOutcomeKind({ zone, totalDamagePerCycle, totalDamageToMai
 
 export function getZoneOutcomeLabel(kind) {
   if (kind === 'fatal') {
-    return 'Fatal';
+    return 'Kill';
   }
 
   if (kind === 'main') {
@@ -154,27 +154,27 @@ export function getZoneOutcomeLabel(kind) {
   }
 
   if (kind === 'utility') {
-    return 'Non-lethal';
+    return 'Part';
   }
 
   return null;
 }
 
-export function getZoneOutcomeShortLabel(kind) {
+export function getZoneOutcomeDescription(kind) {
   if (kind === 'fatal') {
-    return 'F';
+    return 'Killing this part kills the enemy';
   }
 
   if (kind === 'main') {
-    return 'M';
+    return 'This path kills through main health';
   }
 
   if (kind === 'limb') {
-    return 'L';
+    return 'This part can be removed before main would die';
   }
 
   if (kind === 'utility') {
-    return 'N';
+    return 'This part can be removed, but destroying it does not kill the enemy';
   }
 
   return null;
@@ -191,6 +191,10 @@ export function getZoneDisplayedTtkSeconds(kind, killSummary) {
 
   if (kind === 'main') {
     return killSummary.mainTtkSeconds;
+  }
+
+  if (kind === 'limb' || kind === 'utility') {
+    return killSummary.zoneTtkSeconds;
   }
 
   return null;

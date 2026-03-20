@@ -3,7 +3,8 @@ import { classifyAtkType, atkColorClass, apColorClass, dfColorClass, durPercenta
 import { calculatorState } from './data.js';
 import { getSelectedWeaponAttacks, renderCalculation } from './calculation.js';
 import { formatTtkSeconds } from './summary.js';
-import { getZoneDisplayedTtkSeconds, getZoneOutcomeKind, getZoneOutcomeLabel, getZoneOutcomeShortLabel, summarizeZoneDamage } from './zone-damage.js';
+import { tokenizeFormattedTtk } from './ttk-formatting.js';
+import { getZoneDisplayedTtkSeconds, getZoneOutcomeDescription, getZoneOutcomeKind, getZoneOutcomeLabel, summarizeZoneDamage } from './zone-damage.js';
 
 export function renderWeaponDetails(weapon) {
   const container = document.getElementById('calculator-weapon-details');
@@ -158,26 +159,40 @@ export function renderWeaponDetails(weapon) {
 
 function appendOutcomeBadge(cell, outcomeKind) {
   const outcomeLabel = getZoneOutcomeLabel(outcomeKind);
-  const shortLabel = getZoneOutcomeShortLabel(outcomeKind);
+  const outcomeDescription = getZoneOutcomeDescription(outcomeKind);
   if (!outcomeLabel) {
     return;
   }
 
   const badge = document.createElement('span');
   badge.className = `calc-zone-context calc-zone-context-${outcomeKind}`;
-  badge.title = outcomeLabel;
-
-  const shortText = document.createElement('span');
-  shortText.className = 'calc-zone-context-short';
-  shortText.textContent = shortLabel || outcomeLabel.charAt(0);
-
-  const fullText = document.createElement('span');
-  fullText.className = 'calc-zone-context-label';
-  fullText.textContent = outcomeLabel;
-
-  badge.appendChild(shortText);
-  badge.appendChild(fullText);
+  badge.title = outcomeDescription || outcomeLabel;
+  badge.textContent = outcomeLabel;
   cell.appendChild(badge);
+}
+
+function createTtkValueNode(ttkSeconds) {
+  const ttkValue = document.createElement('span');
+  ttkValue.className = 'calc-derived-value';
+
+  if (ttkSeconds === null) {
+    ttkValue.textContent = '-';
+    ttkValue.classList.add('muted');
+    return ttkValue;
+  }
+
+  ttkValue.classList.add('calc-ttk-value');
+  const formattedTtk = formatTtkSeconds(ttkSeconds);
+  const tokens = tokenizeFormattedTtk(formattedTtk);
+
+  tokens.forEach(({ text, kind }) => {
+    const token = document.createElement('span');
+    token.className = `calc-ttk-token calc-ttk-token-${kind}`;
+    token.textContent = text;
+    ttkValue.appendChild(token);
+  });
+
+  return ttkValue;
 }
 
 export function renderEnemyDetails(enemy) {
@@ -312,26 +327,19 @@ export function renderEnemyDetails(enemy) {
         const ttkContent = document.createElement('div');
         ttkContent.className = 'calc-derived-inline';
 
-        const ttkValue = document.createElement('span');
-        ttkValue.className = 'calc-derived-value';
-        ttkValue.textContent = ttkSeconds === null ? '-' : formatTtkSeconds(ttkSeconds);
-        if (ttkSeconds === null) {
-          ttkValue.classList.add('muted');
-        }
-
         td.classList.add('calc-derived-cell');
-        ttkContent.appendChild(ttkValue);
+        ttkContent.appendChild(createTtkValueNode(ttkSeconds));
         appendOutcomeBadge(ttkContent, outcomeKind);
         td.appendChild(ttkContent);
 
         if (selectedAttacks.length > 0 && !(zoneSummary?.totalDamagePerCycle > 0)) {
           td.title = 'Selected attacks do not damage this part';
-        } else if (outcomeKind === 'limb') {
-          td.title = 'This part breaks before it can kill main';
-        } else if (outcomeKind === 'utility') {
-          td.title = 'Destroying this part does not kill the enemy';
         } else if (ttkSeconds === null && zoneSummary?.killSummary?.hasRpm === false) {
           td.title = 'TTK unavailable without RPM';
+        } else if (outcomeKind === 'limb') {
+          td.title = 'This part can be removed, but it breaks before it can kill main';
+        } else if (outcomeKind === 'utility') {
+          td.title = 'This part can be removed, but destroying it does not kill the enemy';
         }
       } else if (header === 'zone_name') {
         td.textContent = value || '';

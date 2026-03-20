@@ -606,6 +606,25 @@ tbody tr:hover {
   font-weight: 600;
 }
 
+.calc-ttk-value {
+  font-variant-numeric: tabular-nums;
+}
+
+.calc-ttk-token-muted,
+.calc-ttk-token-separator,
+.calc-ttk-token-suffix {
+  color: var(--muted);
+}
+
+.calc-ttk-token-significant {
+  color: var(--text);
+  font-weight: 700;
+}
+
+.calc-ttk-token-default {
+  color: var(--text);
+}
+
 .calc-derived-value.muted,
 .calculator-table tbody td.calc-derived-cell.muted {
   color: var(--muted);
@@ -616,43 +635,15 @@ tbody tr:hover {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 18px;
+  min-width: 36px;
   height: 18px;
-  padding: 0 5px;
+  padding: 0 6px;
   border: 1px solid var(--border);
   border-radius: 999px;
   font-size: 10px;
   font-weight: 700;
   letter-spacing: .2px;
-  overflow: hidden;
   white-space: nowrap;
-  transition: padding .16s ease, background-color .16s ease, border-color .16s ease;
-}
-
-.calc-zone-context-short {
-  display: inline-block;
-  min-width: 1ch;
-  text-align: center;
-}
-
-.calc-zone-context-label {
-  max-width: 0;
-  opacity: 0;
-  overflow: hidden;
-  margin-left: 0;
-  transition: max-width .16s ease, opacity .16s ease, margin-left .16s ease;
-}
-
-.calc-zone-context:hover,
-.calc-zone-context:focus-visible {
-  padding-right: 8px;
-}
-
-.calc-zone-context:hover .calc-zone-context-label,
-.calc-zone-context:focus-visible .calc-zone-context-label {
-  max-width: 72px;
-  opacity: 1;
-  margin-left: 4px;
 }
 
 .calc-zone-context-fatal {
