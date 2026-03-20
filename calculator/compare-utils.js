@@ -465,6 +465,14 @@ function isLethalHallOfFameRow(row) {
     || row?.metrics?.bySlot?.B?.outcomeKind === 'main';
 }
 
+function getHallOfFameOutcomeKind(row, winner) {
+  if (winner !== 'A' && winner !== 'B') {
+    return 'none';
+  }
+
+  return row?.metrics?.bySlot?.[winner]?.outcomeKind || 'none';
+}
+
 function buildHallOfFameMetricCandidate(metricKey, diffMetric, diffDisplayMode) {
   const displayMetric = getDiffDisplayMetric(diffMetric, diffDisplayMode);
   if (displayMetric.kind === 'one-sided') {
@@ -515,13 +523,14 @@ export function buildHallOfFameEntries(rows, {
       return {
         row,
         metric,
-        isLethal: isLethalHallOfFameRow(row)
+        isLethal: isLethalHallOfFameRow(row),
+        outcomeKind: getHallOfFameOutcomeKind(row, metric.winner)
       };
     })
     .filter(Boolean);
 
   function sortEntriesForWinner(winner) {
-    return entries
+    const rankedEntries = entries
       .filter((entry) => entry.metric.winner === winner)
       .sort((left, right) => {
         if (left.isLethal !== right.isLethal) {
@@ -538,8 +547,32 @@ export function buildHallOfFameEntries(rows, {
 
         return left.row.enemyName.localeCompare(right.row.enemyName)
           || left.row.zoneIndex - right.row.zoneIndex;
-      })
-      .slice(0, limit);
+      });
+
+    const selectedEntries = [];
+    const deferredEntries = [];
+    const seenEnemyOutcomeKeys = new Set();
+
+    rankedEntries.forEach((entry) => {
+      const enemyOutcomeKey = `${normalizeText(entry.row.enemyName)}::${entry.outcomeKind}`;
+      if (seenEnemyOutcomeKeys.has(enemyOutcomeKey)) {
+        deferredEntries.push(entry);
+        return;
+      }
+
+      seenEnemyOutcomeKeys.add(enemyOutcomeKey);
+      selectedEntries.push(entry);
+    });
+
+    for (const entry of deferredEntries) {
+      if (selectedEntries.length >= limit) {
+        break;
+      }
+
+      selectedEntries.push(entry);
+    }
+
+    return selectedEntries.slice(0, limit);
   }
 
   return {

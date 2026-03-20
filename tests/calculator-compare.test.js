@@ -701,3 +701,78 @@ test('buildHallOfFameEntries prefers lethal rows before non-lethal rows', () => 
   assert.equal(hallOfFame.B[0].row.enemyName, 'Fatal Target');
   assert.equal(hallOfFame.B[1].row.enemyName, 'Arm Target');
 });
+
+test('buildHallOfFameEntries filters duplicate same-outcome entries from one enemy before filling repeats', () => {
+  const rows = [
+    makeSortRow(0, 'Left Hip', {
+      enemyName: 'Gatekeeper',
+      outcomeKindB: 'limb',
+      diffTtk: makeDiffMetric({
+        kind: 'numeric',
+        winner: 'B',
+        sortValue: -1.2,
+        absoluteValue: -1.2,
+        absoluteSortValue: -1.2,
+        percentValue: -80,
+        percentSortValue: -80,
+        displayValue: null
+      })
+    }),
+    makeSortRow(1, 'Right Leg', {
+      enemyName: 'Gatekeeper',
+      outcomeKindB: 'limb',
+      diffTtk: makeDiffMetric({
+        kind: 'numeric',
+        winner: 'B',
+        sortValue: -0.9,
+        absoluteValue: -0.9,
+        absoluteSortValue: -0.9,
+        percentValue: -60,
+        percentSortValue: -60,
+        displayValue: null
+      })
+    }),
+    makeSortRow(2, 'Main', {
+      enemyName: 'Gatekeeper',
+      outcomeKindB: 'main',
+      diffTtk: makeDiffMetric({
+        kind: 'numeric',
+        winner: 'B',
+        sortValue: -0.4,
+        absoluteValue: -0.4,
+        absoluteSortValue: -0.4,
+        percentValue: -40,
+        percentSortValue: -40,
+        displayValue: null
+      })
+    }),
+    makeSortRow(3, 'Arm', {
+      enemyName: 'Raider',
+      outcomeKindB: 'limb',
+      diffTtk: makeDiffMetric({
+        kind: 'numeric',
+        winner: 'B',
+        sortValue: -0.3,
+        absoluteValue: -0.3,
+        absoluteSortValue: -0.3,
+        percentValue: -30,
+        percentSortValue: -30,
+        displayValue: null
+      })
+    })
+  ];
+
+  const hallOfFame = buildHallOfFameEntries(rows, {
+    diffDisplayMode: 'absolute',
+    limit: 3
+  });
+
+  assert.deepEqual(
+    hallOfFame.B.map((entry) => `${entry.row.enemyName}:${entry.outcomeKind}:${entry.row.zone.zone_name}`),
+    [
+      'Gatekeeper:main:Main',
+      'Gatekeeper:limb:Left Hip',
+      'Raider:limb:Arm'
+    ]
+  );
+});
