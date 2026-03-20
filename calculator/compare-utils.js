@@ -18,6 +18,14 @@ const COMPARE_OUTCOME_GROUP_ORDER = {
   none: 5
 };
 
+const ONE_SIDED_OUTCOME_GROUP_ORDER = {
+  main: 0,
+  fatal: 1,
+  limb: 2,
+  utility: 3,
+  none: 4
+};
+
 function normalizeText(value) {
   return String(value ?? '').trim().toLowerCase();
 }
@@ -216,6 +224,63 @@ function summarizeZoneForSlot({ zone, enemyMainHealth, weapon, selectedAttacks =
 
 function hasOneSidedDiff(metrics) {
   return metrics?.diffShots?.kind === 'one-sided' || metrics?.diffTtkSeconds?.kind === 'one-sided';
+}
+
+function isDiffSortKey(sortKey) {
+  return sortKey === 'shotsDiff' || sortKey === 'ttkDiff';
+}
+
+function getOneSidedDiffMetric(row, sortKey) {
+  if (sortKey === 'shotsDiff') {
+    return row?.metrics?.diffShots;
+  }
+
+  if (sortKey === 'ttkDiff') {
+    return row?.metrics?.diffTtkSeconds;
+  }
+
+  return row?.metrics?.diffTtkSeconds?.kind === 'one-sided'
+    ? row?.metrics?.diffTtkSeconds
+    : row?.metrics?.diffShots;
+}
+
+function getOneSidedWinningSlot(row, sortKey) {
+  const winner = getOneSidedDiffMetric(row, sortKey)?.winner;
+  if (winner === 'A' || winner === 'B') {
+    return winner;
+  }
+
+  return null;
+}
+
+function getOneSidedOutcomeGroupValue(row, sortKey) {
+  const winningSlot = getOneSidedWinningSlot(row, sortKey);
+  const outcomeKind = winningSlot
+    ? row?.metrics?.bySlot?.[winningSlot]?.outcomeKind || 'none'
+    : 'none';
+
+  return ONE_SIDED_OUTCOME_GROUP_ORDER[outcomeKind] ?? ONE_SIDED_OUTCOME_GROUP_ORDER.none;
+}
+
+function getOneSidedMetricSortValue(row, sortKey) {
+  const winningSlot = getOneSidedWinningSlot(row, sortKey);
+  if (!winningSlot) {
+    return null;
+  }
+
+  if (sortKey === 'ttkDiff') {
+    return row?.metrics?.bySlot?.[winningSlot]?.ttkSeconds ?? null;
+  }
+
+  if (sortKey === 'shotsDiff') {
+    return row?.metrics?.bySlot?.[winningSlot]?.shotsToKill ?? null;
+  }
+
+  return null;
+}
+
+function shouldUseOneSidedOutcomeSubgroups(mode, groupMode, sortKey) {
+  return mode === 'compare' && groupMode === 'outcome' && isDiffSortKey(sortKey);
 }
 
 function getOutcomeGroupValue(row, groupingSlot, mode) {
@@ -499,6 +564,19 @@ export function getOutcomeGroupingSlot(mode, sortKey) {
   return 'A';
 }
 
+function getOutcomeGroupKey(row, groupingSlot, mode, sortKey, groupMode) {
+  const primaryGroup = getOutcomeGroupValue(row, groupingSlot, mode);
+  if (
+    shouldUseOneSidedOutcomeSubgroups(mode, groupMode, sortKey)
+    && primaryGroup === COMPARE_OUTCOME_GROUP_ORDER.oneSided
+    && hasOneSidedDiff(row?.metrics)
+  ) {
+    return `${primaryGroup}:${getOneSidedOutcomeGroupValue(row, sortKey)}`;
+  }
+
+  return String(primaryGroup);
+}
+
 export function getZoneSortValue(row, sortKey, diffDisplayMode = 'absolute') {
   switch (sortKey) {
     case 'faction':
@@ -557,6 +635,7 @@ export function sortEnemyZoneRows(rows, {
   const groupingSlot = groupMode === 'outcome'
     ? getOutcomeGroupingSlot(mode, sortKey)
     : null;
+  const useOneSidedOutcomeSubgroups = shouldUseOneSidedOutcomeSubgroups(mode, groupMode, sortKey);
 
   const sortedRows = [...rows].sort((left, right) => {
     if (pinMain) {
@@ -572,6 +651,34 @@ export function sortEnemyZoneRows(rows, {
 
       if (leftGroup !== rightGroup) {
         return leftGroup - rightGroup;
+      }
+
+      const comparingOneSidedDiffRows = useOneSidedOutcomeSubgroups
+        && leftGroup === COMPARE_OUTCOME_GROUP_ORDER.oneSided
+        && rightGroup === COMPARE_OUTCOME_GROUP_ORDER.oneSided
+        && hasOneSidedDiff(left?.metrics)
+        && hasOneSidedDiff(right?.metrics);
+
+      if (comparingOneSidedDiffRows) {
+        const oneSidedOutcomeComparison = compareNullableValues(
+          getOneSidedOutcomeGroupValue(left, sortKey),
+          getOneSidedOutcomeGroupValue(right, sortKey),
+          'asc'
+        );
+        if (oneSidedOutcomeComparison !== 0) {
+          return oneSidedOutcomeComparison;
+        }
+
+        const oneSidedMetricComparison = compareNullableValues(
+          getOneSidedMetricSortValue(left, sortKey),
+          getOneSidedMetricSortValue(right, sortKey),
+          sortDir
+        );
+        if (oneSidedMetricComparison !== 0) {
+          return oneSidedMetricComparison;
+        }
+
+        return left.zoneIndex - right.zoneIndex;
       }
     }
 
@@ -596,8 +703,8 @@ export function sortEnemyZoneRows(rows, {
     }
 
     const previous = sortedRows[index - 1];
-    const previousGroup = getOutcomeGroupValue(previous, groupingSlot, mode);
-    const currentGroup = getOutcomeGroupValue(row, groupingSlot, mode);
+    const previousGroup = getOutcomeGroupKey(previous, groupingSlot, mode, sortKey, groupMode);
+    const currentGroup = getOutcomeGroupKey(row, groupingSlot, mode, sortKey, groupMode);
 
     return {
       ...row,

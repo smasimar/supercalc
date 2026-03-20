@@ -497,6 +497,89 @@ test('sortEnemyZoneRows places one-sided compare rows below main outcomes and ab
   assert.equal(sorted[3].groupStart, true);
 });
 
+test('sortEnemyZoneRows subgroups one-sided diff rows by winning outcome and real ttk', () => {
+  const rows = [
+    makeSortRow(0, 'main-transfer', { outcomeKindA: 'main', diffTtk: 0 }),
+    makeSortRow(1, 'one-sided-main-fast', {
+      outcomeKindB: 'main',
+      ttkB: 0.6,
+      diffTtk: {
+        kind: 'one-sided',
+        sortValue: Number.NEGATIVE_INFINITY,
+        winner: 'B',
+        displayValue: 0.6
+      }
+    }),
+    makeSortRow(2, 'one-sided-main-slow', {
+      outcomeKindA: 'main',
+      ttkA: 1.4,
+      diffTtk: {
+        kind: 'one-sided',
+        sortValue: Number.POSITIVE_INFINITY,
+        winner: 'A',
+        displayValue: 1.4
+      }
+    }),
+    makeSortRow(3, 'one-sided-kill', {
+      outcomeKindB: 'fatal',
+      ttkB: 0.8,
+      diffTtk: {
+        kind: 'one-sided',
+        sortValue: Number.NEGATIVE_INFINITY,
+        winner: 'B',
+        displayValue: 0.8
+      }
+    }),
+    makeSortRow(4, 'one-sided-limb', {
+      outcomeKindA: 'limb',
+      ttkA: 0.25,
+      diffTtk: {
+        kind: 'one-sided',
+        sortValue: Number.POSITIVE_INFINITY,
+        winner: 'A',
+        displayValue: 0.25
+      }
+    }),
+    makeSortRow(5, 'one-sided-part', {
+      outcomeKindB: 'utility',
+      ttkB: 0.15,
+      diffTtk: {
+        kind: 'one-sided',
+        sortValue: Number.NEGATIVE_INFINITY,
+        winner: 'B',
+        displayValue: 0.15
+      }
+    }),
+    makeSortRow(6, 'kill', { outcomeKindA: 'fatal', diffTtk: -0.2 })
+  ];
+
+  const sorted = sortEnemyZoneRows(rows, {
+    mode: 'compare',
+    sortKey: 'ttkDiff',
+    sortDir: 'asc',
+    groupMode: 'outcome'
+  });
+
+  assert.deepEqual(
+    sorted.map((row) => row.zone.zone_name),
+    [
+      'main-transfer',
+      'one-sided-main-fast',
+      'one-sided-main-slow',
+      'one-sided-kill',
+      'one-sided-limb',
+      'one-sided-part',
+      'kill'
+    ]
+  );
+  assert.equal(sorted[1].groupStart, true);
+  assert.equal(sorted[2].groupStart, false);
+  assert.equal(sorted[3].groupStart, true);
+  assert.equal(sorted[4].groupStart, true);
+  assert.equal(sorted[5].groupStart, true);
+  assert.equal(sorted[6].groupStart, true);
+});
+
 test('sortEnemyZoneRows does not pin Main in overview-style sorting when disabled', () => {
   const rows = [
     makeSortRow(0, 'arm', { enemyName: 'A', ttkA: 1 }),
