@@ -233,10 +233,52 @@ test('sortEnemyZoneRows can group by outcome before sorting a side-specific ttk 
 
   assert.deepEqual(
     sorted.map((row) => row.zone.zone_name),
-    ['fatal-fast', 'fatal-slow', 'main', 'utility']
+    ['main', 'fatal-fast', 'fatal-slow', 'utility']
   );
   assert.equal(sorted[0].groupStart, false);
-  assert.equal(sorted[1].groupStart, false);
-  assert.equal(sorted[2].groupStart, true);
+  assert.equal(sorted[1].groupStart, true);
+  assert.equal(sorted[2].groupStart, false);
   assert.equal(sorted[3].groupStart, true);
+});
+
+test('sortEnemyZoneRows keeps the literal Main zone first regardless of sort direction', () => {
+  const rows = [
+    makeSortRow(0, 'arm', { shotsA: 2 }),
+    makeSortRow(1, 'Main', { shotsA: 9 }),
+    makeSortRow(2, 'head', { shotsA: 6 })
+  ];
+
+  const sorted = sortEnemyZoneRows(rows, {
+    mode: 'single',
+    sortKey: 'shots',
+    sortDir: 'desc',
+    groupMode: 'none'
+  });
+
+  assert.deepEqual(
+    sorted.map((row) => row.zone.zone_name),
+    ['Main', 'head', 'arm']
+  );
+});
+
+test('sortEnemyZoneRows groups compare rows by A outcome when no B column is active', () => {
+  const rows = [
+    makeSortRow(0, 'utility', { outcomeKindA: 'utility', diffShots: -1 }),
+    makeSortRow(1, 'main', { outcomeKindA: 'main', diffShots: 0 }),
+    makeSortRow(2, 'fatal', { outcomeKindA: 'fatal', diffShots: 1 })
+  ];
+
+  const sorted = sortEnemyZoneRows(rows, {
+    mode: 'compare',
+    sortKey: 'shotsDiff',
+    sortDir: 'asc',
+    groupMode: 'outcome'
+  });
+
+  assert.deepEqual(
+    sorted.map((row) => row.zone.zone_name),
+    ['main', 'fatal', 'utility']
+  );
+  assert.equal(sorted[1].groupStart, true);
+  assert.equal(sorted[2].groupStart, true);
 });

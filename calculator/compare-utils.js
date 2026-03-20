@@ -13,6 +13,10 @@ function normalizeText(value) {
   return String(value ?? '').trim().toLowerCase();
 }
 
+function getPinnedZoneOrderValue(row) {
+  return normalizeText(row?.zone?.zone_name) === 'main' ? 0 : 1;
+}
+
 function toFiniteNumber(value) {
   const numeric = Number(value);
   return Number.isFinite(numeric) ? numeric : null;
@@ -215,7 +219,7 @@ export function getOutcomeGroupingSlot(mode, sortKey) {
     return 'B';
   }
 
-  return null;
+  return 'A';
 }
 
 export function getZoneSortValue(row, sortKey) {
@@ -272,6 +276,11 @@ export function sortEnemyZoneRows(rows, {
     : null;
 
   const sortedRows = [...rows].sort((left, right) => {
+    const pinnedComparison = getPinnedZoneOrderValue(left) - getPinnedZoneOrderValue(right);
+    if (pinnedComparison !== 0) {
+      return pinnedComparison;
+    }
+
     if (groupingSlot) {
       const leftGroup = getOutcomeGroupValue(left.metrics?.bySlot?.[groupingSlot]?.outcomeKind);
       const rightGroup = getOutcomeGroupValue(right.metrics?.bySlot?.[groupingSlot]?.outcomeKind);

@@ -467,9 +467,9 @@ function renderEnemyControls(enemy) {
   note.className = 'status calculator-toolbar-note';
   if (calculatorState.mode === 'compare') {
     const groupingSlot = getOutcomeGroupingSlot(calculatorState.mode, calculatorState.enemySort.key);
-    note.textContent = groupingSlot
-      ? 'Diff columns are computed as B - A.'
-      : 'Diff columns are computed as B - A. Outcome grouping applies to A/B columns.';
+    note.textContent = groupingSlot === 'B'
+      ? 'Diff columns are computed as B - A. Outcome grouping currently follows B because you are sorting a B column.'
+      : 'Diff columns are computed as B - A. Outcome grouping follows A by default.';
   } else {
     note.textContent = 'Outcome grouping follows the Kill, Main, Limb, Part badge order.';
   }
