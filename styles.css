@@ -718,6 +718,19 @@ tbody tr:hover {
   font-variant-numeric:tabular-nums;
 }
 
+.calc-diff-special{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:18px;
+  padding:0 6px;
+  border:1px solid currentColor;
+  border-radius:999px;
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:.2px;
+}
+
 .calc-diff-sign{
   margin-right:1px;
 }
@@ -726,8 +739,16 @@ tbody tr:hover {
   color:var(--accent-2);
 }
 
+.calc-diff-special.calc-diff-better{
+  background:rgba(63, 113, 44, 0.14);
+}
+
 .calc-diff-worse{
   color:var(--red);
+}
+
+.calc-diff-special.calc-diff-worse{
+  background:rgba(200, 68, 46, 0.14);
 }
 
 .calc-diff-neutral{

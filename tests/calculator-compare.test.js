@@ -23,6 +23,19 @@ function makeAttackRow(name, damage, ap = 2) {
   };
 }
 
+function makeDiffMetric(value) {
+  if (value && typeof value === 'object' && 'sortValue' in value) {
+    return value;
+  }
+
+  return {
+    kind: value === null ? 'unavailable' : 'numeric',
+    sortValue: value,
+    winner: null,
+    displayValue: null
+  };
+}
+
 function makeSortRow(zoneIndex, zoneName, {
   outcomeKindA = null,
   ttkA = null,
@@ -49,10 +62,10 @@ function makeSortRow(zoneIndex, zoneName, {
           outcomeKind: outcomeKindB,
           ttkSeconds: ttkB,
           shotsToKill: shotsB
-        }
+      }
       },
-      diffTtkSeconds: diffTtk,
-      diffShots
+      diffTtkSeconds: makeDiffMetric(diffTtk),
+      diffShots: makeDiffMetric(diffShots)
     }
   };
 }
@@ -151,11 +164,13 @@ test('buildZoneComparisonMetrics computes A, B, and Diff as B minus A', () => {
 
   assert.equal(metrics.bySlot.A.shotsToKill, 3);
   assert.equal(metrics.bySlot.B.shotsToKill, 2);
-  assert.equal(metrics.diffShots, -1);
+  assert.equal(metrics.diffShots.kind, 'numeric');
+  assert.equal(metrics.diffShots.sortValue, -1);
 
   assert.equal(metrics.bySlot.A.ttkSeconds, 2);
   assert.equal(metrics.bySlot.B.ttkSeconds, 1);
-  assert.equal(metrics.diffTtkSeconds, -1);
+  assert.equal(metrics.diffTtkSeconds.kind, 'numeric');
+  assert.equal(metrics.diffTtkSeconds.sortValue, -1);
 });
 
 test('buildZoneComparisonMetrics honors hit counts for each slot', () => {
@@ -183,7 +198,36 @@ test('buildZoneComparisonMetrics honors hit counts for each slot', () => {
   assert.equal(metrics.bySlot.A.shotsToKill, 2);
   assert.equal(metrics.bySlot.B.zoneSummary.totalDamagePerCycle, 100);
   assert.equal(metrics.bySlot.B.shotsToKill, 3);
-  assert.equal(metrics.diffShots, 1);
+  assert.equal(metrics.diffShots.sortValue, 1);
+});
+
+test('buildZoneComparisonMetrics marks one-sided damage wins as infinite diff severity', () => {
+  const metrics = buildZoneComparisonMetrics({
+    zone: {
+      health: 300,
+      Con: 0,
+      AV: 3,
+      'Dur%': 0,
+      'ToMain%': 0,
+      ExTarget: 'Part',
+      ExMult: 1,
+      IsFatal: false
+    },
+    enemyMainHealth: 1000,
+    weaponA: { rpm: 60 },
+    weaponB: { rpm: 60 },
+    selectedAttacksA: [makeAttackRow('A', 100, 2)],
+    selectedAttacksB: [makeAttackRow('B', 100, 4)]
+  });
+
+  assert.equal(metrics.bySlot.A.shotsToKill, null);
+  assert.equal(metrics.bySlot.B.shotsToKill, 3);
+  assert.equal(metrics.diffShots.kind, 'one-sided');
+  assert.equal(metrics.diffShots.winner, 'B');
+  assert.equal(metrics.diffShots.sortValue, Number.NEGATIVE_INFINITY);
+  assert.equal(metrics.diffTtkSeconds.kind, 'one-sided');
+  assert.equal(metrics.diffTtkSeconds.winner, 'B');
+  assert.equal(metrics.diffTtkSeconds.displayValue, 2);
 });
 
 test('sortEnemyZoneRows sorts diff columns numerically and keeps unavailable rows last', () => {
@@ -213,6 +257,51 @@ test('sortEnemyZoneRows sorts diff columns numerically and keeps unavailable row
   assert.deepEqual(
     descending.map((row) => row.zone.zone_name),
     ['slower', 'faster', 'unavailable']
+  );
+});
+
+test('sortEnemyZoneRows ranks one-sided diff wins beyond finite numeric deltas', () => {
+  const rows = [
+    makeSortRow(0, 'numeric-better', { diffTtk: -0.78 }),
+    makeSortRow(1, 'b-only', {
+      diffTtk: {
+        kind: 'one-sided',
+        sortValue: Number.NEGATIVE_INFINITY,
+        winner: 'B',
+        displayValue: 0
+      }
+    }),
+    makeSortRow(2, 'numeric-worse', { diffTtk: 0.5 }),
+    makeSortRow(3, 'a-only', {
+      diffTtk: {
+        kind: 'one-sided',
+        sortValue: Number.POSITIVE_INFINITY,
+        winner: 'A',
+        displayValue: 1.2
+      }
+    })
+  ];
+
+  const ascending = sortEnemyZoneRows(rows, {
+    mode: 'compare',
+    sortKey: 'ttkDiff',
+    sortDir: 'asc',
+    groupMode: 'none'
+  });
+  assert.deepEqual(
+    ascending.map((row) => row.zone.zone_name),
+    ['b-only', 'numeric-better', 'numeric-worse', 'a-only']
+  );
+
+  const descending = sortEnemyZoneRows(rows, {
+    mode: 'compare',
+    sortKey: 'ttkDiff',
+    sortDir: 'desc',
+    groupMode: 'none'
+  });
+  assert.deepEqual(
+    descending.map((row) => row.zone.zone_name),
+    ['a-only', 'numeric-worse', 'numeric-better', 'b-only']
   );
 });
 

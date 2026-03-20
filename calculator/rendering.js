@@ -89,16 +89,24 @@ function createTtkValueNode(ttkSeconds) {
   return ttkValue;
 }
 
-function createDiffValueNode(value, valueType) {
+function createDiffValueNode(diffMetric, valueType) {
   const diffValue = document.createElement('span');
   diffValue.className = 'calc-derived-value calc-diff-value';
 
-  if (value === null) {
+  if (!diffMetric || diffMetric.sortValue === null) {
     diffValue.textContent = '-';
     diffValue.classList.add('muted');
     return diffValue;
   }
 
+  if (diffMetric.kind === 'one-sided') {
+    diffValue.classList.add('calc-diff-special');
+    diffValue.classList.add(diffMetric.winner === 'B' ? 'calc-diff-better' : 'calc-diff-worse');
+    diffValue.textContent = `${diffMetric.winner} Only`;
+    return diffValue;
+  }
+
+  const value = diffMetric.sortValue;
   if (value < 0) {
     diffValue.classList.add('calc-diff-better');
   } else if (value > 0) {
@@ -129,6 +137,22 @@ function createDiffValueNode(value, valueType) {
 
   diffValue.textContent = value > 0 ? `+${value}` : String(value);
   return diffValue;
+}
+
+function getDiffMetricTitle(diffMetric, valueType) {
+  if (!diffMetric || diffMetric.sortValue === null) {
+    return 'Diff unavailable when either side is unavailable';
+  }
+
+  if (diffMetric.kind === 'one-sided') {
+    const metricLabel = valueType === 'ttk' ? 'TTK' : 'shots';
+    const displayValue = valueType === 'ttk'
+      ? formatTtkSeconds(diffMetric.displayValue)
+      : String(diffMetric.displayValue);
+    return `Only weapon ${diffMetric.winner} can damage this part with the current selection (${diffMetric.winner} ${metricLabel}: ${displayValue})`;
+  }
+
+  return 'Diff = B - A';
 }
 
 function getMetricTitle(slot, slotMetrics, valueType) {
@@ -468,8 +492,8 @@ function renderEnemyControls(enemy) {
   if (calculatorState.mode === 'compare') {
     const groupingSlot = getOutcomeGroupingSlot(calculatorState.mode, calculatorState.enemySort.key);
     note.textContent = groupingSlot === 'B'
-      ? 'Diff columns are computed as B - A. Outcome grouping currently follows B because you are sorting a B column.'
-      : 'Diff columns are computed as B - A. Outcome grouping follows A by default.';
+      ? 'Diff columns are computed as B - A. One-sided damage wins sort beyond finite deltas, and outcome grouping currently follows B because you are sorting a B column.'
+      : 'Diff columns are computed as B - A. One-sided damage wins sort beyond finite deltas, and outcome grouping follows A by default.';
   } else {
     note.textContent = 'Outcome grouping follows the Kill, Main, Limb, Part badge order.';
   }
@@ -575,7 +599,7 @@ function buildDiffMetricCell(value, valueType) {
   const td = document.createElement('td');
   td.classList.add('calc-derived-cell', 'calc-diff-cell');
   td.appendChild(createDiffValueNode(value, valueType));
-  td.title = value === null ? 'Diff unavailable when either side is unavailable' : 'Diff = B - A';
+  td.title = getDiffMetricTitle(value, valueType);
   return td;
 }
 

@@ -17,6 +17,49 @@ function getPinnedZoneOrderValue(row) {
   return normalizeText(row?.zone?.zone_name) === 'main' ? 0 : 1;
 }
 
+function isFiniteMetricValue(value) {
+  return Number.isFinite(value);
+}
+
+function buildDiffMetric({ slotA, slotB, valueA, valueB }) {
+  if (isFiniteMetricValue(valueA) && isFiniteMetricValue(valueB)) {
+    return {
+      kind: 'numeric',
+      sortValue: valueB - valueA,
+      winner: null,
+      displayValue: null
+    };
+  }
+
+  const slotABlocked = slotA?.selectedAttackCount > 0 && !slotA?.damagesZone;
+  const slotBBlocked = slotB?.selectedAttackCount > 0 && !slotB?.damagesZone;
+
+  if (!isFiniteMetricValue(valueA) && isFiniteMetricValue(valueB) && slotABlocked) {
+    return {
+      kind: 'one-sided',
+      sortValue: Number.NEGATIVE_INFINITY,
+      winner: 'B',
+      displayValue: valueB
+    };
+  }
+
+  if (isFiniteMetricValue(valueA) && !isFiniteMetricValue(valueB) && slotBBlocked) {
+    return {
+      kind: 'one-sided',
+      sortValue: Number.POSITIVE_INFINITY,
+      winner: 'A',
+      displayValue: valueA
+    };
+  }
+
+  return {
+    kind: 'unavailable',
+    sortValue: null,
+    winner: null,
+    displayValue: null
+  };
+}
+
 function toFiniteNumber(value) {
   const numeric = Number(value);
   return Number.isFinite(numeric) ? numeric : null;
@@ -201,8 +244,18 @@ export function buildZoneComparisonMetrics({
       A: slotA,
       B: slotB
     },
-    diffShots: calculateDiffValue(slotA.shotsToKill, slotB.shotsToKill),
-    diffTtkSeconds: calculateDiffValue(slotA.ttkSeconds, slotB.ttkSeconds)
+    diffShots: buildDiffMetric({
+      slotA,
+      slotB,
+      valueA: slotA.shotsToKill,
+      valueB: slotB.shotsToKill
+    }),
+    diffTtkSeconds: buildDiffMetric({
+      slotA,
+      slotB,
+      valueA: slotA.ttkSeconds,
+      valueB: slotB.ttkSeconds
+    })
   };
 }
 
@@ -253,13 +306,13 @@ export function getZoneSortValue(row, sortKey) {
     case 'shotsB':
       return row.metrics?.bySlot?.B?.shotsToKill ?? null;
     case 'shotsDiff':
-      return row.metrics?.diffShots ?? null;
+      return row.metrics?.diffShots?.sortValue ?? null;
     case 'ttkA':
       return row.metrics?.bySlot?.A?.ttkSeconds ?? null;
     case 'ttkB':
       return row.metrics?.bySlot?.B?.ttkSeconds ?? null;
     case 'ttkDiff':
-      return row.metrics?.diffTtkSeconds ?? null;
+      return row.metrics?.diffTtkSeconds?.sortValue ?? null;
     default:
       return normalizeText(row.zone?.[sortKey]);
   }
