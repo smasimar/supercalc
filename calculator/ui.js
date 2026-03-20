@@ -88,11 +88,14 @@ function setupModeToggle() {
 
 function setupWeaponSelector(slot) {
   const suffix = slot.toLowerCase();
-  const weaponInput = document.getElementById(`calculator-weapon-input-${suffix}`);
-  const weaponDropdown = document.getElementById(`calculator-weapon-dropdown-${suffix}`);
+  const weaponInput = document.getElementById(`calculator-weapon-input-${suffix}`)
+    || (slot === 'A' ? document.getElementById('calculator-weapon-input') : null);
+  const weaponDropdown = document.getElementById(`calculator-weapon-dropdown-${suffix}`)
+    || (slot === 'A' ? document.getElementById('calculator-weapon-dropdown') : null);
   const weaponSelector = weaponInput?.parentElement;
 
   if (!weaponInput || !weaponDropdown || !weaponSelector) {
+    console.warn(`[calculator] Weapon selector DOM missing for slot ${slot}`);
     return;
   }
 
@@ -218,6 +221,7 @@ function setupEnemySelector() {
   const enemySelector = enemyInput?.parentElement;
 
   if (!enemyInput || !enemyDropdown || !enemySelector) {
+    console.warn('[calculator] Enemy selector DOM missing');
     return;
   }
 
