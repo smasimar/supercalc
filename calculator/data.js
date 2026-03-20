@@ -27,6 +27,9 @@ function buildInitialHitCounts(attackKeys = []) {
 
 export const calculatorState = {
   mode: 'single',
+  compareView: 'focused',
+  overviewScope: 'All',
+  diffDisplayMode: 'absolute',
   weaponA: null,
   weaponB: null,
   selectedEnemy: null,
@@ -83,6 +86,10 @@ export function getEnemyOptions() {
   return enemyState.units || [];
 }
 
+export function getOverviewScopeOptions() {
+  return ['All', ...(enemyState.factions || [])];
+}
+
 export function getWeaponForSlot(slot = 'A') {
   return calculatorState[getWeaponStateKey(slot)] || null;
 }
@@ -93,6 +100,21 @@ export function getActiveWeaponSlots() {
 
 export function setCalculatorMode(mode) {
   calculatorState.mode = mode === 'compare' ? 'compare' : 'single';
+  if (calculatorState.mode !== 'compare') {
+    calculatorState.compareView = 'focused';
+  }
+}
+
+export function setCompareView(view) {
+  calculatorState.compareView = view === 'overview' ? 'overview' : 'focused';
+}
+
+export function setOverviewScope(scope) {
+  calculatorState.overviewScope = scope || 'All';
+}
+
+export function setDiffDisplayMode(mode) {
+  calculatorState.diffDisplayMode = mode === 'percent' ? 'percent' : 'absolute';
 }
 
 export function setSelectedWeapon(slot, weapon) {
@@ -166,6 +188,9 @@ export function adjustAttackHitCount(slot, attackKey, delta) {
 export function setSelectedEnemy(enemy) {
   calculatorState.selectedEnemy = enemy || null;
   calculatorState.selectedZoneIndex = getPreferredZoneIndex(enemy);
+  if (enemy) {
+    calculatorState.compareView = 'focused';
+  }
 }
 
 export function setSelectedZoneIndex(zoneIndex) {

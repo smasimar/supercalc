@@ -806,3 +806,31 @@ tbody tr:hover {
 .calc-compare-body{
   padding:12px;
 }
+
+.calc-hof-body{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+.calc-hof-entry{
+  padding:10px 12px;
+  border:1px solid var(--border);
+  background:#202020;
+}
+
+.calc-hof-entry-header{
+  font-weight:700;
+}
+
+.calc-hof-entry-meta{
+  margin-top:2px;
+  color:var(--muted);
+  font-size:12px;
+}
+
+.calc-hof-entry-values{
+  margin-top:6px;
+  font-variant-numeric:tabular-nums;
+  font-size:13px;
+}

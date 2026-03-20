@@ -4,6 +4,7 @@ import {
   getEnemyOptions,
   getWeaponOptions,
   setCalculatorMode,
+  setCompareView,
   setSelectedEnemy,
   setSelectedWeapon
 } from './data.js';
@@ -50,6 +51,23 @@ function syncCalculatorModeUi() {
 
   if (weaponLabelA) {
     weaponLabelA.textContent = compareMode ? 'Weapon A:' : 'Weapon:';
+  }
+
+  syncEnemyInputValue();
+}
+
+function getEnemyInputDisplayValue() {
+  if (calculatorState.mode === 'compare' && calculatorState.compareView === 'overview') {
+    return 'Overview';
+  }
+
+  return calculatorState.selectedEnemy?.name || '';
+}
+
+function syncEnemyInputValue() {
+  const enemyInput = document.getElementById('calculator-enemy-input');
+  if (enemyInput) {
+    enemyInput.value = getEnemyInputDisplayValue();
   }
 }
 
@@ -231,8 +249,9 @@ function setupEnemySelector() {
   clearButton.type = 'button';
   clearButton.addEventListener('click', (event) => {
     event.stopPropagation();
-    enemyInput.value = '';
+    setCompareView('focused');
     setSelectedEnemy(null);
+    syncEnemyInputValue();
     renderEnemyDetails();
     renderCalculation();
     populateDropdown('');
@@ -243,6 +262,7 @@ function setupEnemySelector() {
 
   function populateDropdown(query = '') {
     const options = getEnemyOptions();
+    const normalizedQuery = query.toLowerCase();
 
     if (!options || options.length === 0) {
       enemyDropdown.innerHTML = '';
@@ -254,13 +274,27 @@ function setupEnemySelector() {
     }
 
     const filteredOptions = options.filter((enemy) =>
-      enemy.name.toLowerCase().includes(query.toLowerCase()) ||
-      enemy.faction.toLowerCase().includes(query.toLowerCase())
+      enemy.name.toLowerCase().includes(normalizedQuery) ||
+      enemy.faction.toLowerCase().includes(normalizedQuery)
     );
 
     enemyDropdown.innerHTML = '';
 
-    if (filteredOptions.length === 0) {
+    if (calculatorState.mode === 'compare' && 'overview'.includes(normalizedQuery)) {
+      const overviewItem = document.createElement('div');
+      overviewItem.className = 'dropdown-item';
+      overviewItem.innerHTML = 'Overview <span style="color:var(--muted); font-size:11px;">(all matching enemies)</span>';
+      overviewItem.addEventListener('click', () => {
+        setCompareView('overview');
+        syncEnemyInputValue();
+        closeDropdown();
+        renderEnemyDetails();
+        renderCalculation();
+      });
+      enemyDropdown.appendChild(overviewItem);
+    }
+
+    if (filteredOptions.length === 0 && enemyDropdown.children.length === 0) {
       const noResults = document.createElement('div');
       noResults.className = 'dropdown-item';
       noResults.textContent = 'No enemies found';
@@ -274,7 +308,7 @@ function setupEnemySelector() {
       item.innerHTML = `${enemy.name} <span style="color:var(--muted); font-size:11px;">(${enemy.faction})</span>`;
       item.addEventListener('click', () => {
         setSelectedEnemy(enemy);
-        enemyInput.value = enemy.name;
+        syncEnemyInputValue();
         closeDropdown();
         renderEnemyDetails();
         renderCalculation();

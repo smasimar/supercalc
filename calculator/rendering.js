@@ -8,19 +8,25 @@ import {
   durPercentageColor
 } from '../colors.js';
 import {
+  getOverviewScopeOptions,
   getAttackHitCounts,
   calculatorState,
+  getEnemyOptions,
   getSelectedAttackKeys,
   getSelectedAttacks,
   getWeaponForSlot,
+  setDiffDisplayMode,
   setEnemyGroupMode,
+  setOverviewScope,
   setSelectedAttack,
   setSelectedZoneIndex,
   toggleEnemySort
 } from './data.js';
 import {
+  buildOverviewRows,
   buildAttackUnionRows,
   buildZoneComparisonMetrics,
+  getDiffDisplayMetric,
   getAttackRowKey,
   getOutcomeGroupingSlot,
   sortEnemyZoneRows
@@ -42,6 +48,12 @@ const ENEMY_BASE_COLUMNS = [
   { key: 'ExMult', label: 'ExMult' },
   { key: 'ToMain%', label: 'ToMain%' },
   { key: 'MainCap', label: 'MainCap' }
+];
+
+const OVERVIEW_COLUMNS = [
+  { key: 'faction', label: 'Faction' },
+  { key: 'enemy', label: 'Enemy' },
+  ...ENEMY_BASE_COLUMNS
 ];
 
 function createPlaceholder(container, text) {
@@ -89,30 +101,41 @@ function createTtkValueNode(ttkSeconds) {
   return ttkValue;
 }
 
-function createDiffValueNode(diffMetric, valueType) {
+function formatPercentDiff(value) {
+  const prefix = value > 0 ? '+' : '';
+  return `${prefix}${value.toFixed(1).replace(/\.0$/, '')}%`;
+}
+
+function createDiffValueNode(diffMetric, valueType, diffDisplayMode = 'absolute') {
   const diffValue = document.createElement('span');
   diffValue.className = 'calc-derived-value calc-diff-value';
+  const displayMetric = getDiffDisplayMetric(diffMetric, diffDisplayMode);
 
-  if (!diffMetric || diffMetric.sortValue === null) {
+  if (displayMetric.kind === 'unavailable') {
     diffValue.textContent = '-';
     diffValue.classList.add('muted');
     return diffValue;
   }
 
-  if (diffMetric.kind === 'one-sided') {
+  if (displayMetric.kind === 'one-sided') {
     diffValue.classList.add('calc-diff-special');
-    diffValue.classList.add(diffMetric.winner === 'B' ? 'calc-diff-better' : 'calc-diff-worse');
-    diffValue.textContent = `${diffMetric.winner} Only`;
+    diffValue.classList.add(displayMetric.winner === 'B' ? 'calc-diff-better' : 'calc-diff-worse');
+    diffValue.textContent = `${displayMetric.winner} Only`;
     return diffValue;
   }
 
-  const value = diffMetric.sortValue;
+  const value = displayMetric.value;
   if (value < 0) {
     diffValue.classList.add('calc-diff-better');
   } else if (value > 0) {
     diffValue.classList.add('calc-diff-worse');
   } else {
     diffValue.classList.add('calc-diff-neutral');
+  }
+
+  if (diffDisplayMode === 'percent') {
+    diffValue.textContent = formatPercentDiff(value);
+    return diffValue;
   }
 
   if (valueType === 'ttk') {
@@ -139,20 +162,26 @@ function createDiffValueNode(diffMetric, valueType) {
   return diffValue;
 }
 
-function getDiffMetricTitle(diffMetric, valueType) {
-  if (!diffMetric || diffMetric.sortValue === null) {
+function getDiffMetricTitle(diffMetric, valueType, diffDisplayMode = 'absolute') {
+  const displayMetric = getDiffDisplayMetric(diffMetric, diffDisplayMode);
+  if (displayMetric.kind === 'unavailable') {
+    if (diffDisplayMode === 'percent') {
+      return 'Percent diff unavailable when either side is unavailable or A has no positive baseline';
+    }
     return 'Diff unavailable when either side is unavailable';
   }
 
-  if (diffMetric.kind === 'one-sided') {
+  if (displayMetric.kind === 'one-sided') {
     const metricLabel = valueType === 'ttk' ? 'TTK' : 'shots';
     const displayValue = valueType === 'ttk'
-      ? formatTtkSeconds(diffMetric.displayValue)
-      : String(diffMetric.displayValue);
-    return `Only weapon ${diffMetric.winner} can damage this part with the current selection (${diffMetric.winner} ${metricLabel}: ${displayValue})`;
+      ? formatTtkSeconds(displayMetric.displayValue)
+      : String(displayMetric.displayValue);
+    return `Only weapon ${displayMetric.winner} can damage this part with the current selection (${displayMetric.winner} ${metricLabel}: ${displayValue})`;
   }
 
-  return 'Diff = B - A';
+  return diffDisplayMode === 'percent'
+    ? 'Percent diff = ((B - A) / A) × 100'
+    : 'Diff = B - A';
 }
 
 function getMetricTitle(slot, slotMetrics, valueType) {
@@ -443,6 +472,40 @@ function getEnemyColumns() {
   ];
 }
 
+function getOverviewColumns() {
+  return [
+    ...OVERVIEW_COLUMNS,
+    { key: 'shotsA', label: 'A Shots' },
+    { key: 'shotsB', label: 'B Shots' },
+    { key: 'shotsDiff', label: 'Diff Shots' },
+    { key: 'ttkA', label: 'A TTK' },
+    { key: 'ttkB', label: 'B TTK' },
+    { key: 'ttkDiff', label: 'Diff TTK' }
+  ];
+}
+
+function appendToolbarButtonGroup(toolbar, labelText, items, isActive, onClick) {
+  const label = document.createElement('span');
+  label.className = 'label';
+  label.textContent = labelText;
+  toolbar.appendChild(label);
+
+  const group = document.createElement('div');
+  group.className = 'calculator-toolbar-group';
+
+  items.forEach(({ value, label: itemLabel }) => {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'button calculator-toolbar-button';
+    button.textContent = itemLabel;
+    button.classList.toggle('is-active', isActive(value));
+    button.addEventListener('click', () => onClick(value));
+    group.appendChild(button);
+  });
+
+  toolbar.appendChild(group);
+}
+
 function renderEnemyControls(enemy) {
   const controlsContainer = document.getElementById('calculator-enemy-controls');
   if (!controlsContainer) {
@@ -451,7 +514,9 @@ function renderEnemyControls(enemy) {
 
   controlsContainer.innerHTML = '';
 
-  if (!enemy || !enemy.zones || enemy.zones.length === 0) {
+  const overviewActive = calculatorState.mode === 'compare' && calculatorState.compareView === 'overview';
+  const hasFocusedEnemy = Boolean(enemy && enemy.zones && enemy.zones.length > 0);
+  if (!overviewActive && !hasFocusedEnemy) {
     controlsContainer.classList.add('hidden');
     return;
   }
@@ -461,35 +526,54 @@ function renderEnemyControls(enemy) {
   const toolbar = document.createElement('div');
   toolbar.className = 'calculator-toolbar';
 
-  const groupLabel = document.createElement('span');
-  groupLabel.className = 'label';
-  groupLabel.textContent = 'Grouping:';
-  toolbar.appendChild(groupLabel);
-
-  const buttonGroup = document.createElement('div');
-  buttonGroup.className = 'calculator-toolbar-group';
-
-  [
-    { mode: 'none', label: 'No grouping' },
-    { mode: 'outcome', label: 'Group by outcome' }
-  ].forEach(({ mode, label }) => {
-    const button = document.createElement('button');
-    button.type = 'button';
-    button.className = 'button calculator-toolbar-button';
-    button.textContent = label;
-    button.classList.toggle('is-active', calculatorState.enemySort.groupMode === mode);
-    button.addEventListener('click', () => {
-      setEnemyGroupMode(mode);
+  appendToolbarButtonGroup(
+    toolbar,
+    'Grouping:',
+    [
+      { value: 'none', label: 'No grouping' },
+      { value: 'outcome', label: 'Group by outcome' }
+    ],
+    (value) => calculatorState.enemySort.groupMode === value,
+    (value) => {
+      setEnemyGroupMode(value);
       renderEnemyDetails();
-    });
-    buttonGroup.appendChild(button);
-  });
+    }
+  );
 
-  toolbar.appendChild(buttonGroup);
+  if (overviewActive) {
+    appendToolbarButtonGroup(
+      toolbar,
+      'Scope:',
+      getOverviewScopeOptions().map((scope) => ({ value: scope, label: scope })),
+      (value) => calculatorState.overviewScope === value,
+      (value) => {
+        setOverviewScope(value);
+        renderEnemyDetails();
+        renderCalculation();
+      }
+    );
+
+    appendToolbarButtonGroup(
+      toolbar,
+      'Diff:',
+      [
+        { value: 'absolute', label: 'Absolute' },
+        { value: 'percent', label: '%' }
+      ],
+      (value) => calculatorState.diffDisplayMode === value,
+      (value) => {
+        setDiffDisplayMode(value);
+        renderEnemyDetails();
+        renderCalculation();
+      }
+    );
+  }
 
   const note = document.createElement('span');
   note.className = 'status calculator-toolbar-note';
-  if (calculatorState.mode === 'compare') {
+  if (overviewActive) {
+    note.textContent = 'Overview is selected in the enemy dropdown. Pick a specific enemy there to return to the focused view.';
+  } else if (calculatorState.mode === 'compare') {
     const groupingSlot = getOutcomeGroupingSlot(calculatorState.mode, calculatorState.enemySort.key);
     note.textContent = groupingSlot === 'B'
       ? 'Diff columns are computed as B - A. One-sided damage wins sort beyond finite deltas, and outcome grouping currently follows B because you are sorting a B column.'
@@ -573,6 +657,130 @@ function formatEnemyBaseCell(td, zone, header) {
   td.textContent = value || '';
 }
 
+function formatOverviewBaseCell(td, row, header) {
+  if (header === 'faction') {
+    td.textContent = row.faction || '';
+    return;
+  }
+
+  if (header === 'enemy') {
+    td.textContent = row.enemyName || '';
+    return;
+  }
+
+  formatEnemyBaseCell(td, row.zone, header);
+}
+
+function renderOverviewDetails(container) {
+  const table = document.createElement('table');
+  table.style.width = '100%';
+  table.style.borderCollapse = 'collapse';
+  table.className = 'calculator-table';
+
+  const thead = document.createElement('thead');
+  const headerRow = document.createElement('tr');
+  const columns = getOverviewColumns();
+
+  columns.forEach((column) => {
+    const th = document.createElement('th');
+    th.textContent = column.label;
+    th.classList.add('sortable');
+    if (calculatorState.enemySort.key === column.key) {
+      th.classList.add(`sort-${calculatorState.enemySort.dir}`);
+    }
+    th.addEventListener('click', () => {
+      toggleEnemySort(column.key);
+      renderEnemyDetails();
+    });
+    headerRow.appendChild(th);
+  });
+
+  thead.appendChild(headerRow);
+  table.appendChild(thead);
+
+  const weaponA = getWeaponForSlot('A');
+  const weaponB = getWeaponForSlot('B');
+  const selectedAttacksA = getSelectedAttacks('A');
+  const selectedAttacksB = getSelectedAttacks('B');
+  const hitCountsA = getAttackHitCounts('A', selectedAttacksA);
+  const hitCountsB = getAttackHitCounts('B', selectedAttacksB);
+
+  const overviewRows = buildOverviewRows({
+    units: getEnemyOptions(),
+    scope: calculatorState.overviewScope,
+    weaponA,
+    weaponB,
+    selectedAttacksA,
+    selectedAttacksB,
+    hitCountsA,
+    hitCountsB
+  });
+
+  if (overviewRows.length === 0) {
+    createPlaceholder(container, 'No overview rows are available for the current scope');
+    return;
+  }
+
+  const sortedRows = sortEnemyZoneRows(overviewRows, {
+    mode: 'compare',
+    sortKey: calculatorState.enemySort.key,
+    sortDir: calculatorState.enemySort.dir,
+    groupMode: calculatorState.enemySort.groupMode,
+    diffDisplayMode: calculatorState.diffDisplayMode,
+    pinMain: false
+  });
+
+  const tbody = document.createElement('tbody');
+
+  sortedRows.forEach((row) => {
+    const tr = document.createElement('tr');
+    if (row.groupStart) {
+      tr.classList.add('group-start');
+    }
+
+    columns.forEach((column) => {
+      if (column.key === 'shotsA') {
+        tr.appendChild(buildSingleMetricCell('A', row.metrics.bySlot.A, 'shots'));
+        return;
+      }
+
+      if (column.key === 'shotsB') {
+        tr.appendChild(buildSingleMetricCell('B', row.metrics.bySlot.B, 'shots'));
+        return;
+      }
+
+      if (column.key === 'shotsDiff') {
+        tr.appendChild(buildDiffMetricCell(row.metrics.diffShots, 'shots', calculatorState.diffDisplayMode));
+        return;
+      }
+
+      if (column.key === 'ttkA') {
+        tr.appendChild(buildSingleMetricCell('A', row.metrics.bySlot.A, 'ttk'));
+        return;
+      }
+
+      if (column.key === 'ttkB') {
+        tr.appendChild(buildSingleMetricCell('B', row.metrics.bySlot.B, 'ttk'));
+        return;
+      }
+
+      if (column.key === 'ttkDiff') {
+        tr.appendChild(buildDiffMetricCell(row.metrics.diffTtkSeconds, 'ttk', calculatorState.diffDisplayMode));
+        return;
+      }
+
+      const td = document.createElement('td');
+      formatOverviewBaseCell(td, row, column.key);
+      tr.appendChild(td);
+    });
+
+    tbody.appendChild(tr);
+  });
+
+  table.appendChild(tbody);
+  container.appendChild(table);
+}
+
 function buildSingleMetricCell(slot, slotMetrics, type) {
   const td = document.createElement('td');
   td.classList.add('calc-derived-cell');
@@ -595,11 +803,11 @@ function buildSingleMetricCell(slot, slotMetrics, type) {
   return td;
 }
 
-function buildDiffMetricCell(value, valueType) {
+function buildDiffMetricCell(value, valueType, diffDisplayMode = 'absolute') {
   const td = document.createElement('td');
   td.classList.add('calc-derived-cell', 'calc-diff-cell');
-  td.appendChild(createDiffValueNode(value, valueType));
-  td.title = getDiffMetricTitle(value, valueType);
+  td.appendChild(createDiffValueNode(value, valueType, diffDisplayMode));
+  td.title = getDiffMetricTitle(value, valueType, diffDisplayMode);
   return td;
 }
 
@@ -641,6 +849,12 @@ export function renderEnemyDetails(enemy = calculatorState.selectedEnemy) {
   }
 
   container.innerHTML = '';
+  if (calculatorState.mode === 'compare' && calculatorState.compareView === 'overview') {
+    renderEnemyControls(null);
+    renderOverviewDetails(container);
+    return;
+  }
+
   renderEnemyControls(enemy);
 
   if (!enemy || !enemy.zones || enemy.zones.length === 0) {
@@ -709,7 +923,9 @@ export function renderEnemyDetails(enemy = calculatorState.selectedEnemy) {
     mode: calculatorState.mode,
     sortKey: calculatorState.enemySort.key,
     sortDir: calculatorState.enemySort.dir,
-    groupMode: calculatorState.enemySort.groupMode
+    groupMode: calculatorState.enemySort.groupMode,
+    diffDisplayMode: 'absolute',
+    pinMain: true
   });
 
   const tbody = document.createElement('tbody');
@@ -744,7 +960,7 @@ export function renderEnemyDetails(enemy = calculatorState.selectedEnemy) {
       }
 
       if (column.key === 'shotsDiff') {
-        tr.appendChild(buildDiffMetricCell(metrics.diffShots, 'shots'));
+        tr.appendChild(buildDiffMetricCell(metrics.diffShots, 'shots', 'absolute'));
         return;
       }
 
@@ -759,7 +975,7 @@ export function renderEnemyDetails(enemy = calculatorState.selectedEnemy) {
       }
 
       if (column.key === 'ttkDiff') {
-        tr.appendChild(buildDiffMetricCell(metrics.diffTtkSeconds, 'ttk'));
+        tr.appendChild(buildDiffMetricCell(metrics.diffTtkSeconds, 'ttk', 'absolute'));
         return;
       }
 

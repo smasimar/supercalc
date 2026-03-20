@@ -3,7 +3,10 @@ import assert from 'node:assert/strict';
 
 import {
   buildAttackUnionRows,
+  buildHallOfFameEntries,
+  buildOverviewRows,
   buildZoneComparisonMetrics,
+  getDiffDisplayMetric,
   getAttackRowKey,
   getDefaultSelectedAttackKeys,
   getPreferredZoneIndex,
@@ -24,19 +27,27 @@ function makeAttackRow(name, damage, ap = 2) {
 }
 
 function makeDiffMetric(value) {
-  if (value && typeof value === 'object' && 'sortValue' in value) {
+  if (value && typeof value === 'object' && ('sortValue' in value || 'absoluteSortValue' in value)) {
     return value;
   }
 
   return {
     kind: value === null ? 'unavailable' : 'numeric',
+    valueA: null,
+    valueB: null,
+    winner: value < 0 ? 'B' : value > 0 ? 'A' : null,
+    displayValue: null,
     sortValue: value,
-    winner: null,
-    displayValue: null
+    absoluteValue: value,
+    absoluteSortValue: value,
+    percentValue: null,
+    percentSortValue: null
   };
 }
 
 function makeSortRow(zoneIndex, zoneName, {
+  faction = 'Terminids',
+  enemyName = 'Sample Enemy',
   outcomeKindA = null,
   ttkA = null,
   shotsA = null,
@@ -47,6 +58,8 @@ function makeSortRow(zoneIndex, zoneName, {
   diffShots = null
 } = {}) {
   return {
+    faction,
+    enemyName,
     zoneIndex,
     zone: {
       zone_name: zoneName
@@ -67,6 +80,25 @@ function makeSortRow(zoneIndex, zoneName, {
       diffTtkSeconds: makeDiffMetric(diffTtk),
       diffShots: makeDiffMetric(diffShots)
     }
+  };
+}
+
+function makeZone(zoneName, {
+  health = 300,
+  isFatal = false,
+  av = 1,
+  toMainPercent = 0
+} = {}) {
+  return {
+    zone_name: zoneName,
+    health,
+    Con: 0,
+    AV: av,
+    'Dur%': 0,
+    'ToMain%': toMainPercent,
+    ExTarget: 'Part',
+    ExMult: 1,
+    IsFatal: isFatal
   };
 }
 
@@ -166,11 +198,13 @@ test('buildZoneComparisonMetrics computes A, B, and Diff as B minus A', () => {
   assert.equal(metrics.bySlot.B.shotsToKill, 2);
   assert.equal(metrics.diffShots.kind, 'numeric');
   assert.equal(metrics.diffShots.sortValue, -1);
+  assert.equal(metrics.diffShots.percentValue, (-1 / 3) * 100);
 
   assert.equal(metrics.bySlot.A.ttkSeconds, 2);
   assert.equal(metrics.bySlot.B.ttkSeconds, 1);
   assert.equal(metrics.diffTtkSeconds.kind, 'numeric');
   assert.equal(metrics.diffTtkSeconds.sortValue, -1);
+  assert.equal(metrics.diffTtkSeconds.percentValue, -50);
 });
 
 test('buildZoneComparisonMetrics honors hit counts for each slot', () => {
@@ -228,6 +262,65 @@ test('buildZoneComparisonMetrics marks one-sided damage wins as infinite diff se
   assert.equal(metrics.diffTtkSeconds.kind, 'one-sided');
   assert.equal(metrics.diffTtkSeconds.winner, 'B');
   assert.equal(metrics.diffTtkSeconds.displayValue, 2);
+  assert.equal(metrics.diffTtkSeconds.percentSortValue, Number.NEGATIVE_INFINITY);
+});
+
+test('getDiffDisplayMetric returns percent values when available', () => {
+  const metrics = buildZoneComparisonMetrics({
+    zone: makeZone('head', { health: 300, isFatal: true }),
+    enemyMainHealth: 1000,
+    weaponA: { rpm: 60 },
+    weaponB: { rpm: 120 },
+    selectedAttacksA: [makeAttackRow('A', 100)],
+    selectedAttacksB: [makeAttackRow('B', 100)]
+  });
+
+  const displayMetric = getDiffDisplayMetric(metrics.diffTtkSeconds, 'percent');
+  assert.equal(displayMetric.kind, 'numeric');
+  assert.equal(displayMetric.winner, 'B');
+  assert.equal(displayMetric.value, -50);
+});
+
+test('buildOverviewRows flattens units and filters by faction scope', () => {
+  const units = [
+    {
+      faction: 'Terminids',
+      name: 'Stalker',
+      health: 800,
+      zones: [makeZone('Main'), makeZone('head', { isFatal: true })]
+    },
+    {
+      faction: 'Automatons',
+      name: 'Devastator',
+      health: 900,
+      zones: [makeZone('Main')]
+    }
+  ];
+
+  const allRows = buildOverviewRows({
+    units,
+    scope: 'All',
+    weaponA: { rpm: 60 },
+    weaponB: { rpm: 60 },
+    selectedAttacksA: [makeAttackRow('A', 100)],
+    selectedAttacksB: [makeAttackRow('B', 100)]
+  });
+  assert.equal(allRows.length, 3);
+  assert.equal(allRows[0].faction, 'Terminids');
+  assert.equal(allRows[0].enemyName, 'Stalker');
+
+  const automatonRows = buildOverviewRows({
+    units,
+    scope: 'Automatons',
+    weaponA: { rpm: 60 },
+    weaponB: { rpm: 60 },
+    selectedAttacksA: [makeAttackRow('A', 100)],
+    selectedAttacksB: [makeAttackRow('B', 100)]
+  });
+  assert.deepEqual(
+    automatonRows.map((row) => `${row.faction}:${row.enemyName}:${row.zone.zone_name}`),
+    ['Automatons:Devastator:Main']
+  );
 });
 
 test('sortEnemyZoneRows sorts diff columns numerically and keeps unavailable rows last', () => {
@@ -402,4 +495,126 @@ test('sortEnemyZoneRows places one-sided compare rows below main outcomes and ab
   assert.equal(sorted[1].groupStart, true);
   assert.equal(sorted[2].groupStart, true);
   assert.equal(sorted[3].groupStart, true);
+});
+
+test('sortEnemyZoneRows does not pin Main in overview-style sorting when disabled', () => {
+  const rows = [
+    makeSortRow(0, 'arm', { enemyName: 'A', ttkA: 1 }),
+    makeSortRow(1, 'Main', { enemyName: 'B', ttkA: 5 }),
+    makeSortRow(2, 'head', { enemyName: 'C', ttkA: 3 })
+  ];
+
+  const sorted = sortEnemyZoneRows(rows, {
+    mode: 'compare',
+    sortKey: 'ttkA',
+    sortDir: 'desc',
+    groupMode: 'none',
+    pinMain: false
+  });
+
+  assert.deepEqual(
+    sorted.map((row) => row.zone.zone_name),
+    ['Main', 'head', 'arm']
+  );
+
+  const alphabetic = sortEnemyZoneRows(rows, {
+    mode: 'compare',
+    sortKey: 'zone_name',
+    sortDir: 'asc',
+    groupMode: 'none',
+    pinMain: false
+  });
+
+  assert.deepEqual(
+    alphabetic.map((row) => row.zone.zone_name),
+    ['arm', 'head', 'Main']
+  );
+});
+
+test('sortEnemyZoneRows uses percent diff values in overview mode when requested', () => {
+  const rows = [
+    makeSortRow(0, 'modest-win', {
+      diffTtk: makeDiffMetric({
+        kind: 'numeric',
+        winner: 'B',
+        sortValue: -1,
+        absoluteValue: -1,
+        absoluteSortValue: -1,
+        percentValue: -25,
+        percentSortValue: -25,
+        displayValue: null
+      })
+    }),
+    makeSortRow(1, 'major-win', {
+      diffTtk: makeDiffMetric({
+        kind: 'numeric',
+        winner: 'B',
+        sortValue: -0.5,
+        absoluteValue: -0.5,
+        absoluteSortValue: -0.5,
+        percentValue: -80,
+        percentSortValue: -80,
+        displayValue: null
+      })
+    })
+  ];
+
+  const sorted = sortEnemyZoneRows(rows, {
+    mode: 'compare',
+    sortKey: 'ttkDiff',
+    sortDir: 'asc',
+    groupMode: 'none',
+    diffDisplayMode: 'percent',
+    pinMain: false
+  });
+
+  assert.deepEqual(
+    sorted.map((row) => row.zone.zone_name),
+    ['major-win', 'modest-win']
+  );
+});
+
+test('buildHallOfFameEntries prefers lethal rows before non-lethal rows', () => {
+  const rows = [
+    makeSortRow(0, 'arm', {
+      enemyName: 'Arm Target',
+      outcomeKindA: 'limb',
+      outcomeKindB: 'limb',
+      diffTtk: makeDiffMetric({
+        kind: 'numeric',
+        winner: 'B',
+        sortValue: -0.5,
+        absoluteValue: -0.5,
+        absoluteSortValue: -0.5,
+        percentValue: -90,
+        percentSortValue: -90,
+        displayValue: null
+      })
+    }),
+    makeSortRow(1, 'head', {
+      enemyName: 'Fatal Target',
+      outcomeKindA: 'fatal',
+      outcomeKindB: 'fatal',
+      diffTtk: makeDiffMetric({
+        kind: 'numeric',
+        winner: 'B',
+        sortValue: -0.25,
+        absoluteValue: -0.25,
+        absoluteSortValue: -0.25,
+        percentValue: -50,
+        percentSortValue: -50,
+        displayValue: null
+      })
+    })
+  ];
+  rows[1].zone.IsFatal = true;
+
+  const hallOfFame = buildHallOfFameEntries(rows, {
+    diffDisplayMode: 'percent',
+    limit: 2
+  });
+
+  assert.equal(hallOfFame.B.length, 2);
+  assert.equal(hallOfFame.B[0].row.enemyName, 'Fatal Target');
+  assert.equal(hallOfFame.B[1].row.enemyName, 'Arm Target');
 });

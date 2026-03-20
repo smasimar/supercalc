@@ -32,11 +32,19 @@ function isFiniteMetricValue(value) {
 
 function buildDiffMetric({ slotA, slotB, valueA, valueB }) {
   if (isFiniteMetricValue(valueA) && isFiniteMetricValue(valueB)) {
+    const absoluteValue = valueB - valueA;
+    const percentValue = valueA > 0 ? (absoluteValue / valueA) * 100 : null;
     return {
       kind: 'numeric',
-      sortValue: valueB - valueA,
-      winner: null,
-      displayValue: null
+      winner: absoluteValue < 0 ? 'B' : absoluteValue > 0 ? 'A' : null,
+      valueA,
+      valueB,
+      displayValue: null,
+      sortValue: absoluteValue,
+      absoluteValue,
+      absoluteSortValue: absoluteValue,
+      percentValue,
+      percentSortValue: percentValue
     };
   }
 
@@ -46,25 +54,95 @@ function buildDiffMetric({ slotA, slotB, valueA, valueB }) {
   if (!isFiniteMetricValue(valueA) && isFiniteMetricValue(valueB) && slotABlocked) {
     return {
       kind: 'one-sided',
-      sortValue: Number.NEGATIVE_INFINITY,
       winner: 'B',
-      displayValue: valueB
+      valueA,
+      valueB,
+      displayValue: valueB,
+      sortValue: Number.NEGATIVE_INFINITY,
+      absoluteValue: null,
+      absoluteSortValue: Number.NEGATIVE_INFINITY,
+      percentValue: null,
+      percentSortValue: Number.NEGATIVE_INFINITY
     };
   }
 
   if (isFiniteMetricValue(valueA) && !isFiniteMetricValue(valueB) && slotBBlocked) {
     return {
       kind: 'one-sided',
-      sortValue: Number.POSITIVE_INFINITY,
       winner: 'A',
-      displayValue: valueA
+      valueA,
+      valueB,
+      displayValue: valueA,
+      sortValue: Number.POSITIVE_INFINITY,
+      absoluteValue: null,
+      absoluteSortValue: Number.POSITIVE_INFINITY,
+      percentValue: null,
+      percentSortValue: Number.POSITIVE_INFINITY
+    };
+  }
+
+    return {
+      kind: 'unavailable',
+      winner: null,
+      valueA,
+      valueB,
+      displayValue: null,
+      sortValue: null,
+      absoluteValue: null,
+      absoluteSortValue: null,
+      percentValue: null,
+      percentSortValue: null
+  };
+}
+
+export function getDiffSortValue(diffMetric, diffDisplayMode = 'absolute') {
+  if (!diffMetric) {
+    return null;
+  }
+
+  if (diffDisplayMode === 'percent') {
+    return diffMetric.percentSortValue ?? null;
+  }
+
+  return diffMetric.absoluteSortValue ?? diffMetric.sortValue ?? null;
+}
+
+export function getDiffDisplayMetric(diffMetric, diffDisplayMode = 'absolute') {
+  if (!diffMetric) {
+    return {
+      kind: 'unavailable',
+      winner: null,
+      value: null,
+      displayValue: null
+    };
+  }
+
+  if (diffMetric.kind === 'one-sided') {
+    return {
+      kind: 'one-sided',
+      winner: diffMetric.winner,
+      value: null,
+      displayValue: diffMetric.displayValue
+    };
+  }
+
+  const value = diffDisplayMode === 'percent'
+    ? diffMetric.percentValue
+    : (diffMetric.absoluteValue ?? diffMetric.sortValue);
+
+  if (value === null || value === undefined) {
+    return {
+      kind: 'unavailable',
+      winner: null,
+      value: null,
+      displayValue: null
     };
   }
 
   return {
-    kind: 'unavailable',
-    sortValue: null,
-    winner: null,
+    kind: 'numeric',
+    winner: diffMetric.winner,
+    value,
     displayValue: null
   };
 }
@@ -278,6 +356,133 @@ export function buildZoneComparisonMetrics({
   };
 }
 
+export function buildOverviewRows({
+  units = [],
+  scope = 'All',
+  weaponA,
+  weaponB,
+  selectedAttacksA = [],
+  selectedAttacksB = [],
+  hitCountsA = [],
+  hitCountsB = []
+}) {
+  return units
+    .filter((unit) => scope === 'All' || unit?.faction === scope)
+    .flatMap((unit) => {
+      const enemyMainHealth = toFiniteNumber(unit?.health) ?? 0;
+      return (unit?.zones || []).map((zone, zoneIndex) => ({
+        id: `${unit.faction}::${unit.name}::${zone?.zone_name || ''}::${zoneIndex}`,
+        faction: unit.faction,
+        enemyName: unit.name,
+        zone,
+        zoneIndex,
+        metrics: buildZoneComparisonMetrics({
+          zone,
+          enemyMainHealth,
+          weaponA,
+          weaponB,
+          selectedAttacksA,
+          selectedAttacksB,
+          hitCountsA,
+          hitCountsB
+        })
+      }));
+    });
+}
+
+function isLethalHallOfFameRow(row) {
+  const zoneName = normalizeText(row?.zone?.zone_name);
+  return zoneName === 'main'
+    || Boolean(row?.zone?.IsFatal)
+    || row?.metrics?.bySlot?.A?.outcomeKind === 'fatal'
+    || row?.metrics?.bySlot?.A?.outcomeKind === 'main'
+    || row?.metrics?.bySlot?.B?.outcomeKind === 'fatal'
+    || row?.metrics?.bySlot?.B?.outcomeKind === 'main';
+}
+
+function buildHallOfFameMetricCandidate(metricKey, diffMetric, diffDisplayMode) {
+  const displayMetric = getDiffDisplayMetric(diffMetric, diffDisplayMode);
+  if (displayMetric.kind === 'one-sided') {
+    return {
+      metricKey,
+      winner: displayMetric.winner,
+      displayMode: 'special',
+      severity: Number.POSITIVE_INFINITY,
+      diffMetric,
+      displayMetric
+    };
+  }
+
+  if (displayMetric.kind !== 'numeric' || !displayMetric.winner || displayMetric.value === 0) {
+    return null;
+  }
+
+  return {
+    metricKey,
+    winner: displayMetric.winner,
+    displayMode: diffDisplayMode,
+    severity: Math.abs(displayMetric.value),
+    diffMetric,
+    displayMetric
+  };
+}
+
+function getPreferredHallOfFameMetric(row, diffDisplayMode) {
+  return buildHallOfFameMetricCandidate('ttk', row?.metrics?.diffTtkSeconds, diffDisplayMode)
+    || buildHallOfFameMetricCandidate('shots', row?.metrics?.diffShots, diffDisplayMode)
+    || (diffDisplayMode === 'percent'
+      ? buildHallOfFameMetricCandidate('ttk', row?.metrics?.diffTtkSeconds, 'absolute')
+        || buildHallOfFameMetricCandidate('shots', row?.metrics?.diffShots, 'absolute')
+      : null);
+}
+
+export function buildHallOfFameEntries(rows, {
+  diffDisplayMode = 'absolute',
+  limit = 5
+} = {}) {
+  const entries = rows
+    .map((row) => {
+      const metric = getPreferredHallOfFameMetric(row, diffDisplayMode);
+      if (!metric) {
+        return null;
+      }
+
+      return {
+        row,
+        metric,
+        isLethal: isLethalHallOfFameRow(row)
+      };
+    })
+    .filter(Boolean);
+
+  function sortEntriesForWinner(winner) {
+    return entries
+      .filter((entry) => entry.metric.winner === winner)
+      .sort((left, right) => {
+        if (left.isLethal !== right.isLethal) {
+          return left.isLethal ? -1 : 1;
+        }
+
+        if (left.metric.severity !== right.metric.severity) {
+          return right.metric.severity - left.metric.severity;
+        }
+
+        if (left.metric.metricKey !== right.metric.metricKey) {
+          return left.metric.metricKey === 'ttk' ? -1 : 1;
+        }
+
+        return left.row.enemyName.localeCompare(right.row.enemyName)
+          || left.row.zoneIndex - right.row.zoneIndex;
+      })
+      .slice(0, limit);
+  }
+
+  return {
+    A: sortEntriesForWinner('A'),
+    B: sortEntriesForWinner('B')
+  };
+}
+
 export function getOutcomeGroupingSlot(mode, sortKey) {
   if (mode !== 'compare') {
     return 'A';
@@ -294,8 +499,12 @@ export function getOutcomeGroupingSlot(mode, sortKey) {
   return 'A';
 }
 
-export function getZoneSortValue(row, sortKey) {
+export function getZoneSortValue(row, sortKey, diffDisplayMode = 'absolute') {
   switch (sortKey) {
+    case 'faction':
+      return normalizeText(row.faction);
+    case 'enemy':
+      return normalizeText(row.enemyName);
     case 'zone_name':
       return normalizeText(row.zone?.zone_name);
     case 'health':
@@ -325,13 +534,13 @@ export function getZoneSortValue(row, sortKey) {
     case 'shotsB':
       return row.metrics?.bySlot?.B?.shotsToKill ?? null;
     case 'shotsDiff':
-      return row.metrics?.diffShots?.sortValue ?? null;
+      return getDiffSortValue(row.metrics?.diffShots, diffDisplayMode);
     case 'ttkA':
       return row.metrics?.bySlot?.A?.ttkSeconds ?? null;
     case 'ttkB':
       return row.metrics?.bySlot?.B?.ttkSeconds ?? null;
     case 'ttkDiff':
-      return row.metrics?.diffTtkSeconds?.sortValue ?? null;
+      return getDiffSortValue(row.metrics?.diffTtkSeconds, diffDisplayMode);
     default:
       return normalizeText(row.zone?.[sortKey]);
   }
@@ -341,16 +550,20 @@ export function sortEnemyZoneRows(rows, {
   mode = 'single',
   sortKey = 'zone_name',
   sortDir = 'asc',
-  groupMode = 'none'
+  groupMode = 'none',
+  diffDisplayMode = 'absolute',
+  pinMain = true
 } = {}) {
   const groupingSlot = groupMode === 'outcome'
     ? getOutcomeGroupingSlot(mode, sortKey)
     : null;
 
   const sortedRows = [...rows].sort((left, right) => {
-    const pinnedComparison = getPinnedZoneOrderValue(left) - getPinnedZoneOrderValue(right);
-    if (pinnedComparison !== 0) {
-      return pinnedComparison;
+    if (pinMain) {
+      const pinnedComparison = getPinnedZoneOrderValue(left) - getPinnedZoneOrderValue(right);
+      if (pinnedComparison !== 0) {
+        return pinnedComparison;
+      }
     }
 
     if (groupingSlot) {
@@ -363,8 +576,8 @@ export function sortEnemyZoneRows(rows, {
     }
 
     const valueComparison = compareNullableValues(
-      getZoneSortValue(left, sortKey),
-      getZoneSortValue(right, sortKey),
+      getZoneSortValue(left, sortKey, diffDisplayMode),
+      getZoneSortValue(right, sortKey, diffDisplayMode),
       sortDir
     );
     if (valueComparison !== 0) {
