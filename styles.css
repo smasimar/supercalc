@@ -312,6 +312,16 @@ tbody tr:hover {
 .calculator-selector{
   position:relative; display:inline-block
 }
+.calculator-mode-toggle{
+  display:flex;
+  gap:8px;
+}
+.calculator-mode-btn.is-active,
+.calculator-toolbar-button.is-active{
+  border-color:var(--accent);
+  color:var(--text);
+  background:#202020;
+}
 .calculator-selector .input{
   min-width:552px;
   padding-right: 32px;
@@ -354,8 +364,33 @@ tbody tr:hover {
 .calculator-details-panel{
   background:#171717; border:2px solid var(--border); padding:12px; overflow-y:auto; overflow-x:hidden; width:100%; max-height:35vh
 }
+#calculator-enemy-controls{
+  display:flex;
+}
 #calculator-result{
   padding:12px; overflow-y:visible; overflow-x:hidden
+}
+
+.calculator-toolbar{
+  width:100%;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.calculator-toolbar-group{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+}
+
+.calculator-toolbar-button{
+  padding:6px 10px;
+}
+
+.calculator-toolbar-note{
+  margin-left:auto;
 }
 
 /* Calculator tables inherit same styling as main tables */
@@ -400,6 +435,11 @@ tbody tr:hover {
   color: var(--bg);
   font-size: 12px;
   font-weight: bold;
+}
+.calculator-table input[type="checkbox"]:disabled,
+.calculator-table input[type="radio"]:disabled{
+  opacity:.45;
+  cursor:not-allowed;
 }
 
 /* Calculator hit counter buttons */
@@ -668,4 +708,80 @@ tbody tr:hover {
   color: var(--muted);
   border-color: rgba(139, 148, 158, 0.4);
   background: rgba(139, 148, 158, 0.08);
+}
+
+.calc-diff-cell{
+  white-space:nowrap;
+}
+
+.calc-diff-value{
+  font-variant-numeric:tabular-nums;
+}
+
+.calc-diff-sign{
+  margin-right:1px;
+}
+
+.calc-diff-better{
+  color:var(--accent-2);
+}
+
+.calc-diff-worse{
+  color:var(--red);
+}
+
+.calc-diff-neutral{
+  color:var(--text);
+}
+
+.calc-compare-results{
+  display:flex;
+  flex-direction:column;
+  gap:16px;
+}
+
+.calc-compare-panel{
+  border:2px solid var(--border);
+  background:#171717;
+}
+
+.calc-compare-heading{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:10px 12px;
+  border-bottom:2px solid var(--border);
+  background:#202020;
+}
+
+.calc-compare-slot-badge{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:24px;
+  height:24px;
+  border-radius:999px;
+  border:1px solid var(--border);
+  font-size:12px;
+  font-weight:700;
+}
+
+.calc-compare-slot-badge-a{
+  color:var(--accent);
+  border-color:rgba(255, 220, 0, 0.45);
+  background:rgba(255, 220, 0, 0.08);
+}
+
+.calc-compare-slot-badge-b{
+  color:#58a6ff;
+  border-color:rgba(88, 166, 255, 0.45);
+  background:rgba(88, 166, 255, 0.08);
+}
+
+.calc-compare-title{
+  font-weight:700;
+}
+
+.calc-compare-body{
+  padding:12px;
 }

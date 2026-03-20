@@ -92,14 +92,30 @@
         <!-- Weapon Section -->
         <div class="calculator-section">
           <div class="row">
-            <span class="label">Weapon:</span>
+            <span class="label">Mode:</span>
+            <div class="calculator-mode-toggle">
+              <button type="button" id="calculator-mode-single" class="button calculator-mode-btn is-active">Single</button>
+              <button type="button" id="calculator-mode-compare" class="button calculator-mode-btn">Compare</button>
+            </div>
+          </div>
+
+          <div class="row">
+            <span class="label" id="calculator-weapon-label-a">Weapon:</span>
             <div class="calculator-selector">
-              <input type="text" id="calculator-weapon-input" class="input" placeholder="Search and select a weapon..." autocomplete="off" />
-              <div id="calculator-weapon-dropdown" class="calculator-dropdown hidden"></div>
+              <input type="text" id="calculator-weapon-input-a" class="input" placeholder="Search and select a weapon..." autocomplete="off" />
+              <div id="calculator-weapon-dropdown-a" class="calculator-dropdown hidden"></div>
             </div>
             <div id="calculator-weapon-loading" class="loading-indicator hidden">
               <div class="spinner"></div>
               <span>Loading weapon data...</span>
+            </div>
+          </div>
+
+          <div class="row hidden" id="calculator-weapon-row-b">
+            <span class="label">Weapon B:</span>
+            <div class="calculator-selector">
+              <input type="text" id="calculator-weapon-input-b" class="input" placeholder="Search and select a second weapon..." autocomplete="off" />
+              <div id="calculator-weapon-dropdown-b" class="calculator-dropdown hidden"></div>
             </div>
           </div>
           
@@ -121,6 +137,8 @@
               <span>Loading enemy data...</span>
             </div>
           </div>
+
+          <div id="calculator-enemy-controls" class="hidden"></div>
           
           <div class="calculator-details-panel">
             <div id="calculator-enemy-details"></div>
