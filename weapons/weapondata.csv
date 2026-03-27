@@ -7,6 +7,7 @@ Grenade,GR,G-6,Frag,,explosion,G-6 FRAG_E,500,500,3,20,25,40,
 Grenade,GR,G-7,Pineapple,,explosion,G-7 PINEAPPLE_E,300,300,3,30,25,40,
 Grenade,GR,G-6,Frag,,projectile,SHRAPNEL_P x35,110,35,3,10,10,20,
 Grenade,GR,TED-63,Dynamite,,explosion,TED-63 DYNAMITE_E,1000,1000,4,40,40,40,
+Grenade,GR,G-48,Giga Grenade,,explosion,G-48 GIGA GRENADE E,2000,2000,5,40,40,40,
 Grenade,SPC,G-109,Urchin,,explosion,G-109 URCHIN_E,0,0,6,0,50,0,Stun Large
 Grenade,SPC,G-123,Thermite,,explosion,G-123 THERMITE_E,2000,2000,7,30,20,40,
 Grenade,SPC,G-13,Incendiary Impact,,explosion,G-13 INCENDIARY IMPACT_E,150,150,3,30,20,15,Fire
@@ -78,6 +79,8 @@ Primary,SMG,MP-98,Knight,1380,projectile,9x20mm FULL METAL JACKET_P,90,18,2,10,1
 Primary,SMG,StA-11,StA SMG,1050,projectile,9x20mm FULL METAL JACKET_P,90,18,2,10,10,5,
 Primary,SMG,M7S,UNSC SMG,872,projectile,M7S_P,90,18,2,10,10,5,
 Primary,SMG,SMG-72,Pummeler,475,projectile,SMG-72_P,85,18,2,10,15,5,Stun Medium
+Primary,SMG,SMG/FLAM-34,Stoker (SMG),420,projectile,12x25mm FULL METAL JACKET P3,130,30,2,10,15,10,
+Primary,SMG,SMG/FLAM-34,Stoker (Flamer),,spray,SMG/FLAM-34 STOKER 0 S,2,2,4,10,5,5,Fire
 Primary,SPC,JAR-5,Dominator,250,projectile,15x100mm STANDARD ROCKET_P,275,90,3,10,35,15,
 Primary,SPC,FMAL-66,Torcher,,spray,FLAM-66 TORCHER_S,2,2,4,10,5,5,Fire
 Primary,SPC,VG-70,Variable,550,projectile,VG-70_P,85,23,2,10,10,4,
@@ -86,11 +89,13 @@ Secondary,CQC,CQC-2,Saber,,melee,CQC-2_M,188,98,3,10,25,30,
 Secondary,CQC,CQC-30,Stun Baton,,melee,CQC-30_M,75,38,3,10,35,30,Stun Large
 Secondary,CQC,CQC-42,Machete,,melee,CQC-42_M,300,150,3,10,30,10,
 Secondary,CQC,CQC-5,Combat Hatchet,,melee,CQC-5_M,240,120,3,10,25,30,
+Secondary,CQC,CQC-73,Entrenchment Tool,,melee,CQC-73_M,165,83,3,10,25,30,
 Secondary,PDW,P-113,Verdict,450,projectile,12x25mm FULL METAL JACKET_P,140,32,3,10,15,10,
 Secondary,PDW,P-4,Senator,200,projectile,13x40mm FULL METAL JACKET_P,225,75,4,10,20,10,
 Secondary,PDW,P-19,Redeemer,1100,projectile,9x20mm FULL METAL JACKET_P1,70,12,2,10,10,4,
 Secondary,PDW,P-2,Peacemaker,900,projectile,9x20mm HOLLOW POINT_P,100,32,2,10,10,4,
 Secondary,PDW,P-92,Warrant,450,projectile,Guided_P,80,20,3,10,15,10,
+Secondary,PDW,P-69,Veto,750,projectile,15x100mm STANDARD ROCKET P1,105,35,3,10,35,15,
 Secondary,PDW,M6C,SOCOM Pistol,,projectile,M6C/SOCOM_P,125,28,2,10,15,10,
 Secondary,SPC,GP-31,Grenade Pistol,900,projectile,40mm HEAT GRENADE_P,250,250,3,30,40,10,
 Secondary,SPC,GP-31,Grenade Pistol,900,explosion,40mm HEAT GRENADE_P_IE,400,400,3,30,25,30,
@@ -178,11 +183,10 @@ Support,CAN,S-11,Speargun,60,projectile,S-11_P,650,275,5,30,80,35,Gas • Gas_Co
 Support,CAN,AC-8,Autocannon (FLAK),190,projectile,SHRAPNEL_P x30,110,35,3,10,10,20,
 Support,CQC,CQC-1,One True Flag,,melee,CQC-1_M,200,100,3,10,35,30,Stun Large
 Support,CQC,CQC-9,Defoliation Tool,,melee,CQC-9_M,450,225,3,10,10,30,DMG/DUR/AP increases over time
-Support,CQC,-,Entrenchment Tool,,melee,Entrenchment_Tool_M,110,55,3,10,25,30,
 Support,CQC,CQC-20,Breaching Hammer,,melee,CQC-20_M,300,150,3,30,40,10,
-Support,CQC,CQC-20,Breaching Hammer,,explosion,CQC-20_M_IE,2100,2100,6,30,50,40,
-Support,GL,GL-21,Grenade Launcher,160,projectile,40mm HE GRENADE_P,20,2,0,10,40,10,
-Support,GL,GL-21,Grenade Launcher,160,explosion,40mm HE GRENADE_P_IE,400,400,4,30,25,30,
+Support,CQC,CQC-20,Breaching Hammer,,explosion,CQC-20_M_IE,2200,2200,6,30,50,40,
+Support,GL,GL-21,Grenade Launcher,160,projectile,40mm HE GRENADE_P,0,0,4,10,30,10,
+Support,GL,GL-21,Grenade Launcher,160,explosion,40mm HE GRENADE_P_IE,400,400,3,30,25,30,
 Support,GL,GL-28,Belt-Fed Grenade Launcher,240,projectile,GL_28_P,0,0,4,10,30,10,
 Support,GL,GL-28,Belt-Fed Grenade Launcher,240,explosion,GL_28_P_IE,150,150,4,30,20,20,
 Support,GL,GL-52,De-Escalator,200,projectile,GL-52_P,20,2,0,10,40,10,
@@ -227,5 +231,6 @@ Support,RL,PLAS-45,Epoch (Charged),600,explosion,LARGE PLASMA BOLT_P2_IE,800,800
 Support,SG,SG-88,Break-Action Shotgun,600,projectile,10g MAGNUM_P,65,13,2,10,20,20,
 Support,SPC,ARC-3,Arc Thrower,60,arc,ARC-3 ARC THROWER_A,250,100,7,20,35,10,Stun Small
 Support,SPC,FLAM-40,Flamethrower,,spray,FLAM-40 FLAMETHROWER_S,2,2,4,10,5,5,Fire
+Support,SPC,B/FLAM-80,Cremator,,spray,B/FLAM-80 CREMATOR_S_dm,3,3,4,10,5,5,Fire
 Support,SPC,TX-41,Sterilizer,,spray,TX-41 STERILIZER_S,1,1,5,5,10,5,Gas_Var2 • Gas_Confusion_Var2
 Support,SPC,B/MD,C4 Pack,,explosion,B/MD C4 PACK E,2000,2000,7,40,30,40,
