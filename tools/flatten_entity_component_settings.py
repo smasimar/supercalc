@@ -8,7 +8,7 @@ The current filediver dumper may emit component payloads either:
 - under a nested "components" object (newer shape)
 
 This script normalizes both shapes into the flat object expected by
-tools\parser_faction_units.py:
+parser_faction_units.py:
 
 {
   "content/fac_bugs/...": {
@@ -58,6 +58,19 @@ def titlecase_upper(value: Any) -> Optional[str]:
 def ensure_parent_dir(path: Path) -> None:
     if path.parent and not path.parent.exists():
         path.parent.mkdir(parents=True, exist_ok=True)
+
+
+def load_json_with_bom(path: Path) -> Any:
+    """Load JSON from UTF-8, UTF-8-BOM, or UTF-16 (LE/BE) as written by Windows tools."""
+    raw = path.read_bytes()
+    # Use "utf-16" (not utf-16-le) so the BOM is not left as U+FEFF (json.loads rejects it on 3.14+).
+    if raw.startswith(b"\xff\xfe") or raw.startswith(b"\xfe\xff"):
+        text = raw.decode("utf-16")
+    elif raw.startswith(b"\xef\xbb\xbf"):
+        text = raw.decode("utf-8-sig")
+    else:
+        text = raw.decode("utf-8")
+    return json.loads(text)
 
 
 def resolve_components(payload: Any) -> Optional[Dict[str, Any]]:
@@ -194,8 +207,7 @@ def main() -> None:
 
     ensure_parent_dir(output_path)
 
-    with input_path.open("r", encoding="utf-8") as handle:
-        data = json.load(handle)
+    data = load_json_with_bom(input_path)
 
     if not isinstance(data, dict):
         raise SystemExit("Input JSON must be a top-level object")

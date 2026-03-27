@@ -171,9 +171,22 @@ def extract_wiki_entries(payload: Any) -> tuple[dict[str, dict[str, Any]], dict[
     return clear_by_code, clear_by_name, ambiguous_codes + ambiguous_names
 
 
+def load_json_with_bom(path: Path) -> Any:
+    """Load JSON from UTF-8, UTF-8-BOM, or UTF-16 (LE/BE) as filediver/Windows dumps often use."""
+    raw = path.read_bytes()
+    # Use "utf-16" (not utf-16-le) so the BOM is not left as U+FEFF (json.loads rejects it on 3.14+).
+    if raw.startswith(b"\xff\xfe") or raw.startswith(b"\xfe\xff"):
+        text = raw.decode("utf-16")
+    elif raw.startswith(b"\xef\xbb\xbf"):
+        text = raw.decode("utf-8-sig")
+    else:
+        text = raw.decode("utf-8")
+    return json.loads(text)
+
+
 def load_json(path: str | None, url: str | None) -> Any:
     if path:
-        return json.loads(Path(path).read_text(encoding="utf-8"))
+        return load_json_with_bom(Path(path))
     if url:
         request = Request(
             url,
