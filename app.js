@@ -12,16 +12,21 @@ window._weaponsState = weaponsState;
 
 // Update weapon data patch/version ticker link when we know the sheet/patch version
 function updatePatchTicker() {
+  const weaponPatchLink = document.querySelector('#tab-weapons .source-links a[data-role=\"patch-link\"]');
+  if (!weaponPatchLink) return;
+
   const patch = weaponsState.patchVersion;
-  if (!patch) return;
+  if (!patch) {
+    weaponPatchLink.classList.add('hidden');
+    weaponPatchLink.removeAttribute('href');
+    weaponPatchLink.textContent = 'Patch: (from weapon data)';
+    return;
+  }
 
   const href = `https://helldivers.wiki.gg/wiki/${encodeURIComponent(patch)}`;
-
-  const weaponPatchLink = document.querySelector('#tab-weapons .source-links a[data-role=\"patch-link\"]');
-  if (weaponPatchLink) {
-    weaponPatchLink.href = href;
-    weaponPatchLink.textContent = `Patch: ${patch}`;
-  }
+  weaponPatchLink.href = href;
+  weaponPatchLink.textContent = `Patch: ${patch}`;
+  weaponPatchLink.classList.remove('hidden');
 }
 
 // Track if enemy data has been loaded
@@ -126,16 +131,16 @@ async function boot(){
   if (TEST_MODE) {
     const testBadge = document.getElementById('testBadge');
     if (testBadge) testBadge.textContent = '• Test mode active (using mock data)';
-    const headers = ['Type','Sub','Code','Name','Atk Type','Atk Name','DMG','DUR','AP','DF','ST','PF'];
+    const headers = ['Type','Sub','Code','Name','RPM','Atk Type','Atk Name','DMG','DUR','AP','DF','ST','PF'];
     const rows = [
-      { Type:'Primary', Sub:'AR', Code:'AR-23', Name:'Liberator', 'Atk Type':'projectile', 'Atk Name':'5.5x50mm FULL METAL JACKET_P', DMG:90, DUR:22, AP:2, DF:10, ST:15, PF:10 },
-      { Type:'Primary', Sub:'AR', Code:'AR-23P', Name:'Liberator Penetrator', 'Atk Type':'projectile', 'Atk Name':'5.5x50mm PENETRATOR_P', DMG:65, DUR:15, AP:3, DF:10, ST:10, PF:10 },
-      { Type:'Secondary', Sub:'PDW', Code:'P-2', Name:'Peacemaker', 'Atk Type':'projectile', 'Atk Name':'9x20mm HOLLOW POINT_P', DMG:95, DUR:30, AP:2, DF:10, ST:15, PF:4 },
-      { Type:'Grenade', Sub:'GR', Code:'G-6', Name:'Frag', 'Atk Type':'explosion', 'Atk Name':'G-6 FRAG_E', DMG:500, DUR:50, AP:3, DF:20, ST:25, PF:40 },
-      { Type:'Grenade', Sub:'GR', Code:'G-6', Name:'Frag', 'Atk Type':'projectile', 'Atk Name':'SHRAPNEL_P x35', DMG:110, DUR:35, AP:3, DF:10, ST:10, PF:20 },
-      { Type:'Support', Sub:'MG', Code:'MG-43', Name:'Machine Gun', 'Atk Type':'projectile', 'Atk Name':'8x60mm FULL METAL JACKET_P1', DMG:90, DUR:23, AP:3, DF:10, ST:20, PF:12 },
-      { Type:'Stratagem', Sub:'ORB', Code:'-', Name:'ORBITAL PRECISION STRIKE', 'Atk Type':'projectile', 'Atk Name':'380mm HE CANNON ROUND_P', DMG:3500, DUR:3500, AP:8, DF:50, ST:50, PF:20 },
-      { Type:'Stratagem', Sub:'ORB', Code:'-', Name:'ORBITAL PRECISION STRIKE', 'Atk Type':'explosion', 'Atk Name':'380mm HE CANNON ROUND_P_IE', DMG:1000, DUR:1000, AP:6, DF:50, ST:70, PF:60 }
+      { Type:'Primary', Sub:'AR', Code:'AR-23', Name:'Liberator', RPM:640, 'Atk Type':'projectile', 'Atk Name':'5.5x50mm FULL METAL JACKET_P', DMG:90, DUR:22, AP:2, DF:10, ST:15, PF:10 },
+      { Type:'Primary', Sub:'AR', Code:'AR-23P', Name:'Liberator Penetrator', RPM:640, 'Atk Type':'projectile', 'Atk Name':'5.5x50mm PENETRATOR_P', DMG:65, DUR:15, AP:3, DF:10, ST:10, PF:10 },
+      { Type:'Secondary', Sub:'PDW', Code:'P-2', Name:'Peacemaker', RPM:900, 'Atk Type':'projectile', 'Atk Name':'9x20mm HOLLOW POINT_P', DMG:95, DUR:30, AP:2, DF:10, ST:15, PF:4 },
+      { Type:'Grenade', Sub:'GR', Code:'G-6', Name:'Frag', RPM:'', 'Atk Type':'explosion', 'Atk Name':'G-6 FRAG_E', DMG:500, DUR:50, AP:3, DF:20, ST:25, PF:40 },
+      { Type:'Grenade', Sub:'GR', Code:'G-6', Name:'Frag', RPM:'', 'Atk Type':'projectile', 'Atk Name':'SHRAPNEL_P x35', DMG:110, DUR:35, AP:3, DF:10, ST:10, PF:20 },
+      { Type:'Support', Sub:'MG', Code:'MG-43', Name:'Machine Gun', RPM:760, 'Atk Type':'projectile', 'Atk Name':'8x60mm FULL METAL JACKET_P1', DMG:90, DUR:23, AP:3, DF:10, ST:20, PF:12 },
+      { Type:'Stratagem', Sub:'ORB', Code:'-', Name:'ORBITAL PRECISION STRIKE', RPM:'', 'Atk Type':'projectile', 'Atk Name':'380mm HE CANNON ROUND_P', DMG:3500, DUR:3500, AP:8, DF:50, ST:50, PF:20 },
+      { Type:'Stratagem', Sub:'ORB', Code:'-', Name:'ORBITAL PRECISION STRIKE', RPM:'', 'Atk Type':'explosion', 'Atk Name':'380mm HE CANNON ROUND_P_IE', DMG:1000, DUR:1000, AP:6, DF:50, ST:70, PF:60 }
     ];
     ingestMatrix([headers, ...rows.map(r => headers.map(h => r[h]))]);
     // Use a clear label for mock data

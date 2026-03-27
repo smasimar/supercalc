@@ -1,0 +1,386 @@
+Enemy data refresh notes
+========================
+
+Purpose
+-------
+This repository's checked-in `enemies\enemydata.json` is curated review output,
+not a direct export from the raw Helldivers 2 `data\` folder.
+
+The repeatable workflow is now:
+
+1. Dump entity/component data from `filediver`
+2. Flatten it with `tools\flatten_entity_component_settings.py`
+3. Parse it with `tools\parser_faction_units.py`
+4. Review it with `tools\compare_enemydata.py`
+5. Curate the checked-in file instead of blindly overwriting it
+
+
+Important caveat
+----------------
+`filediver`'s `entity-component-settings-json-dumper` does detect the local
+Helldivers 2 install and load the string table, but the actual entity/component
+payload comes from embedded datalibrary blobs such as
+`datalibrary\generated_entities.dl_bin.gz`.
+
+Practical consequences:
+
+- A complete local `data\` folder is still useful for strings and lookup data
+- Missing units are not explained by an incomplete local install alone
+- A stale `filediver` datalibrary snapshot can still lag the latest game build
+- A current local `filediver` checkout is necessary, but not sufficient
+
+
+Verified reference run
+----------------------
+This workflow was first verified on 2026-03-17 with:
+
+- `filediver` commit `66e376dabcbd5782e44c79961b74b86e135aaee8`
+- Go `go1.26.1`
+- `supercalc` `tools\parser_faction_units.py`
+
+On that date, the local `filediver` checkout matched GitHub HEAD, so the
+investigated gaps were not caused by an outdated clone.
+
+The workflow was re-run on 2026-03-19 using the same `filediver` commit through
+an explicit Go path:
+
+    C:\Program Files\Go\bin\go.exe
+
+That re-run reproduced the same hybrid-only units as the 2026-03-17 check.
+
+The workflow was then re-run on 2026-03-19 after updating `filediver` to:
+
+- `76b9b7e0f38a11a02a8cb2d985eda3653babc94c`
+- release tag `v0.7.19`
+
+That newer run uses the checked-in flattener and diff helper documented below.
+
+
+Step 1: dump entity component settings
+--------------------------------------
+PowerShell:
+
+    Set-Location C:\GitHub\filediver
+    & 'C:\Program Files\Go\bin\go.exe' run .\cmd\tools\components\entity-component-settings-json-dumper > C:\temp\entity-component-settings.json
+
+
+Step 2: flatten the dump into parser_faction_units.py input shape
+-----------------------------------------------------------------
+PowerShell:
+
+    Set-Location C:\GitHub\supercalc
+    python .\tools\flatten_entity_component_settings.py --input C:\temp\entity-component-settings.json --output C:\temp\entity-component-settings-flat.json
+
+This script handles both the older direct-component shape and the newer nested
+`components.*` shape, plus these key fallbacks:
+
+- top-level `content/fac_*` key when already resolved
+- `UnitComponentData.unit_path`
+- `LocalUnitComponentData.unit_path`
+- synthesized `content/fac_<bucket>/__unresolved__/<hash>` fallback from
+  `FactionComponentData`
+- `loc_name_upper` fallback when `loc_name` is missing
+
+
+Step 3: run the existing parser
+-------------------------------
+PowerShell:
+
+    Set-Location C:\GitHub\supercalc
+    python .\tools\parser_faction_units.py --input C:\temp\entity-component-settings-flat.json --output C:\temp\enemydata-from-filediver.json
+
+
+Step 4: review before checking in
+---------------------------------
+PowerShell:
+
+    Set-Location C:\GitHub\supercalc
+    python .\tools\compare_enemydata.py --generated C:\temp\enemydata-from-filediver.json --report C:\temp\enemydata-report.json --normalized-generated C:\temp\enemydata-normalized.json
+
+Do not blindly overwrite `enemies\enemydata.json`. The generated file is review
+input, not the checked-in source of truth.
+
+The comparison helper:
+
+- normalizes `MainCap` bool vs int noise
+- treats missing `ExMult` as default `1`
+- reports added units, missing/manual-only units, and stat-changed units
+- reports name-only zone churn separately
+- carries forward existing readable zone names only when a generated hashed zone
+  has a unique safe signature match
+
+
+What the 2026-03-17 investigation found
+---------------------------------------
+Naive flattening
+  Rule: only keep entries whose top-level key already starts with `content/fac_`
+  Result: 72 units total
+  - Automaton: 34
+  - Illuminate: 11
+  - Terminid: 27
+
+Hybrid flattening
+  Rule: use top-level key first, then `UnitComponentData.unit_path`,
+  `LocalUnitComponentData.unit_path`, and finally `FactionComponentData`
+  fallbacks, plus a `loc_name_upper` fallback
+  Result: 91 units total
+  - Automaton: 44
+  - Illuminate: 15
+  - Terminid: 32
+
+Checked-in file at that time
+  `enemies\enemydata.json`: 83 units total
+  - Automaton: 42
+  - Illuminate: 13
+  - Terminid: 28
+
+
+Why the first pass looked like 11 units were missing
+----------------------------------------------------
+The initial gaps were mostly adapter issues, not missing game files:
+
+- Many units exist in the raw `filediver` dump but use unresolved hashed
+  top-level keys instead of `content/fac_*`
+- `Shredder Tank` has `loc_name_upper` and `loc_name_plural`, but no `loc_name`
+- `Heavy Fusion Cannon` has a usable `UnitComponentData.unit_path`, but no
+  `FactionComponentData`
+
+In other words, the raw dump often had the data; the missing units came from
+assuming that a valid entry must already have both:
+
+- a resolved `content/fac_*` top-level key
+- a populated `loc_name`
+
+
+Missing / extra units after hybrid flattening
+---------------------------------------------
+Old-only (still not reproduced automatically)
+
+- Automaton: `Factory Strider Gatling Gun`
+
+Hybrid-only (present in generated output, absent from checked-in file)
+
+- Automaton: `Automaton Dropship`, `Bulk Fabricator`, `Fabricator`
+- Illuminate: `Gazer`, `Overship`
+- Terminid: `Gatling Sentry`, `Infested Tower`, `Shrieker Nest`, `Spore Lung`
+
+Interpretation:
+
+- `Factory Strider Gatling Gun` does not appear as a named top-level entity in
+  the current `filediver` dump. Treat it as a manual or curated entry until a
+  better upstream source is identified.
+- The hybrid-only units are probably valid objects, but they change the scope
+  of what counts as an "enemy" target in this repository. Review them manually
+  before adding them.
+
+2026-03-19 curation decision:
+
+- add: `Automaton Dropship`, `Bulk Fabricator`, `Fabricator`, `Gazer`,
+  `Infested Tower`, `Shrieker Nest`, `Spore Lung`
+- exclude for now: `Overship`, `Gatling Sentry`
+
+
+Known overlap differences that need review
+------------------------------------------
+Most overlapping units differ only in serialization details such as:
+
+- `MainCap: 1` versus `MainCap: true`
+- omitted default `ExMult: 1`
+
+The verified runs found a small number of meaningful differences:
+
+- `Automaton -> Devastator`
+  - one overlapping zone changed from:
+    - checked-in: `health 500`, `AV 1`, `ToMain% 0`
+    - hybrid output: `health 600`, `AV 2`, `ToMain% 0.4`
+
+- `Automaton -> Heavy Fusion Repeater`
+  - checked-in health: `500`
+  - hybrid output health: `300`
+  - checked-in zones: `2`
+  - hybrid output zones: `1`
+
+- `Automaton -> Trooper`
+  - one overlapping zone changed from:
+    - checked-in: `health 90`, `AV 0`
+    - hybrid output: `health 30`, `AV 2`
+
+- `Terminid -> Bile Spitter`
+  - checked-in zones: `8`
+  - hybrid output zones: `4`
+
+- `Terminid -> Pouncer`
+  - checked-in zones: `8`
+  - hybrid output zones: `4`
+
+- `Terminid -> Scavenger`
+  - checked-in zones: `8`
+  - hybrid output zones: `4`
+
+- `Terminid -> Spore Burst Scavenger`
+  - checked-in zones: `8`
+  - hybrid output zones: `4`
+
+Most other overlapping differences observed in the reruns were zone label noise or
+missing `ExMult` values in the generated output. Those should be treated as
+adapter/source-shape differences until proven otherwise.
+
+These meaningful stat or zone-count changes need a human decision before
+replacing the checked-in data.
+
+
+Latest upstream-derived review summary
+--------------------------------------
+The 2026-03-19 run against `filediver` `76b9b7e` / `v0.7.19` produced:
+
+- generated output: `94` units total
+  - Automaton: `44`
+  - Illuminate: `18`
+  - Terminid: `32`
+- checked-in file at comparison time: `90` units total
+- comparison summary:
+  - added units: `5`
+  - missing/manual-only units: `1`
+  - stat-changed units: `25`
+  - name-only units: `29`
+  - safe aliases applied by the review helper: `34`
+
+Added units in the generated output:
+
+- Illuminate: `Gatekeeper`, `Obtruder`, `Overship`, `Veracitor`
+- Terminid: `Gatling Sentry`
+
+Current-only / manual entry:
+
+- Automaton: `Factory Strider Gatling Gun`
+
+Interpretation:
+
+- the updated upstream dump now surfaces more candidate units than the older
+  hybrid workflow
+- `Overship` and `Gatling Sentry` are still intentionally excluded unless that
+  scope decision changes
+- the new Illuminate additions (`Gatekeeper`, `Obtruder`, `Veracitor`) need
+  manual review before they should be added to the checked-in dataset
+- the report should be treated as the review queue, not as an auto-apply list
+
+
+Current branch curation status
+------------------------------
+On branch `3-refresh-enemydata`, the checked-in file has now been updated to
+include the three new Illuminate patch units:
+
+- `Gatekeeper`
+- `Obtruder`
+- `Veracitor`
+
+Current comparison summary after those additions:
+
+- checked-in file: `93` units total
+- generated file: `94` units total
+- added units still excluded from the checked-in file: `2`
+  - `Overship`
+  - `Gatling Sentry`
+- current-only / manual entry: `Factory Strider Gatling Gun`
+- remaining report totals:
+  - stat-changed units: `22`
+  - name-only units: `31`
+  - safe aliases applied by the review helper: `36`
+
+Why the three Illuminate additions were accepted despite opaque zone names:
+
+- they are legitimate new patch enemies rather than edge-case props or
+  deployables
+- their top-level unit names are stable and useful even if some sub-zone labels
+  are still hashed
+- waiting for perfect zone labels would block broader enemy coverage for no
+  gameplay gain
+
+Additional branch curation applied after review:
+
+- `Automaton -> Devastator`
+  - kept the readable `backpack` label
+  - updated it from `500 HP / AV 1 / ToMain 0` to
+    `600 HP / AV 2 / ToMain 0.4`
+
+- `Automaton -> Trooper`
+  - the generated data keeps `leg_left` as-is
+  - the old `leg_right` weak point is replaced by a new `backpack` weak point
+  - applied checked-in change:
+    - removed `leg_right` as `90 HP / AV 0 / ToMain 0.65`
+    - added `backpack` as `30 HP / AV 2 / ToMain 0.65`
+
+
+Hive Guard curation note
+------------------------
+The updated upstream-derived data did show a real `Hive Guard` change.
+
+Curated interpretation applied to `enemies\enemydata.json`:
+
+- rear legs unchanged:
+  - `health 125`
+  - `AV 1`
+  - `ToMain% 0.35`
+- front legs reduced:
+  - `health 125`
+  - `AV 1`
+  - `ToMain% 0.45`
+- claws increased:
+  - `health 125`
+  - `AV 3`
+  - `ToMain% 0.45`
+
+Why this was curated manually:
+
+- the generated upstream output used opaque hash names for the new `AV 1 /
+  ToMain 0.45` pair
+- the raw generated `r_claw` / `l_claw` zones now carry the old front-leg stat
+  profile
+- preserving readable front-leg labels in the checked-in file is more useful
+  than checking in the raw hashed names verbatim
+
+
+Other remaining diffs worth watching
+------------------------------------
+The latest upstream report still contains many `stat_changed_units`, but not all
+of them are equally trustworthy. The clearest remaining HP / AV / transfer
+changes are:
+
+- `Automaton -> Heavy Fusion Repeater`
+  - top-level health changes from `500` to `300`
+  - checked-in shape has two `500 HP / AV 4 / ToMain 1` zones (`Main`, `gun`)
+  - generated shape collapses to one `300 HP / AV 3 / ToMain 1` zone (`Main`)
+
+Everything else currently in `stat_changed_units` needs more caution:
+
+- several Automaton and Terminid entries appear to be part regrouping plus hash
+  renaming rather than clean top-level HP changes
+- `Illuminate -> Fleshmob` and `Illuminate -> Leviathan` still look mixed
+  between real part remapping and generated-name churn
+- the Charger / Titan / Hive Lord family diffs are currently better treated as
+  review candidates than as auto-apply gameplay changes
+
+
+Specific answers from the investigation
+---------------------------------------
+- The older local `filediver` checkout was outdated relative to the later
+  `76b9b7e` update that changed the embedded datalibrary.
+- The local game `data\` folder is not the main reason units looked missing.
+- Agitators are present in the generated output.
+- `Agitator` health from the verified run: `750`
+
+
+Recommended workflow for future refreshes
+-----------------------------------------
+1. Update `filediver` to latest GitHub HEAD
+2. Re-run the entity dump
+3. Run `tools\flatten_entity_component_settings.py`
+4. Run `tools\parser_faction_units.py`
+5. Run `tools\compare_enemydata.py`
+6. Manually review:
+   - `Factory Strider Gatling Gun`
+   - any newly surfaced units
+   - `stat_changed_units`
+   - `name_only_units`
+   - any zones whose generated names are still opaque hashes
+7. Only then update the checked-in file
