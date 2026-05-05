@@ -189,7 +189,7 @@ export function ingestHeadersAndRows(newHeaders, newRows) {
   buildIndexes();
 }
 
-export async function loadCSV(sourceUrl = LOCAL_CSV_URL){
+export async function loadCSV(sourceUrl = PUBLISHED_CSV_URL){
   const res = await fetch(buildCsvRequestUrl(sourceUrl), { cache: 'no-store' });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
 

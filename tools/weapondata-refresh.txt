@@ -3,43 +3,40 @@ Weapon data refresh notes
 
 Source of truth
 ---------------
-The app now loads weapon data from the checked-in file:
+The app now loads weapon data at runtime from the published Google Sheets CSV:
 
-    weapons\weapondata.csv
+    https://docs.google.com/spreadsheets/d/e/2PACX-1vTeLqZ5-maEmzrM6SUDMRXpHEhV0tQImiBdgMCil9lSA11IiY_nGdamE54W7DAiSXn1XuJljdF4P537/pub?gid=0&single=true&output=csv
 
-That file is the source of truth for the app. The old Google Sheets export is
-now just an import source, not the runtime dependency.
+That sheet export is the source of truth for the app.
 
 
 Why this changed
 ----------------
-Previously the app fetched a live CSV from Google Sheets at runtime. That made
-the site dependent on an external spreadsheet and made it awkward to add local
-fields like `RPM` for TTK work.
+We previously switched the app to a checked-in CSV to avoid external runtime
+dependency while adding `RPM`. Now that `RPM` is implemented in the sheet, we
+can rely on the sheet again.
 
-Keeping the CSV in-repo makes the app self-contained and lets future edits be
-reviewed and committed alongside code changes.
+Note: the repository may still contain `weapons\weapondata.csv` as a local copy
+or scratchpad, but it is not used by default at runtime.
 
 
 Refresh workflow
 ----------------
-1. Download the latest Google Sheets CSV export from:
+1. Update the Google Sheet and verify the published CSV export:
 
        https://docs.google.com/spreadsheets/d/e/2PACX-1vTeLqZ5-maEmzrM6SUDMRXpHEhV0tQImiBdgMCil9lSA11IiY_nGdamE54W7DAiSXn1XuJljdF4P537/pub?gid=0&single=true&output=csv
 
-2. Replace `weapons\weapondata.csv` with that export.
-
-3. Generate a fresh `filediver` entity/component dump:
+2. (Optional) Generate a fresh `filediver` entity/component dump:
 
        Set-Location C:\GitHub\filediver
        go run .\cmd\tools\components\entity-component-settings-json-dumper > C:\temp\entity-component-settings.json
 
-4. Merge RPM values from the dump into the checked-in CSV:
+3. (Optional) Merge RPM values from the dump into a local CSV copy for audit/backfill:
 
        Set-Location C:\GitHub\supercalc
        python .\tools\merge_weapon_rpm_from_filediver.py --dump C:\temp\entity-component-settings.json --csv .\weapons\weapondata.csv
 
-5. Review unresolved rows and odd values.
+4. Review unresolved rows and odd values.
 
 6. Use wiki raw JSON only as a fallback/audit source for gaps that `filediver`
    does not cover cleanly. The current best raw source is:
