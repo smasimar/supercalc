@@ -192,7 +192,171 @@
       ],
       "health": 750
     },
-    "Annihilator Tank": {
+    "Agitator (Female)": {
+      "damageable_zones": [
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0.2,
+          "ExMult": 1,
+          "ExTarget": "Part",
+          "MainCap": 0,
+          "ToMain%": 1,
+          "health": 750,
+          "zone_name": "Main"
+        },
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 0.75,
+          "health": 300,
+          "zone_name": "[unknown]"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 0.45,
+          "ExTarget": "Part",
+          "MainCap": 1,
+          "ToMain%": 0.8,
+          "health": 300,
+          "zone_name": "[unknown]"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 0.45,
+          "ExTarget": "Part",
+          "MainCap": 1,
+          "ToMain%": 0.8,
+          "health": 300,
+          "zone_name": "[unknown]"
+        },
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 0.75,
+          "health": 300,
+          "zone_name": "[unknown]"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 150,
+          "zone_name": "[unknown]"
+        },
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 0,
+          "ToMain%": 0.75,
+          "health": 1400,
+          "zone_name": "[unknown]"
+        },
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 0,
+          "ToMain%": 0.75,
+          "health": 1400,
+          "zone_name": "[unknown]"
+        },
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 0,
+          "ToMain%": 1,
+          "health": 1400,
+          "zone_name": "pelvis"
+        },
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 0,
+          "ToMain%": 1,
+          "health": 1200,
+          "zone_name": "[unknown]"
+        },
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 0.35,
+          "ExTarget": "Part",
+          "MainCap": 0,
+          "ToMain%": 0.3,
+          "health": 300,
+          "zone_name": "[unknown]"
+        },
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 0.35,
+          "ExTarget": "Part",
+          "MainCap": 0,
+          "ToMain%": 0.3,
+          "health": 200,
+          "zone_name": "[unknown]"
+        },
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 0.35,
+          "ExTarget": "Part",
+          "MainCap": 0,
+          "ToMain%": 0.3,
+          "health": 200,
+          "zone_name": "[unknown]"
+        },
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 0.35,
+          "ExTarget": "Part",
+          "MainCap": 0,
+          "ToMain%": 0.3,
+          "health": 200,
+          "zone_name": "[unknown]"
+        }
+      ],
+      "health": 750
+    },
+    "Annihilator Tank (Heavycannon)": {
       "damageable_zones": [
         {
           "AV": 5,
@@ -275,7 +439,7 @@
       ],
       "health": 4000
     },
-    "Assault Raider": {
+    "Assault Raider (Jump Melee)": {
       "damageable_zones": [
         {
           "AV": 0,
@@ -417,7 +581,7 @@
       ],
       "health": 2100
     },
-    "Barrager Tank": {
+    "Barrager Tank (Rocketlauncher)": {
       "damageable_zones": [
         {
           "AV": 5,
@@ -501,6 +665,138 @@
       "health": 4000
     },
     "Berserker": {
+      "damageable_zones": [
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 750,
+          "zone_name": "Main"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 110,
+          "zone_name": "head"
+        },
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0.4,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 425,
+          "zone_name": "chest_left"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 350,
+          "zone_name": "boss"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.65,
+          "health": 600,
+          "zone_name": "pelvis"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 0,
+          "health": 180,
+          "zone_name": "shoulderplate_left"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 0,
+          "health": 180,
+          "zone_name": "shoulderplate_right"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0.3,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 0.5,
+          "health": 260,
+          "zone_name": "right_arm"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0.3,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 0.5,
+          "health": 260,
+          "zone_name": "left_arm"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0.3,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0,
+          "health": -1,
+          "zone_name": "right_leg"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0.3,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0,
+          "health": -1,
+          "zone_name": "left_leg"
+        }
+      ],
+      "health": 750
+    },
+    "Berserker (Iron Fleet)": {
       "damageable_zones": [
         {
           "AV": 0,
@@ -632,7 +928,271 @@
       ],
       "health": 1000
     },
-    "Brawler": {
+    "Berserker (Ivory Legion)": {
+      "damageable_zones": [
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 750,
+          "zone_name": "Main"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 110,
+          "zone_name": "head"
+        },
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0.4,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 425,
+          "zone_name": "chest_left"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 350,
+          "zone_name": "boss"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.65,
+          "health": 600,
+          "zone_name": "pelvis"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 0,
+          "health": 180,
+          "zone_name": "shoulderplate_left"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 0,
+          "health": 180,
+          "zone_name": "shoulderplate_right"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0.3,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 0.5,
+          "health": 260,
+          "zone_name": "right_arm"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0.3,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 0.5,
+          "health": 260,
+          "zone_name": "left_arm"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0.3,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0,
+          "health": -1,
+          "zone_name": "right_leg"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0.3,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0,
+          "health": -1,
+          "zone_name": "left_leg"
+        }
+      ],
+      "health": 750
+    },
+    "Berserker (Jumppack)": {
+      "damageable_zones": [
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 750,
+          "zone_name": "Main"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 110,
+          "zone_name": "head"
+        },
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0.4,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 425,
+          "zone_name": "chest_left"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 350,
+          "zone_name": "boss"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.65,
+          "health": 600,
+          "zone_name": "pelvis"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 0,
+          "health": 180,
+          "zone_name": "shoulderplate_left"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 0,
+          "health": 180,
+          "zone_name": "shoulderplate_right"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0.3,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 0.5,
+          "health": 260,
+          "zone_name": "right_arm"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0.3,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 0.5,
+          "health": 260,
+          "zone_name": "left_arm"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0.3,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0,
+          "health": -1,
+          "zone_name": "right_leg"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0.3,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0,
+          "health": -1,
+          "zone_name": "left_leg"
+        }
+      ],
+      "health": 750
+    },
+    "Brawler (Melee)": {
       "damageable_zones": [
         {
           "AV": 0,
@@ -719,6 +1279,50 @@
       "health": 125
     },
     "Cannon Turret": {
+      "damageable_zones": [
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 2100,
+          "zone_name": "Main"
+        }
+      ],
+      "health": 2100
+    },
+    "Cannon Turret (2)": {
+      "damageable_zones": [
+        {
+          "AV": 5,
+          "Con": 0,
+          "Dur%": 1,
+          "ExMult": 0.5,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 900,
+          "zone_name": "Main"
+        },
+        {
+          "AV": 5,
+          "Con": 0,
+          "Dur%": 1,
+          "ExMult": 0.5,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": -1,
+          "zone_name": "Gun"
+        }
+      ],
+      "health": 900
+    },
+    "Cannon Turret (3)": {
       "damageable_zones": [
         {
           "AV": 5,
@@ -844,7 +1448,179 @@
       ],
       "health": 125
     },
-    "Conflagration Devastator": {
+    "Commissar (2)": {
+      "damageable_zones": [
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 125,
+          "zone_name": "Main"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 40,
+          "zone_name": "head"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 100,
+          "zone_name": "chest"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.5,
+          "health": 65,
+          "zone_name": "left_arm"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.5,
+          "health": 65,
+          "zone_name": "right_arm"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.65,
+          "health": 90,
+          "zone_name": "leg_right"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.65,
+          "health": 90,
+          "zone_name": "leg_left"
+        }
+      ],
+      "health": 125
+    },
+    "Commissar (Jump)": {
+      "damageable_zones": [
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 125,
+          "zone_name": "Main"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 40,
+          "zone_name": "head"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 100,
+          "zone_name": "chest"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.5,
+          "health": 65,
+          "zone_name": "left_arm"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.5,
+          "health": 65,
+          "zone_name": "right_arm"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.65,
+          "health": 90,
+          "zone_name": "leg_right"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.65,
+          "health": 90,
+          "zone_name": "leg_left"
+        }
+      ],
+      "health": 125
+    },
+    "Conflagration Devastator (Shotgun Ivory Legion)": {
       "damageable_zones": [
         {
           "AV": 2,
@@ -1152,6 +1928,474 @@
           "ToMain%": 0.6,
           "health": 500,
           "zone_name": "left_leg"
+        }
+      ],
+      "health": 750
+    },
+    "Devastator (Iron Fleet)": {
+      "damageable_zones": [
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 800,
+          "zone_name": "Main"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 125,
+          "zone_name": "head"
+        },
+        {
+          "AV": 3,
+          "Con": 0,
+          "Dur%": 0.3,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 425,
+          "zone_name": "chest"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 350,
+          "zone_name": "boss"
+        },
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.75,
+          "health": 500,
+          "zone_name": "pelvis"
+        },
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 0.25,
+          "health": 150,
+          "zone_name": "shoulderplate_left"
+        },
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 0.25,
+          "health": 150,
+          "zone_name": "shoulderplate_right"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Part",
+          "MainCap": 0,
+          "ToMain%": 0.5,
+          "health": 300,
+          "zone_name": "right_arm"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Part",
+          "MainCap": 0,
+          "ToMain%": 0.5,
+          "health": 300,
+          "zone_name": "left_arm"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.75,
+          "health": 500,
+          "zone_name": "right_hip"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.75,
+          "health": 500,
+          "zone_name": "right_hip"
+        },
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.6,
+          "health": 500,
+          "zone_name": "right_leg"
+        },
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.6,
+          "health": 500,
+          "zone_name": "left_leg"
+        }
+      ],
+      "health": 800
+    },
+    "Devastator (Ivory Legion)": {
+      "damageable_zones": [
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 750,
+          "zone_name": "Main"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 110,
+          "zone_name": "head"
+        },
+        {
+          "AV": 3,
+          "Con": 0,
+          "Dur%": 0.3,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 425,
+          "zone_name": "chest"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 350,
+          "zone_name": "boss"
+        },
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.75,
+          "health": 500,
+          "zone_name": "pelvis"
+        },
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 0.25,
+          "health": 150,
+          "zone_name": "shoulderplate_left"
+        },
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 0.25,
+          "health": 150,
+          "zone_name": "shoulderplate_right"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.5,
+          "health": 260,
+          "zone_name": "right_arm"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.5,
+          "health": 260,
+          "zone_name": "left_arm"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.75,
+          "health": 500,
+          "zone_name": "right_hip"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.75,
+          "health": 500,
+          "zone_name": "right_hip"
+        },
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0.3,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.6,
+          "health": 500,
+          "zone_name": "right_leg"
+        },
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0.3,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.6,
+          "health": 500,
+          "zone_name": "left_leg"
+        }
+      ],
+      "health": 750
+    },
+    "Devastator (Jetpack Standard)": {
+      "damageable_zones": [
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 750,
+          "zone_name": "Main"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 110,
+          "zone_name": "head"
+        },
+        {
+          "AV": 3,
+          "Con": 0,
+          "Dur%": 0.3,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 425,
+          "zone_name": "chest"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 350,
+          "zone_name": "boss"
+        },
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.75,
+          "health": 500,
+          "zone_name": "pelvis"
+        },
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 0.25,
+          "health": 150,
+          "zone_name": "shoulderplate_left"
+        },
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 0.25,
+          "health": 150,
+          "zone_name": "shoulderplate_right"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.5,
+          "health": 260,
+          "zone_name": "right_arm"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.5,
+          "health": 260,
+          "zone_name": "left_arm"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.75,
+          "health": 500,
+          "zone_name": "right_hip"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.75,
+          "health": 500,
+          "zone_name": "right_hip"
+        },
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0.3,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.6,
+          "health": 500,
+          "zone_name": "right_leg"
+        },
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0.3,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.6,
+          "health": 500,
+          "zone_name": "left_leg"
         },
         {
           "AV": 1,
@@ -1168,7 +2412,417 @@
       ],
       "health": 750
     },
+    "Devastator (Jumppack)": {
+      "damageable_zones": [
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 750,
+          "zone_name": "Main"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 110,
+          "zone_name": "head"
+        },
+        {
+          "AV": 3,
+          "Con": 0,
+          "Dur%": 0.3,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 425,
+          "zone_name": "chest"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 350,
+          "zone_name": "boss"
+        },
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.75,
+          "health": 500,
+          "zone_name": "pelvis"
+        },
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 0.25,
+          "health": 150,
+          "zone_name": "shoulderplate_left"
+        },
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 0.25,
+          "health": 150,
+          "zone_name": "shoulderplate_right"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.5,
+          "health": 260,
+          "zone_name": "right_arm"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.5,
+          "health": 260,
+          "zone_name": "left_arm"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.75,
+          "health": 500,
+          "zone_name": "right_hip"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.75,
+          "health": 500,
+          "zone_name": "right_hip"
+        },
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0.3,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.6,
+          "health": 500,
+          "zone_name": "right_leg"
+        },
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0.3,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.6,
+          "health": 500,
+          "zone_name": "left_leg"
+        }
+      ],
+      "health": 750
+    },
+    "Devastator (Riotgunner)": {
+      "damageable_zones": [
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 750,
+          "zone_name": "Main"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 110,
+          "zone_name": "head"
+        },
+        {
+          "AV": 3,
+          "Con": 0,
+          "Dur%": 0.3,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 425,
+          "zone_name": "chest"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 350,
+          "zone_name": "boss"
+        },
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.75,
+          "health": 500,
+          "zone_name": "pelvis"
+        },
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 0.25,
+          "health": 150,
+          "zone_name": "shoulderplate_left"
+        },
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 0.25,
+          "health": 150,
+          "zone_name": "shoulderplate_right"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.5,
+          "health": 260,
+          "zone_name": "right_arm"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.5,
+          "health": 260,
+          "zone_name": "left_arm"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.75,
+          "health": 500,
+          "zone_name": "right_hip"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.75,
+          "health": 500,
+          "zone_name": "right_hip"
+        },
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0.3,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.6,
+          "health": 500,
+          "zone_name": "right_leg"
+        },
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0.3,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.6,
+          "health": 500,
+          "zone_name": "left_leg"
+        },
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.4,
+          "health": 600,
+          "zone_name": "backpack"
+        }
+      ],
+      "health": 750
+    },
     "Dropship": {
+      "damageable_zones": [
+        {
+          "AV": 5,
+          "Con": 0,
+          "Dur%": 1,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 3500,
+          "zone_name": "Main"
+        },
+        {
+          "AV": 5,
+          "Con": 0,
+          "Dur%": 1,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": -1,
+          "zone_name": "body"
+        },
+        {
+          "AV": 5,
+          "Con": 0,
+          "Dur%": 1,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": -1,
+          "zone_name": "back_body"
+        },
+        {
+          "AV": 5,
+          "Con": 0,
+          "Dur%": 1,
+          "ExMult": 1,
+          "ExTarget": "Part",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0,
+          "health": 1500,
+          "zone_name": "front_left_thruster"
+        },
+        {
+          "AV": 5,
+          "Con": 0,
+          "Dur%": 1,
+          "ExMult": 1,
+          "ExTarget": "Part",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0,
+          "health": 1500,
+          "zone_name": "front_right_thruster"
+        },
+        {
+          "AV": 5,
+          "Con": 0,
+          "Dur%": 1,
+          "ExMult": 1,
+          "ExTarget": "Part",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0,
+          "health": 1500,
+          "zone_name": "rear_left_thruster"
+        },
+        {
+          "AV": 5,
+          "Con": 0,
+          "Dur%": 1,
+          "ExMult": 1,
+          "ExTarget": "Part",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0,
+          "health": 1500,
+          "zone_name": "rear_right_thruster"
+        }
+      ],
+      "health": 3500
+    },
+    "Dropship (2)": {
       "damageable_zones": [
         {
           "AV": 5,
@@ -1644,7 +3298,461 @@
       ],
       "health": 10000
     },
+    "Factory Strider (Jammer)": {
+      "damageable_zones": [
+        {
+          "AV": 4,
+          "Con": 0,
+          "Dur%": 1,
+          "ExMult": 0.6,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 10000,
+          "zone_name": "Main"
+        },
+        {
+          "AV": 5,
+          "Con": 0,
+          "Dur%": 1,
+          "ExMult": 0.6,
+          "ExTarget": "Part",
+          "MainCap": 1,
+          "ToMain%": 0.3,
+          "health": 1500,
+          "zone_name": "right_front_upper_leg_armor"
+        },
+        {
+          "AV": 5,
+          "Con": 0,
+          "Dur%": 1,
+          "ExMult": 0.6,
+          "ExTarget": "Part",
+          "MainCap": 1,
+          "ToMain%": 0.2,
+          "health": 800,
+          "zone_name": "right_front_upper_knee_armor"
+        },
+        {
+          "AV": 5,
+          "Con": 0,
+          "Dur%": 1,
+          "ExMult": 0.6,
+          "ExTarget": "Part",
+          "MainCap": 1,
+          "ToMain%": 0.3,
+          "health": 1500,
+          "zone_name": "right_front_lower_leg_armor"
+        },
+        {
+          "AV": 4,
+          "Con": 2000,
+          "Dur%": 1,
+          "ExMult": 0.6,
+          "ExTarget": "Part",
+          "IsFatal": true,
+          "MainCap": 0,
+          "ToMain%": 0.4,
+          "health": 1500,
+          "zone_name": "right_front_leg"
+        },
+        {
+          "AV": 5,
+          "Con": 0,
+          "Dur%": 1,
+          "ExMult": 0.6,
+          "ExTarget": "Part",
+          "MainCap": 1,
+          "ToMain%": 0.3,
+          "health": 1500,
+          "zone_name": "right_back_upper_leg_armor"
+        },
+        {
+          "AV": 5,
+          "Con": 0,
+          "Dur%": 1,
+          "ExMult": 0.6,
+          "ExTarget": "Part",
+          "MainCap": 1,
+          "ToMain%": 0.2,
+          "health": 800,
+          "zone_name": "right_back_upper_knee_armor"
+        },
+        {
+          "AV": 5,
+          "Con": 0,
+          "Dur%": 1,
+          "ExMult": 0.6,
+          "ExTarget": "Part",
+          "MainCap": 1,
+          "ToMain%": 0.3,
+          "health": 1500,
+          "zone_name": "right_back_lower_leg_armor"
+        },
+        {
+          "AV": 4,
+          "Con": 2000,
+          "Dur%": 1,
+          "ExMult": 0.6,
+          "ExTarget": "Part",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.4,
+          "health": 1500,
+          "zone_name": "right_back_leg"
+        },
+        {
+          "AV": 5,
+          "Con": 0,
+          "Dur%": 1,
+          "ExMult": 0.6,
+          "ExTarget": "Part",
+          "MainCap": 1,
+          "ToMain%": 0.3,
+          "health": 1500,
+          "zone_name": "left_front_upper_leg_armor"
+        },
+        {
+          "AV": 5,
+          "Con": 0,
+          "Dur%": 1,
+          "ExMult": 0.6,
+          "ExTarget": "Part",
+          "MainCap": 1,
+          "ToMain%": 0.2,
+          "health": 800,
+          "zone_name": "left_front_upper_knee_armor"
+        },
+        {
+          "AV": 5,
+          "Con": 0,
+          "Dur%": 1,
+          "ExMult": 0.6,
+          "ExTarget": "Part",
+          "MainCap": 1,
+          "ToMain%": 0.3,
+          "health": 1500,
+          "zone_name": "left_front_lower_leg_armor"
+        },
+        {
+          "AV": 4,
+          "Con": 2000,
+          "Dur%": 1,
+          "ExMult": 0.6,
+          "ExTarget": "Part",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.4,
+          "health": 1500,
+          "zone_name": "left_front_leg"
+        },
+        {
+          "AV": 5,
+          "Con": 0,
+          "Dur%": 1,
+          "ExMult": 0.6,
+          "ExTarget": "Part",
+          "MainCap": 1,
+          "ToMain%": 0.3,
+          "health": 1500,
+          "zone_name": "left_back_upper_leg_armor"
+        },
+        {
+          "AV": 5,
+          "Con": 0,
+          "Dur%": 1,
+          "ExMult": 0.6,
+          "ExTarget": "Part",
+          "MainCap": 1,
+          "ToMain%": 0.2,
+          "health": 800,
+          "zone_name": "left_back_upper_knee_armor"
+        },
+        {
+          "AV": 5,
+          "Con": 0,
+          "Dur%": 1,
+          "ExMult": 0.6,
+          "ExTarget": "Part",
+          "MainCap": 1,
+          "ToMain%": 0.3,
+          "health": 1500,
+          "zone_name": "left_back_lower_leg_armor"
+        },
+        {
+          "AV": 4,
+          "Con": 2000,
+          "Dur%": 1,
+          "ExMult": 0.6,
+          "ExTarget": "Part",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.4,
+          "health": 1500,
+          "zone_name": "left_back_leg"
+        },
+        {
+          "AV": 5,
+          "Con": 0,
+          "Dur%": 1,
+          "ExMult": 0.6,
+          "ExTarget": "Part",
+          "MainCap": 1,
+          "ToMain%": 0.3,
+          "health": 1500,
+          "zone_name": "head_armor"
+        },
+        {
+          "AV": 4,
+          "Con": 0,
+          "Dur%": 1,
+          "ExMult": 0.6,
+          "ExTarget": "Part",
+          "IsFatal": true,
+          "MainCap": 0,
+          "ToMain%": 1,
+          "health": 2500,
+          "zone_name": "head_body"
+        },
+        {
+          "AV": 5,
+          "Con": 0,
+          "Dur%": 1,
+          "ExMult": 0.6,
+          "ExTarget": "Part",
+          "MainCap": 1,
+          "ToMain%": 0.3,
+          "health": 1500,
+          "zone_name": "neck_armor"
+        },
+        {
+          "AV": 4,
+          "Con": 0,
+          "Dur%": 1,
+          "ExMult": 0.6,
+          "ExTarget": "Part",
+          "IsFatal": true,
+          "MainCap": 0,
+          "ToMain%": 1,
+          "health": 2500,
+          "zone_name": "neck_body"
+        },
+        {
+          "AV": 5,
+          "Con": 0,
+          "Dur%": 1,
+          "ExMult": 0.6,
+          "ExTarget": "Part",
+          "MainCap": 1,
+          "ToMain%": 0.3,
+          "health": 2200,
+          "zone_name": "front_armor"
+        },
+        {
+          "AV": 5,
+          "Con": 0,
+          "Dur%": 1,
+          "ExMult": 0.6,
+          "ExTarget": "Part",
+          "MainCap": 1,
+          "ToMain%": 0.3,
+          "health": 2200,
+          "zone_name": "left_armor"
+        },
+        {
+          "AV": 5,
+          "Con": 0,
+          "Dur%": 1,
+          "ExMult": 0.6,
+          "ExTarget": "Part",
+          "MainCap": 1,
+          "ToMain%": 0.3,
+          "health": 2200,
+          "zone_name": "right_armor"
+        },
+        {
+          "AV": 5,
+          "Con": 0,
+          "Dur%": 1,
+          "ExMult": 0.6,
+          "ExTarget": "Part",
+          "MainCap": 1,
+          "ToMain%": 0.3,
+          "health": 2200,
+          "zone_name": "front_top_armor"
+        },
+        {
+          "AV": 4,
+          "Con": 0,
+          "Dur%": 1,
+          "ExMult": 0.6,
+          "ExTarget": "Part",
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 2000,
+          "zone_name": "engine_front"
+        },
+        {
+          "AV": 5,
+          "Con": 0,
+          "Dur%": 1,
+          "ExMult": 0.6,
+          "ExTarget": "Part",
+          "MainCap": 1,
+          "ToMain%": 0.5,
+          "health": 2200,
+          "zone_name": "engine_rear"
+        },
+        {
+          "AV": 3,
+          "Con": 0,
+          "Dur%": 0.75,
+          "ExMult": 0.6,
+          "ExTarget": "Part",
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 1500,
+          "zone_name": "engine_rear_weakspot"
+        },
+        {
+          "AV": 5,
+          "Con": 0,
+          "Dur%": 1,
+          "ExMult": 0.6,
+          "ExTarget": "Part",
+          "MainCap": 1,
+          "ToMain%": 0.3,
+          "health": 2200,
+          "zone_name": "back_armor"
+        },
+        {
+          "AV": 3,
+          "Con": 1200,
+          "Dur%": 1,
+          "ExMult": 0.6,
+          "ExTarget": "Part",
+          "IsFatal": true,
+          "MainCap": 0,
+          "ToMain%": 0.5,
+          "health": 1200,
+          "zone_name": "front_body"
+        },
+        {
+          "AV": 3,
+          "Con": 1200,
+          "Dur%": 1,
+          "ExMult": 0.6,
+          "ExTarget": "Part",
+          "IsFatal": true,
+          "MainCap": 0,
+          "ToMain%": 1,
+          "health": 1200,
+          "zone_name": "right_body"
+        },
+        {
+          "AV": 3,
+          "Con": 1200,
+          "Dur%": 1,
+          "ExMult": 0.6,
+          "ExTarget": "Part",
+          "IsFatal": true,
+          "MainCap": 0,
+          "ToMain%": 1,
+          "health": 1200,
+          "zone_name": "left_body"
+        },
+        {
+          "AV": 3,
+          "Con": 1200,
+          "Dur%": 1,
+          "ExMult": 0.6,
+          "ExTarget": "Part",
+          "IsFatal": true,
+          "MainCap": 0,
+          "ToMain%": 1,
+          "health": 1200,
+          "zone_name": "back_body"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 1,
+          "ExMult": 0.6,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 0,
+          "ToMain%": 1,
+          "health": 500,
+          "zone_name": "weakspot_engine"
+        }
+      ],
+      "health": 10000
+    },
     "Factory Strider Gatling Gun": {
+      "damageable_zones": [
+        {
+          "AV": 3,
+          "Con": 0,
+          "Dur%": 1,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 300,
+          "zone_name": "Main"
+        }
+      ],
+      "health": 300
+    },
+    "Factory Strider Gatling Gun (Back Left)": {
+      "damageable_zones": [
+        {
+          "AV": 3,
+          "Con": 0,
+          "Dur%": 1,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 300,
+          "zone_name": "Main"
+        }
+      ],
+      "health": 300
+    },
+    "Factory Strider Gatling Gun (Back Right)": {
+      "damageable_zones": [
+        {
+          "AV": 3,
+          "Con": 0,
+          "Dur%": 1,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 300,
+          "zone_name": "Main"
+        }
+      ],
+      "health": 300
+    },
+    "Factory Strider Gatling Gun (Front Left)": {
+      "damageable_zones": [
+        {
+          "AV": 3,
+          "Con": 0,
+          "Dur%": 1,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 300,
+          "zone_name": "Main"
+        }
+      ],
+      "health": 300
+    },
+    "Factory Strider Gatling Gun (Front Right)": {
       "damageable_zones": [
         {
           "AV": 3,
@@ -1715,6 +3823,38 @@
         }
       ],
       "health": 500
+    },
+    "Fusion Repeater (2)": {
+      "damageable_zones": [
+        {
+          "AV": 3,
+          "Con": 0,
+          "Dur%": 1,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 300,
+          "zone_name": "Main"
+        }
+      ],
+      "health": 300
+    },
+    "Fusion Repeater (3)": {
+      "damageable_zones": [
+        {
+          "AV": 3,
+          "Con": 0,
+          "Dur%": 1,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 300,
+          "zone_name": "Main"
+        }
+      ],
+      "health": 300
     },
     "Gunship": {
       "damageable_zones": [
@@ -1788,7 +3928,175 @@
       ],
       "health": 950
     },
-    "Heavy Devastator": {
+    "Heavy Devastator (Mg Assassinate)": {
+      "damageable_zones": [
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 750,
+          "zone_name": "Main"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 110,
+          "zone_name": "head"
+        },
+        {
+          "AV": 3,
+          "Con": 0,
+          "Dur%": 0.3,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 425,
+          "zone_name": "chest"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 350,
+          "zone_name": "boss"
+        },
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.75,
+          "health": 500,
+          "zone_name": "pelvis"
+        },
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 0.25,
+          "health": 150,
+          "zone_name": "shoulderplate_left"
+        },
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 0.25,
+          "health": 150,
+          "zone_name": "shoulderplate_right"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.5,
+          "health": 260,
+          "zone_name": "right_arm"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.5,
+          "health": 260,
+          "zone_name": "left_arm"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.75,
+          "health": 500,
+          "zone_name": "right_hip"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.75,
+          "health": 500,
+          "zone_name": "right_hip"
+        },
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0.3,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.6,
+          "health": 500,
+          "zone_name": "right_leg"
+        },
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0.3,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.6,
+          "health": 500,
+          "zone_name": "left_leg"
+        },
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.4,
+          "health": 600,
+          "zone_name": "backpack"
+        }
+      ],
+      "health": 750
+    },
+    "Heavy Devastator (Mg)": {
       "damageable_zones": [
         {
           "AV": 2,
@@ -1999,6 +4307,22 @@
     "Heavy Fusion Repeater": {
       "damageable_zones": [
         {
+          "AV": 3,
+          "Con": 0,
+          "Dur%": 1,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 300,
+          "zone_name": "Main"
+        }
+      ],
+      "health": 300
+    },
+    "Heavy Fusion Repeater (2)": {
+      "damageable_zones": [
+        {
           "AV": 4,
           "Con": 0,
           "Dur%": 0,
@@ -2023,7 +4347,34 @@
       ],
       "health": 500
     },
-    "Hulk": {
+    "Heavy Fusion Repeater (3)": {
+      "damageable_zones": [
+        {
+          "AV": 4,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 500,
+          "zone_name": "Main"
+        },
+        {
+          "AV": 4,
+          "Con": 0,
+          "Dur%": 0.8,
+          "ExMult": 0.4,
+          "ExTarget": "Part",
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 500,
+          "zone_name": "gun"
+        }
+      ],
+      "health": 500
+    },
+    "Hulk (Base)": {
       "damageable_zones": [
         {
           "AV": 4,
@@ -2109,7 +4460,7 @@
       ],
       "health": 1800
     },
-    "Hulk Bruiser": {
+    "Hulk Bruiser (Suppressor Jumppack)": {
       "damageable_zones": [
         {
           "AV": 4,
@@ -2195,7 +4546,7 @@
       ],
       "health": 1800
     },
-    "Hulk Firebomber": {
+    "Hulk Bruiser (Suppressor)": {
       "damageable_zones": [
         {
           "AV": 4,
@@ -2281,7 +4632,7 @@
       ],
       "health": 1800
     },
-    "Hulk Obliterator": {
+    "Hulk Firebomber (Ivory Legion)": {
       "damageable_zones": [
         {
           "AV": 4,
@@ -2367,7 +4718,7 @@
       ],
       "health": 1800
     },
-    "Hulk Scorcher": {
+    "Hulk Obliterator (Artillery)": {
       "damageable_zones": [
         {
           "AV": 4,
@@ -2453,7 +4804,265 @@
       ],
       "health": 1800
     },
-    "Incendiary MG Devastator": {
+    "Hulk Scorcher (Assault Jumppack)": {
+      "damageable_zones": [
+        {
+          "AV": 4,
+          "Con": 0,
+          "Dur%": 0.6,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 1800,
+          "zone_name": "Main"
+        },
+        {
+          "AV": 4,
+          "Con": 0,
+          "Dur%": 0.7,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.8,
+          "health": 500,
+          "zone_name": "left_arm"
+        },
+        {
+          "AV": 4,
+          "Con": 0,
+          "Dur%": 0.7,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.8,
+          "health": 500,
+          "zone_name": "right_arm"
+        },
+        {
+          "AV": 4,
+          "Con": 500,
+          "Dur%": 0.8,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 0,
+          "ToMain%": 0.8,
+          "health": 500,
+          "zone_name": "left_leg"
+        },
+        {
+          "AV": 4,
+          "Con": 500,
+          "Dur%": 0.8,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 0,
+          "ToMain%": 0.8,
+          "health": 500,
+          "zone_name": "right_leg"
+        },
+        {
+          "AV": 4,
+          "Con": 0,
+          "Dur%": 0.25,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 250,
+          "zone_name": "head"
+        },
+        {
+          "AV": 1,
+          "Con": 650,
+          "Dur%": 0.6,
+          "ExMult": 1,
+          "ExTarget": "Part",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.6,
+          "health": 900,
+          "zone_name": "c_back_weakspot"
+        }
+      ],
+      "health": 1800
+    },
+    "Hulk Scorcher (Assault)": {
+      "damageable_zones": [
+        {
+          "AV": 4,
+          "Con": 0,
+          "Dur%": 0.6,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 1800,
+          "zone_name": "Main"
+        },
+        {
+          "AV": 4,
+          "Con": 0,
+          "Dur%": 0.7,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.8,
+          "health": 500,
+          "zone_name": "left_arm"
+        },
+        {
+          "AV": 4,
+          "Con": 0,
+          "Dur%": 0.7,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.8,
+          "health": 500,
+          "zone_name": "right_arm"
+        },
+        {
+          "AV": 4,
+          "Con": 500,
+          "Dur%": 0.8,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 0,
+          "ToMain%": 0.8,
+          "health": 500,
+          "zone_name": "left_leg"
+        },
+        {
+          "AV": 4,
+          "Con": 500,
+          "Dur%": 0.8,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 0,
+          "ToMain%": 0.8,
+          "health": 500,
+          "zone_name": "right_leg"
+        },
+        {
+          "AV": 4,
+          "Con": 0,
+          "Dur%": 0.25,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 250,
+          "zone_name": "head"
+        },
+        {
+          "AV": 1,
+          "Con": 650,
+          "Dur%": 0.6,
+          "ExMult": 1,
+          "ExTarget": "Part",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.6,
+          "health": 900,
+          "zone_name": "c_back_weakspot"
+        }
+      ],
+      "health": 1800
+    },
+    "Hulk Scorcher (Ivory Legion Assault)": {
+      "damageable_zones": [
+        {
+          "AV": 4,
+          "Con": 0,
+          "Dur%": 0.6,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 1800,
+          "zone_name": "Main"
+        },
+        {
+          "AV": 4,
+          "Con": 0,
+          "Dur%": 0.7,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.8,
+          "health": 500,
+          "zone_name": "left_arm"
+        },
+        {
+          "AV": 4,
+          "Con": 0,
+          "Dur%": 0.7,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.8,
+          "health": 500,
+          "zone_name": "right_arm"
+        },
+        {
+          "AV": 4,
+          "Con": 500,
+          "Dur%": 0.8,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 0,
+          "ToMain%": 0.8,
+          "health": 500,
+          "zone_name": "left_leg"
+        },
+        {
+          "AV": 4,
+          "Con": 500,
+          "Dur%": 0.8,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 0,
+          "ToMain%": 0.8,
+          "health": 500,
+          "zone_name": "right_leg"
+        },
+        {
+          "AV": 4,
+          "Con": 0,
+          "Dur%": 0.25,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 250,
+          "zone_name": "head"
+        },
+        {
+          "AV": 1,
+          "Con": 650,
+          "Dur%": 0.6,
+          "ExMult": 1,
+          "ExTarget": "Part",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.6,
+          "health": 900,
+          "zone_name": "c_back_weakspot"
+        }
+      ],
+      "health": 1800
+    },
+    "Incendiary MG Devastator (Mg Ivory Legion)": {
       "damageable_zones": [
         {
           "AV": 2,
@@ -2621,7 +5230,7 @@
       ],
       "health": 750
     },
-    "MG Raider": {
+    "MG Raider (Ivory Legion Machinegunner)": {
       "damageable_zones": [
         {
           "AV": 0,
@@ -2707,7 +5316,179 @@
       ],
       "health": 125
     },
-    "Marauder": {
+    "MG Raider (Machinegunner Jump)": {
+      "damageable_zones": [
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 125,
+          "zone_name": "Main"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 40,
+          "zone_name": "head"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 100,
+          "zone_name": "chest"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.5,
+          "health": 65,
+          "zone_name": "left_arm"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.5,
+          "health": 65,
+          "zone_name": "right_arm"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.65,
+          "health": 90,
+          "zone_name": "leg_right"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.65,
+          "health": 90,
+          "zone_name": "leg_left"
+        }
+      ],
+      "health": 125
+    },
+    "MG Raider (Machinegunner)": {
+      "damageable_zones": [
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 125,
+          "zone_name": "Main"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 40,
+          "zone_name": "head"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 100,
+          "zone_name": "chest"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.5,
+          "health": 65,
+          "zone_name": "left_arm"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.5,
+          "health": 65,
+          "zone_name": "right_arm"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.65,
+          "health": 90,
+          "zone_name": "leg_right"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.65,
+          "health": 90,
+          "zone_name": "leg_left"
+        }
+      ],
+      "health": 125
+    },
+    "Marauder (Tier 3)": {
       "damageable_zones": [
         {
           "AV": 0,
@@ -2793,7 +5574,7 @@
       ],
       "health": 125
     },
-    "Pyro Trooper": {
+    "Pyro Trooper (Flamer)": {
       "damageable_zones": [
         {
           "AV": 0,
@@ -2879,7 +5660,7 @@
       ],
       "health": 125
     },
-    "Radical": {
+    "Radical (Rusher Female)": {
       "damageable_zones": [
         {
           "AV": 1,
@@ -3043,7 +5824,171 @@
       ],
       "health": 750
     },
-    "Raider": {
+    "Radical (Rusher)": {
+      "damageable_zones": [
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0.2,
+          "ExMult": 1,
+          "ExTarget": "Part",
+          "MainCap": 0,
+          "ToMain%": 1,
+          "health": 750,
+          "zone_name": "Main"
+        },
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 0.75,
+          "health": 300,
+          "zone_name": "[unknown]"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 0.45,
+          "ExTarget": "Part",
+          "MainCap": 1,
+          "ToMain%": 0.8,
+          "health": 300,
+          "zone_name": "[unknown]"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 0.45,
+          "ExTarget": "Part",
+          "MainCap": 1,
+          "ToMain%": 0.8,
+          "health": 300,
+          "zone_name": "[unknown]"
+        },
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 0.75,
+          "health": 300,
+          "zone_name": "[unknown]"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 150,
+          "zone_name": "[unknown]"
+        },
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 0,
+          "ToMain%": 0.75,
+          "health": 1400,
+          "zone_name": "[unknown]"
+        },
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 0,
+          "ToMain%": 0.75,
+          "health": 1400,
+          "zone_name": "[unknown]"
+        },
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 0,
+          "ToMain%": 1,
+          "health": 1400,
+          "zone_name": "pelvis"
+        },
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 0,
+          "ToMain%": 1,
+          "health": 1200,
+          "zone_name": "[unknown]"
+        },
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 0.35,
+          "ExTarget": "Part",
+          "MainCap": 0,
+          "ToMain%": 0.3,
+          "health": 300,
+          "zone_name": "[unknown]"
+        },
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 0.35,
+          "ExTarget": "Part",
+          "MainCap": 0,
+          "ToMain%": 0.3,
+          "health": 200,
+          "zone_name": "[unknown]"
+        },
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 0.35,
+          "ExTarget": "Part",
+          "MainCap": 0,
+          "ToMain%": 0.3,
+          "health": 200,
+          "zone_name": "[unknown]"
+        },
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 0.35,
+          "ExTarget": "Part",
+          "MainCap": 0,
+          "ToMain%": 0.3,
+          "health": 200,
+          "zone_name": "[unknown]"
+        }
+      ],
+      "health": 750
+    },
+    "Raider (Ivory Legion Tier 2)": {
       "damageable_zones": [
         {
           "AV": 0,
@@ -3129,7 +6074,93 @@
       ],
       "health": 125
     },
-    "Reinforced Scout Strider": {
+    "Raider (Tier 2)": {
+      "damageable_zones": [
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 125,
+          "zone_name": "Main"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 40,
+          "zone_name": "head"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 100,
+          "zone_name": "chest"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.5,
+          "health": 65,
+          "zone_name": "left_arm"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.5,
+          "health": 65,
+          "zone_name": "right_arm"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.65,
+          "health": 90,
+          "zone_name": "leg_right"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.65,
+          "health": 90,
+          "zone_name": "leg_left"
+        }
+      ],
+      "health": 125
+    },
+    "Reinforced Scout Strider (Tier2)": {
       "damageable_zones": [
         {
           "AV": 4,
@@ -3193,7 +6224,7 @@
       ],
       "health": 500
     },
-    "Rocket Devastator": {
+    "Rocket Devastator (Rpg Assassinate)": {
       "damageable_zones": [
         {
           "AV": 2,
@@ -3371,7 +6402,363 @@
       ],
       "health": 750
     },
-    "Rocket Raider": {
+    "Rocket Devastator (Rpg Ivory Legion)": {
+      "damageable_zones": [
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 750,
+          "zone_name": "Main"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 110,
+          "zone_name": "head"
+        },
+        {
+          "AV": 3,
+          "Con": 0,
+          "Dur%": 0.3,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 425,
+          "zone_name": "chest"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 350,
+          "zone_name": "boss"
+        },
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.75,
+          "health": 500,
+          "zone_name": "pelvis"
+        },
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 0.25,
+          "health": 150,
+          "zone_name": "shoulderplate_left"
+        },
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 0.25,
+          "health": 150,
+          "zone_name": "shoulderplate_right"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.5,
+          "health": 260,
+          "zone_name": "right_arm"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.5,
+          "health": 260,
+          "zone_name": "left_arm"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.75,
+          "health": 500,
+          "zone_name": "right_hip"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.75,
+          "health": 500,
+          "zone_name": "right_hip"
+        },
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0.3,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.6,
+          "health": 500,
+          "zone_name": "right_leg"
+        },
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0.3,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.6,
+          "health": 500,
+          "zone_name": "left_leg"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 1,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 0.3,
+          "health": 300,
+          "zone_name": "rocket_pods"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 200,
+          "zone_name": "rocket_pods_internal"
+        }
+      ],
+      "health": 750
+    },
+    "Rocket Devastator (Rpg)": {
+      "damageable_zones": [
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 750,
+          "zone_name": "Main"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 110,
+          "zone_name": "head"
+        },
+        {
+          "AV": 3,
+          "Con": 0,
+          "Dur%": 0.3,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 425,
+          "zone_name": "chest"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 350,
+          "zone_name": "boss"
+        },
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.75,
+          "health": 500,
+          "zone_name": "pelvis"
+        },
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 0.25,
+          "health": 150,
+          "zone_name": "shoulderplate_left"
+        },
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 0.25,
+          "health": 150,
+          "zone_name": "shoulderplate_right"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.5,
+          "health": 260,
+          "zone_name": "right_arm"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.5,
+          "health": 260,
+          "zone_name": "left_arm"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.75,
+          "health": 500,
+          "zone_name": "right_hip"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.75,
+          "health": 500,
+          "zone_name": "right_hip"
+        },
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0.3,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.6,
+          "health": 500,
+          "zone_name": "right_leg"
+        },
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0.3,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.6,
+          "health": 500,
+          "zone_name": "left_leg"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 1,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 0.3,
+          "health": 300,
+          "zone_name": "rocket_pods"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 200,
+          "zone_name": "rocket_pods_internal"
+        }
+      ],
+      "health": 750
+    },
+    "Rocket Raider (Rocketeer)": {
       "damageable_zones": [
         {
           "AV": 0,
@@ -3458,7 +6845,7 @@
       ],
       "health": 125
     },
-    "Scout Raider": {
+    "Scout Raider (Scout)": {
       "damageable_zones": [
         {
           "AV": 0,
@@ -3608,7 +6995,7 @@
       ],
       "health": 500
     },
-    "Shredder Tank": {
+    "Shredder Tank (Autocannons)": {
       "damageable_zones": [
         {
           "AV": 5,
@@ -3691,7 +7078,7 @@
       ],
       "health": 4000
     },
-    "Trooper": {
+    "Trooper (Base)": {
       "damageable_zones": [
         {
           "AV": 0,
@@ -3776,6 +7163,866 @@
         }
       ],
       "health": 125
+    },
+    "Trooper (Cannoneer)": {
+      "damageable_zones": [
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 125,
+          "zone_name": "Main"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 40,
+          "zone_name": "head"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 100,
+          "zone_name": "chest"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.5,
+          "health": 65,
+          "zone_name": "left_arm"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.5,
+          "health": 65,
+          "zone_name": "right_arm"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.65,
+          "health": 90,
+          "zone_name": "leg_right"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.65,
+          "health": 90,
+          "zone_name": "leg_left"
+        }
+      ],
+      "health": 125
+    },
+    "Trooper (Elite Machinegunner)": {
+      "damageable_zones": [
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 125,
+          "zone_name": "Main"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 40,
+          "zone_name": "head"
+        },
+        {
+          "AV": 3,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 100,
+          "zone_name": "chest"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.5,
+          "health": 65,
+          "zone_name": "left_arm"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.5,
+          "health": 65,
+          "zone_name": "right_arm"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.65,
+          "health": 90,
+          "zone_name": "leg_right"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.65,
+          "health": 90,
+          "zone_name": "leg_left"
+        }
+      ],
+      "health": 125
+    },
+    "Trooper (Elite)": {
+      "damageable_zones": [
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 125,
+          "zone_name": "Main"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 40,
+          "zone_name": "head"
+        },
+        {
+          "AV": 3,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 100,
+          "zone_name": "chest"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.5,
+          "health": 65,
+          "zone_name": "left_arm"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.5,
+          "health": 65,
+          "zone_name": "right_arm"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.65,
+          "health": 90,
+          "zone_name": "leg_right"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.65,
+          "health": 90,
+          "zone_name": "leg_left"
+        }
+      ],
+      "health": 125
+    },
+    "Trooper (Ivory Legion Cannoneer)": {
+      "damageable_zones": [
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 125,
+          "zone_name": "Main"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 40,
+          "zone_name": "head"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 100,
+          "zone_name": "chest"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.5,
+          "health": 65,
+          "zone_name": "left_arm"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.5,
+          "health": 65,
+          "zone_name": "right_arm"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.65,
+          "health": 90,
+          "zone_name": "leg_right"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.65,
+          "health": 90,
+          "zone_name": "leg_left"
+        }
+      ],
+      "health": 125
+    },
+    "Trooper (Ivory Legion)": {
+      "damageable_zones": [
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 100,
+          "zone_name": "Main"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 40,
+          "zone_name": "head"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 100,
+          "zone_name": "chest"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.5,
+          "health": 50,
+          "zone_name": "left_arm"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.5,
+          "health": 50,
+          "zone_name": "right_arm"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.65,
+          "health": 90,
+          "zone_name": "leg_right"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.65,
+          "health": 90,
+          "zone_name": "leg_left"
+        }
+      ],
+      "health": 100
+    },
+    "Trooper (Jetpack Standard)": {
+      "damageable_zones": [
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 125,
+          "zone_name": "Main"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 40,
+          "zone_name": "head"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 100,
+          "zone_name": "chest"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.5,
+          "health": 65,
+          "zone_name": "left_arm"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.5,
+          "health": 65,
+          "zone_name": "right_arm"
+        },
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.65,
+          "health": 30,
+          "zone_name": "backpack"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.65,
+          "health": 90,
+          "zone_name": "leg_left"
+        }
+      ],
+      "health": 125
+    },
+    "Trooper (Jump)": {
+      "damageable_zones": [
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 125,
+          "zone_name": "Main"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 40,
+          "zone_name": "head"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 100,
+          "zone_name": "chest"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.5,
+          "health": 65,
+          "zone_name": "left_arm"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.5,
+          "health": 65,
+          "zone_name": "right_arm"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.65,
+          "health": 90,
+          "zone_name": "leg_right"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.65,
+          "health": 90,
+          "zone_name": "leg_left"
+        }
+      ],
+      "health": 125
+    },
+    "Trooper (Scout Walker Rider)": {
+      "damageable_zones": [
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 0.5,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 125,
+          "zone_name": "Main"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 0.5,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 40,
+          "zone_name": "head"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 0.5,
+          "ExTarget": "Part",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 100,
+          "zone_name": "chest"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 0.5,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.5,
+          "health": 65,
+          "zone_name": "left_arm"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 0.5,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.5,
+          "health": 65,
+          "zone_name": "right_arm"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 0.5,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.65,
+          "health": 90,
+          "zone_name": "leg_right"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 0.5,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.65,
+          "health": 90,
+          "zone_name": "leg_left"
+        }
+      ],
+      "health": 125
+    },
+    "Trooper (Shotgun)": {
+      "damageable_zones": [
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 125,
+          "zone_name": "Main"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 40,
+          "zone_name": "head"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 100,
+          "zone_name": "chest"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.5,
+          "health": 65,
+          "zone_name": "left_arm"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.5,
+          "health": 65,
+          "zone_name": "right_arm"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.65,
+          "health": 90,
+          "zone_name": "leg_right"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.65,
+          "health": 90,
+          "zone_name": "leg_left"
+        }
+      ],
+      "health": 125
+    },
+    "Trooper (Tier 1)": {
+      "damageable_zones": [
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 100,
+          "zone_name": "Main"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 40,
+          "zone_name": "head"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 100,
+          "zone_name": "chest"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.5,
+          "health": 50,
+          "zone_name": "left_arm"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.5,
+          "health": 50,
+          "zone_name": "right_arm"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.65,
+          "health": 90,
+          "zone_name": "leg_right"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.65,
+          "health": 90,
+          "zone_name": "leg_left"
+        }
+      ],
+      "health": 100
     },
     "Vox Engine": {
       "damageable_zones": [
@@ -4080,6 +8327,66 @@
       ],
       "health": 11000
     },
+    "Vox Engine (2)": {
+      "damageable_zones": [
+        {
+          "AV": 5,
+          "Con": 0,
+          "Dur%": 1,
+          "ExMult": 0.4,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 8000,
+          "zone_name": "Main"
+        },
+        {
+          "AV": 5,
+          "Con": 0,
+          "Dur%": 1,
+          "ExMult": 0.4,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": -1,
+          "zone_name": "Gun"
+        }
+      ],
+      "health": 8000
+    },
+    "Vox Engine (Front Left)": {
+      "damageable_zones": [
+        {
+          "AV": 3,
+          "Con": 0,
+          "Dur%": 1,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 300,
+          "zone_name": "Main"
+        }
+      ],
+      "health": 300
+    },
+    "Vox Engine (Front Right)": {
+      "damageable_zones": [
+        {
+          "AV": 3,
+          "Con": 0,
+          "Dur%": 1,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 300,
+          "zone_name": "Main"
+        }
+      ],
+      "health": 300
+    },
     "War Strider": {
       "damageable_zones": [
         {
@@ -4251,6 +8558,22 @@
   },
   "Illuminate": {
     "Cannon Turret": {
+      "damageable_zones": [
+        {
+          "AV": 4,
+          "Con": 0,
+          "Dur%": 1,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 800,
+          "zone_name": "Main"
+        }
+      ],
+      "health": 800
+    },
+    "Cannon Turret (2)": {
       "damageable_zones": [
         {
           "AV": 0,
@@ -5853,6 +10176,409 @@
       ],
       "health": 3000
     },
+    "Harvester (Tier 2)": {
+      "damageable_zones": [
+        {
+          "AV": 4,
+          "Con": 0,
+          "Dur%": 0.7,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 3000,
+          "zone_name": "Main"
+        },
+        {
+          "AV": 4,
+          "Con": 0,
+          "Dur%": 0.75,
+          "ExMult": 1,
+          "ExTarget": "Part",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 2000,
+          "zone_name": "body_default"
+        },
+        {
+          "AV": 4,
+          "Con": 0,
+          "Dur%": 0.75,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 1,
+          "health": 1000,
+          "zone_name": "body_front"
+        },
+        {
+          "AV": 3,
+          "Con": 0,
+          "Dur%": 0.5,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 800,
+          "zone_name": "body_front_internal"
+        },
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 1.2,
+          "health": 350,
+          "zone_name": "eye"
+        },
+        {
+          "AV": 3,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 0.1,
+          "health": 350,
+          "zone_name": "shield_generator_top_front"
+        },
+        {
+          "AV": 3,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 0.1,
+          "health": 350,
+          "zone_name": "shield_generator_top_rear"
+        },
+        {
+          "AV": 3,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 0.1,
+          "health": 350,
+          "zone_name": "shield_generator_bottom"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0.8,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 1,
+          "health": 500,
+          "zone_name": "body_weakspot_right"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0.8,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 1,
+          "health": 500,
+          "zone_name": "body_weakspot_left"
+        },
+        {
+          "AV": 4,
+          "Con": 0,
+          "Dur%": 0.75,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 1,
+          "health": 800,
+          "zone_name": "body_right"
+        },
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0.5,
+          "ExMult": 1,
+          "ExTarget": "Part",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 800,
+          "zone_name": "body_right_internal"
+        },
+        {
+          "AV": 4,
+          "Con": 0,
+          "Dur%": 0.75,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 1,
+          "health": 800,
+          "zone_name": "body_left"
+        },
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0.5,
+          "ExMult": 1,
+          "ExTarget": "Part",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 800,
+          "zone_name": "body_left_internal"
+        },
+        {
+          "AV": 3,
+          "Con": 0,
+          "Dur%": 0.7,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.45,
+          "health": 1000,
+          "zone_name": "left_hip"
+        },
+        {
+          "AV": 4,
+          "Con": 0,
+          "Dur%": 0.75,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 0.3,
+          "health": 600,
+          "zone_name": "left_upper_leg_top"
+        },
+        {
+          "AV": 4,
+          "Con": 0,
+          "Dur%": 0.75,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 0.3,
+          "health": 900,
+          "zone_name": "left_upper_leg"
+        },
+        {
+          "AV": 4,
+          "Con": 0,
+          "Dur%": 0.75,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 0.3,
+          "health": 900,
+          "zone_name": "left_middle_leg"
+        },
+        {
+          "AV": 4,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 0.3,
+          "health": 900,
+          "zone_name": "left_lower_leg"
+        },
+        {
+          "AV": 3,
+          "Con": 0,
+          "Dur%": 0.25,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.45,
+          "health": 1000,
+          "zone_name": "left_upper_leg_internal"
+        },
+        {
+          "AV": 3,
+          "Con": 0,
+          "Dur%": 0.25,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.6,
+          "health": 1000,
+          "zone_name": "left_middle_leg_internal"
+        },
+        {
+          "AV": 3,
+          "Con": 0,
+          "Dur%": 0.7,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.6,
+          "health": 1000,
+          "zone_name": "right_hip"
+        },
+        {
+          "AV": 4,
+          "Con": 0,
+          "Dur%": 0.75,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 0.3,
+          "health": 900,
+          "zone_name": "right_upper_leg_top"
+        },
+        {
+          "AV": 4,
+          "Con": 0,
+          "Dur%": 0.75,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 0.3,
+          "health": 900,
+          "zone_name": "right_upper_leg"
+        },
+        {
+          "AV": 4,
+          "Con": 0,
+          "Dur%": 0.75,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 0.3,
+          "health": 900,
+          "zone_name": "right_middle_leg"
+        },
+        {
+          "AV": 4,
+          "Con": 0,
+          "Dur%": 0.75,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 0.3,
+          "health": 900,
+          "zone_name": "right_lower_leg"
+        },
+        {
+          "AV": 3,
+          "Con": 0,
+          "Dur%": 0.25,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.45,
+          "health": 1000,
+          "zone_name": "right_upper_leg_internal"
+        },
+        {
+          "AV": 3,
+          "Con": 0,
+          "Dur%": 0.25,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.6,
+          "health": 1000,
+          "zone_name": "right_middle_leg_internal"
+        },
+        {
+          "AV": 3,
+          "Con": 0,
+          "Dur%": 0.7,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.6,
+          "health": 1000,
+          "zone_name": "back_hip"
+        },
+        {
+          "AV": 4,
+          "Con": 0,
+          "Dur%": 0.75,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 0.3,
+          "health": 900,
+          "zone_name": "back_upper_leg_top"
+        },
+        {
+          "AV": 4,
+          "Con": 0,
+          "Dur%": 0.75,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 0.3,
+          "health": 900,
+          "zone_name": "back_upper_leg"
+        },
+        {
+          "AV": 4,
+          "Con": 0,
+          "Dur%": 0.75,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 0.3,
+          "health": 900,
+          "zone_name": "back_middle_leg"
+        },
+        {
+          "AV": 4,
+          "Con": 0,
+          "Dur%": 0.75,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 0.3,
+          "health": 900,
+          "zone_name": "back_lower_leg"
+        },
+        {
+          "AV": 3,
+          "Con": 0,
+          "Dur%": 0.25,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.6,
+          "health": 1000,
+          "zone_name": "back_upper_leg_internal"
+        },
+        {
+          "AV": 3,
+          "Con": 0,
+          "Dur%": 0.25,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.6,
+          "health": 1000,
+          "zone_name": "back_middle_leg_internal"
+        }
+      ],
+      "health": 3000
+    },
     "Leviathan": {
       "damageable_zones": [
         {
@@ -6344,6 +11070,311 @@
       ],
       "health": 600
     },
+    "Overseer (Fake)": {
+      "damageable_zones": [
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 10,
+          "zone_name": "Main"
+        },
+        {
+          "AV": 3,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 150,
+          "zone_name": "head"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 600,
+          "zone_name": "torso"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.5,
+          "health": 300,
+          "zone_name": "arms_right"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 0.5,
+          "health": 300,
+          "zone_name": "arms_left"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 0.7,
+          "health": -1,
+          "zone_name": "legs_left"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 0.7,
+          "health": -1,
+          "zone_name": "legs_right"
+        },
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.2,
+          "health": 100,
+          "zone_name": "armor_upper_r_arm"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.2,
+          "health": 100,
+          "zone_name": "armor_upper_r_arm_damaged"
+        },
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.2,
+          "health": 100,
+          "zone_name": "armor_lower_r_arm"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.2,
+          "health": 100,
+          "zone_name": "armor_lower_r_arm_damaged"
+        },
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.2,
+          "health": 100,
+          "zone_name": "armor_upper_l_arm"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.2,
+          "health": 100,
+          "zone_name": "armor_upper_l_arm_damaged"
+        },
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.2,
+          "health": 100,
+          "zone_name": "armor_lower_l_arm"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.2,
+          "health": 100,
+          "zone_name": "armor_lower_l_arm_damaged"
+        },
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.2,
+          "health": 100,
+          "zone_name": "armor_upper_r_leg"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.2,
+          "health": 100,
+          "zone_name": "armor_upper_r_leg"
+        },
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.2,
+          "health": 100,
+          "zone_name": "armor_lower_r_leg"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.2,
+          "health": 100,
+          "zone_name": "armor_lower_r_leg_damaged"
+        },
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.2,
+          "health": 100,
+          "zone_name": "armor_upper_l_leg"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.2,
+          "health": 100,
+          "zone_name": "armor_upper_l_leg_damaged"
+        },
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.2,
+          "health": 100,
+          "zone_name": "armor_lower_l_leg"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.2,
+          "health": 100,
+          "zone_name": "armor_lower_l_leg_damaged"
+        },
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.2,
+          "health": 150,
+          "zone_name": "torso_armor"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.2,
+          "health": 200,
+          "zone_name": "torso_armor_damaged"
+        },
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.2,
+          "health": 200,
+          "zone_name": "hips_armor"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.2,
+          "health": 200,
+          "zone_name": "hips_armor_damaged"
+        }
+      ],
+      "health": 10
+    },
     "Stingray": {
       "damageable_zones": [
         {
@@ -6752,6 +11783,198 @@
           "ExTarget": "Main",
           "MainCap": 1,
           "ToMain%": 1,
+          "health": 100,
+          "zone_name": "Main"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 40,
+          "zone_name": "Head"
+        },
+        {
+          "AV": 0,
+          "Con": 1000,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.4,
+          "health": 50,
+          "zone_name": "arm_r"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 0.3,
+          "health": 50,
+          "zone_name": "arm_r_elbow"
+        },
+        {
+          "AV": 0,
+          "Con": 1000,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.4,
+          "health": 50,
+          "zone_name": "arm_l"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 0.3,
+          "health": 50,
+          "zone_name": "arm_l_elbow"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.3,
+          "health": 80,
+          "zone_name": "Legs_left"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.3,
+          "health": 80,
+          "zone_name": "Legs_right"
+        }
+      ],
+      "health": 100
+    },
+    "Voteless (V2)": {
+      "damageable_zones": [
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 130,
+          "zone_name": "Main"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 50,
+          "zone_name": "Head"
+        },
+        {
+          "AV": 0,
+          "Con": 1000,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.4,
+          "health": 65,
+          "zone_name": "arm_r"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 0.3,
+          "health": 50,
+          "zone_name": "arm_r_elbow"
+        },
+        {
+          "AV": 0,
+          "Con": 1000,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.4,
+          "health": 65,
+          "zone_name": "arm_l"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 0.3,
+          "health": 50,
+          "zone_name": "arm_l_elbow"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.3,
+          "health": 80,
+          "zone_name": "Legs_left"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.3,
+          "health": 80,
+          "zone_name": "Legs_right"
+        }
+      ],
+      "health": 130
+    },
+    "Voteless (V3)": {
+      "damageable_zones": [
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1,
           "health": 160,
           "zone_name": "Main"
         },
@@ -7026,7 +12249,7 @@
       ],
       "health": 600
     },
-    "Xenobite Ardent": {
+    "Xenobite Ardent (Tier 2)": {
       "damageable_zones": [
         {
           "AV": 2,
@@ -7333,7 +12556,7 @@
     }
   },
   "Terminid": {
-    "Alpha Commander": {
+    "Alpha Commander (Tier2)": {
       "damageable_zones": [
         {
           "AV": 2,
@@ -7535,6 +12758,114 @@
       ],
       "health": 750
     },
+    "Bile Spewer (Tier 2)": {
+      "damageable_zones": [
+        {
+          "AV": 3,
+          "Con": 0,
+          "Dur%": 0.5,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 750,
+          "zone_name": "Main"
+        },
+        {
+          "AV": 3,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 300,
+          "zone_name": "hitzone_head"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 250,
+          "zone_name": "hitzone_mouth"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 1,
+          "ExMult": 1,
+          "ExTarget": "Part",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.6,
+          "health": 750,
+          "zone_name": "hitzone_butt"
+        },
+        {
+          "AV": 3,
+          "Con": 0,
+          "Dur%": 0.8,
+          "ExMult": 1,
+          "ExTarget": "Part",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.2,
+          "health": 500,
+          "zone_name": "hitzone_butt_plates"
+        },
+        {
+          "AV": 3,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.5,
+          "health": 200,
+          "zone_name": "hitzone_frontleg_right"
+        },
+        {
+          "AV": 3,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.5,
+          "health": 200,
+          "zone_name": "hitzone_frontleg_left"
+        },
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0.3,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.5,
+          "health": 250,
+          "zone_name": "hitzone_backleg_right"
+        },
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0.3,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.5,
+          "health": 250,
+          "zone_name": "hitzone_backleg_left"
+        }
+      ],
+      "health": 750
+    },
     "Bile Spitter": {
       "damageable_zones": [
         {
@@ -7636,6 +12967,315 @@
       "health": 60
     },
     "Bile Titan": {
+      "damageable_zones": [
+        {
+          "AV": 4,
+          "Con": 0,
+          "Dur%": 1,
+          "ExMult": 0.5,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 6500,
+          "zone_name": "Main"
+        },
+        {
+          "AV": 4,
+          "Con": 0,
+          "Dur%": 1,
+          "ExMult": 0.5,
+          "ExTarget": "Part",
+          "MainCap": 0,
+          "ToMain%": 1,
+          "health": 1000,
+          "zone_name": "left_front_leg_armor"
+        },
+        {
+          "AV": 4,
+          "Con": 0,
+          "Dur%": 1,
+          "ExMult": 0.5,
+          "ExTarget": "Part",
+          "MainCap": 0,
+          "ToMain%": 1,
+          "health": 1000,
+          "zone_name": "left_front_leg_end_top_armor"
+        },
+        {
+          "AV": 4,
+          "Con": 0,
+          "Dur%": 1,
+          "ExMult": 0.5,
+          "ExTarget": "Part",
+          "MainCap": 0,
+          "ToMain%": 1,
+          "health": 1000,
+          "zone_name": "left_front_leg_end_bottom_armor"
+        },
+        {
+          "AV": 4,
+          "Con": 1500,
+          "Dur%": 1,
+          "ExMult": 0.5,
+          "ExTarget": "Part",
+          "IsFatal": true,
+          "MainCap": 0,
+          "ToMain%": 1,
+          "health": 2000,
+          "zone_name": "left_front_leg_flesh"
+        },
+        {
+          "AV": 4,
+          "Con": 0,
+          "Dur%": 1,
+          "ExMult": 0.5,
+          "ExTarget": "Part",
+          "MainCap": 0,
+          "ToMain%": 1,
+          "health": 1000,
+          "zone_name": "right_front_leg_armor"
+        },
+        {
+          "AV": 4,
+          "Con": 0,
+          "Dur%": 1,
+          "ExMult": 0.5,
+          "ExTarget": "Part",
+          "MainCap": 0,
+          "ToMain%": 1,
+          "health": 1000,
+          "zone_name": "right_front_leg_end_top_armor"
+        },
+        {
+          "AV": 4,
+          "Con": 0,
+          "Dur%": 1,
+          "ExMult": 0.5,
+          "ExTarget": "Part",
+          "MainCap": 0,
+          "ToMain%": 1,
+          "health": 1000,
+          "zone_name": "right_front_leg_end_bottom_armor"
+        },
+        {
+          "AV": 4,
+          "Con": 2000,
+          "Dur%": 1,
+          "ExMult": 0.5,
+          "ExTarget": "Part",
+          "IsFatal": true,
+          "MainCap": 0,
+          "ToMain%": 1,
+          "health": 2000,
+          "zone_name": "right_front_leg_flesh"
+        },
+        {
+          "AV": 4,
+          "Con": 0,
+          "Dur%": 1,
+          "ExMult": 0.5,
+          "ExTarget": "Part",
+          "MainCap": 0,
+          "ToMain%": 1,
+          "health": 1000,
+          "zone_name": "left_back_leg_armor"
+        },
+        {
+          "AV": 4,
+          "Con": 0,
+          "Dur%": 1,
+          "ExMult": 0.5,
+          "ExTarget": "Part",
+          "MainCap": 0,
+          "ToMain%": 1,
+          "health": 1000,
+          "zone_name": "left_back_leg_end_top_armor"
+        },
+        {
+          "AV": 4,
+          "Con": 0,
+          "Dur%": 1,
+          "ExMult": 0.5,
+          "ExTarget": "Part",
+          "MainCap": 0,
+          "ToMain%": 1,
+          "health": 1000,
+          "zone_name": "left_back_leg_end_bottom_armor"
+        },
+        {
+          "AV": 4,
+          "Con": 2000,
+          "Dur%": 1,
+          "ExMult": 0.5,
+          "ExTarget": "Part",
+          "IsFatal": true,
+          "MainCap": 0,
+          "ToMain%": 1,
+          "health": 2000,
+          "zone_name": "left_back_leg_flesh"
+        },
+        {
+          "AV": 4,
+          "Con": 0,
+          "Dur%": 1,
+          "ExMult": 0.5,
+          "ExTarget": "Part",
+          "MainCap": 0,
+          "ToMain%": 1,
+          "health": 1000,
+          "zone_name": "right_back_leg_armor"
+        },
+        {
+          "AV": 4,
+          "Con": 0,
+          "Dur%": 1,
+          "ExMult": 0.5,
+          "ExTarget": "Part",
+          "MainCap": 0,
+          "ToMain%": 1,
+          "health": 1000,
+          "zone_name": "right_back_leg_end_top_armor"
+        },
+        {
+          "AV": 4,
+          "Con": 0,
+          "Dur%": 1,
+          "ExMult": 0.5,
+          "ExTarget": "Part",
+          "MainCap": 0,
+          "ToMain%": 1,
+          "health": 1000,
+          "zone_name": "right_back_leg_end_bottom_armor"
+        },
+        {
+          "AV": 4,
+          "Con": 2000,
+          "Dur%": 1,
+          "ExMult": 0.5,
+          "ExTarget": "Part",
+          "IsFatal": true,
+          "MainCap": 0,
+          "ToMain%": 1,
+          "health": 2000,
+          "zone_name": "right_back_leg_flesh"
+        },
+        {
+          "AV": 4,
+          "Con": 0,
+          "Dur%": 0.95,
+          "ExMult": 0.5,
+          "ExTarget": "Part",
+          "IsFatal": true,
+          "MainCap": 0,
+          "ToMain%": 1,
+          "health": 1500,
+          "zone_name": "head"
+        },
+        {
+          "AV": 4,
+          "Con": 0,
+          "Dur%": 1,
+          "ExMult": 0.5,
+          "ExTarget": "Part",
+          "MainCap": 0,
+          "ToMain%": 1,
+          "health": 1500,
+          "zone_name": "torso_left"
+        },
+        {
+          "AV": 4,
+          "Con": 0,
+          "Dur%": 1,
+          "ExMult": 0.5,
+          "ExTarget": "Part",
+          "MainCap": 0,
+          "ToMain%": 1,
+          "health": 1500,
+          "zone_name": "torso_right"
+        },
+        {
+          "AV": 4,
+          "Con": 0,
+          "Dur%": 1,
+          "ExMult": 0.5,
+          "ExTarget": "Part",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 3500,
+          "zone_name": "butt_lower"
+        },
+        {
+          "AV": 4,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 0.5,
+          "ExTarget": "Part",
+          "MainCap": 0,
+          "ToMain%": 1,
+          "health": 1000,
+          "zone_name": "left_arm"
+        },
+        {
+          "AV": 4,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 0.5,
+          "ExTarget": "Part",
+          "MainCap": 0,
+          "ToMain%": 1,
+          "health": 1000,
+          "zone_name": "right_arm"
+        },
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0.8,
+          "ExMult": 1,
+          "ExTarget": "Part",
+          "IsFatal": true,
+          "MainCap": 0,
+          "ToMain%": 0.6,
+          "health": 4000,
+          "zone_name": "inner_body"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0.7,
+          "ExMult": 0.5,
+          "ExTarget": "Part",
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": -1,
+          "zone_name": "inner_torso"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 1,
+          "ExMult": 0.5,
+          "ExTarget": "Part",
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 750,
+          "zone_name": "abdomen_outer_flesh"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 1,
+          "ExMult": 0.5,
+          "ExTarget": "Part",
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 750,
+          "zone_name": "tail_outer_flesh"
+        }
+      ],
+      "health": 6500
+    },
+    "Bile Titan (Gloom)": {
       "damageable_zones": [
         {
           "AV": 4,
@@ -8345,6 +13985,218 @@
       "health": 2400
     },
     "Charger Behemoth": {
+      "damageable_zones": [
+        {
+          "AV": 4,
+          "Con": 0,
+          "Dur%": 1,
+          "ExMult": 0.75,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 3000,
+          "zone_name": "Main"
+        },
+        {
+          "AV": 4,
+          "Con": 0,
+          "Dur%": 1,
+          "ExMult": 0.75,
+          "ExTarget": "Part",
+          "IsFatal": true,
+          "MainCap": 0,
+          "ToMain%": 0.7,
+          "health": 1600,
+          "zone_name": "head"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 1,
+          "ExMult": 0.75,
+          "ExTarget": "Part",
+          "IsFatal": true,
+          "MainCap": 0,
+          "ToMain%": 0.5,
+          "health": 950,
+          "zone_name": "body_rear"
+        },
+        {
+          "AV": 4,
+          "Con": 0,
+          "Dur%": 0.75,
+          "ExMult": 0.75,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 0,
+          "ToMain%": 0.75,
+          "health": 2200,
+          "zone_name": "rear_armor_plates"
+        },
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 1,
+          "ExMult": 0.75,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": -1,
+          "zone_name": "torso_underside"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0.3,
+          "ExMult": 0.75,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 3,
+          "health": -1,
+          "zone_name": "torso_inside"
+        },
+        {
+          "AV": 4,
+          "Con": 0,
+          "Dur%": 0.85,
+          "ExMult": 0.75,
+          "ExTarget": "Part",
+          "MainCap": 0,
+          "ToMain%": 1,
+          "health": 1000,
+          "zone_name": "left_side_armor"
+        },
+        {
+          "AV": 4,
+          "Con": 0,
+          "Dur%": 0.85,
+          "ExMult": 0.75,
+          "ExTarget": "Part",
+          "MainCap": 0,
+          "ToMain%": 1,
+          "health": 1000,
+          "zone_name": "right_side_armor"
+        },
+        {
+          "AV": 4,
+          "Con": 0,
+          "Dur%": 0.8,
+          "ExMult": 0.75,
+          "ExTarget": "Part",
+          "MainCap": 0,
+          "ToMain%": 0.5,
+          "health": 1000,
+          "zone_name": "l_back_leg"
+        },
+        {
+          "AV": 4,
+          "Con": 0,
+          "Dur%": 0.8,
+          "ExMult": 0.75,
+          "ExTarget": "Part",
+          "MainCap": 0,
+          "ToMain%": 0.5,
+          "health": 1000,
+          "zone_name": "r_back_leg"
+        },
+        {
+          "AV": 4,
+          "Con": 0,
+          "Dur%": 0.8,
+          "ExMult": 0.75,
+          "ExTarget": "Part",
+          "MainCap": 0,
+          "ToMain%": 0.6,
+          "health": 1000,
+          "zone_name": "l_middle_leg"
+        },
+        {
+          "AV": 4,
+          "Con": 0,
+          "Dur%": 0.8,
+          "ExMult": 0.75,
+          "ExTarget": "Part",
+          "MainCap": 0,
+          "ToMain%": 0.6,
+          "health": 1000,
+          "zone_name": "r_middle_leg"
+        },
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0.7,
+          "ExMult": 0.75,
+          "ExTarget": "Part",
+          "IsFatal": true,
+          "MainCap": 0,
+          "ToMain%": 0.5,
+          "health": 800,
+          "zone_name": "l_back_leg_flesh"
+        },
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0.7,
+          "ExMult": 0.75,
+          "ExTarget": "Part",
+          "IsFatal": true,
+          "MainCap": 0,
+          "ToMain%": 0.5,
+          "health": 800,
+          "zone_name": "r_back_leg_flesh"
+        },
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0.7,
+          "ExMult": 0.75,
+          "ExTarget": "Part",
+          "IsFatal": true,
+          "MainCap": 0,
+          "ToMain%": 0.5,
+          "health": 800,
+          "zone_name": "l_middle_leg_flesh"
+        },
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0.7,
+          "ExMult": 0.75,
+          "ExTarget": "Part",
+          "IsFatal": true,
+          "MainCap": 0,
+          "ToMain%": 0.5,
+          "health": 800,
+          "zone_name": "r_middle_leg_flesh"
+        },
+        {
+          "AV": 4,
+          "Con": 0,
+          "Dur%": 0.7,
+          "ExMult": 0.75,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.7,
+          "health": 500,
+          "zone_name": "l_front_leg"
+        },
+        {
+          "AV": 4,
+          "Con": 0,
+          "Dur%": 0.7,
+          "ExMult": 0.75,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.7,
+          "health": 500,
+          "zone_name": "r_front_leg"
+        }
+      ],
+      "health": 3000
+    },
+    "Charger Behemoth (Tier2)": {
       "damageable_zones": [
         {
           "AV": 4,
@@ -9463,7 +15315,239 @@
       ],
       "health": 150000
     },
-    "Hunter": {
+    "Hunter (Base)": {
+      "damageable_zones": [
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 130,
+          "zone_name": "Main"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 40,
+          "zone_name": "hitzone_face"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.5,
+          "health": 45,
+          "zone_name": "hitzone_l_front_leg"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.5,
+          "health": 45,
+          "zone_name": "hitzone_r_front_leg"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.5,
+          "health": 45,
+          "zone_name": "hitzone_l_rear_leg"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.5,
+          "health": 45,
+          "zone_name": "hitzone_r_rear_leg"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.4,
+          "health": 45,
+          "zone_name": "hitzone_l_claw"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.4,
+          "health": 45,
+          "zone_name": "hitzone_r_claw"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.3,
+          "health": 20,
+          "zone_name": "hitzone_r_wing"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.3,
+          "health": 20,
+          "zone_name": "hitzone_l_wing"
+        }
+      ],
+      "health": 130
+    },
+    "Hunter (Tier 1)": {
+      "damageable_zones": [
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 130,
+          "zone_name": "Main"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 40,
+          "zone_name": "hitzone_face"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.5,
+          "health": 45,
+          "zone_name": "hitzone_l_front_leg"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.5,
+          "health": 45,
+          "zone_name": "hitzone_r_front_leg"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.5,
+          "health": 45,
+          "zone_name": "hitzone_l_rear_leg"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.5,
+          "health": 45,
+          "zone_name": "hitzone_r_rear_leg"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.4,
+          "health": 45,
+          "zone_name": "hitzone_l_claw"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.4,
+          "health": 45,
+          "zone_name": "hitzone_r_claw"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.3,
+          "health": 20,
+          "zone_name": "hitzone_r_wing"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.3,
+          "health": 20,
+          "zone_name": "hitzone_l_wing"
+        }
+      ],
+      "health": 130
+    },
+    "Hunter (Tier 2)": {
       "damageable_zones": [
         {
           "AV": 0,
@@ -9853,7 +15937,131 @@
       ],
       "health": 4000
     },
+    "Impaler (Tentacle)": {
+      "damageable_zones": [
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 5000,
+          "zone_name": "Main"
+        }
+      ],
+      "health": 5000
+    },
     "Nursing Spewer": {
+      "damageable_zones": [
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0.5,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 750,
+          "zone_name": "Main"
+        },
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 300,
+          "zone_name": "hitzone_head"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 250,
+          "zone_name": "hitzone_mouth"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 1,
+          "ExMult": 1,
+          "ExTarget": "Part",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.6,
+          "health": 750,
+          "zone_name": "hitzone_butt"
+        },
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0.8,
+          "ExMult": 1,
+          "ExTarget": "Part",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.2,
+          "health": 500,
+          "zone_name": "hitzone_butt_plates"
+        },
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.5,
+          "health": 200,
+          "zone_name": "hitzone_frontleg_right"
+        },
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.5,
+          "health": 200,
+          "zone_name": "hitzone_frontleg_left"
+        },
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0.3,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.5,
+          "health": 250,
+          "zone_name": "hitzone_backleg_right"
+        },
+        {
+          "AV": 2,
+          "Con": 0,
+          "Dur%": 0.3,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.5,
+          "health": 250,
+          "zone_name": "hitzone_backleg_left"
+        }
+      ],
+      "health": 750
+    },
+    "Nursing Spewer (Mission)": {
       "damageable_zones": [
         {
           "AV": 2,
@@ -10061,7 +16269,7 @@
       ],
       "health": 60
     },
-    "Predator Hunter": {
+    "Predator Hunter (Tier 3)": {
       "damageable_zones": [
         {
           "AV": 0,
@@ -10740,7 +16948,107 @@
       ],
       "health": 250
     },
-    "Scavenger": {
+    "Scavenger (Base)": {
+      "damageable_zones": [
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 60,
+          "zone_name": "Main"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.3,
+          "health": 30,
+          "zone_name": "hitzone_limbs_right"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.3,
+          "health": 30,
+          "zone_name": "hitzone_limbs_left"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.3,
+          "health": 30,
+          "zone_name": "hitzone_limbs_right"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.3,
+          "health": 30,
+          "zone_name": "[unknown]"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 20,
+          "zone_name": "face"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.3,
+          "health": 30,
+          "zone_name": "[unknown]"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.3,
+          "health": 30,
+          "zone_name": "[unknown]"
+        }
+      ],
+      "health": 60
+    },
+    "Scavenger (Tier 1 Captive)": {
       "damageable_zones": [
         {
           "AV": 0,
@@ -10840,6 +17148,206 @@
       ],
       "health": 80
     },
+    "Scavenger (Tier 1)": {
+      "damageable_zones": [
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 60,
+          "zone_name": "Main"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.3,
+          "health": 30,
+          "zone_name": "hitzone_limbs_right"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.3,
+          "health": 30,
+          "zone_name": "hitzone_limbs_left"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.3,
+          "health": 30,
+          "zone_name": "hitzone_limbs_right"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.3,
+          "health": 30,
+          "zone_name": "[unknown]"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 20,
+          "zone_name": "face"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.3,
+          "health": 30,
+          "zone_name": "[unknown]"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.3,
+          "health": 30,
+          "zone_name": "[unknown]"
+        }
+      ],
+      "health": 60
+    },
+    "Scavenger (Tier 2)": {
+      "damageable_zones": [
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 60,
+          "zone_name": "Main"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.3,
+          "health": 30,
+          "zone_name": "hitzone_limbs_right"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.3,
+          "health": 30,
+          "zone_name": "hitzone_limbs_left"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.3,
+          "health": 30,
+          "zone_name": "hitzone_limbs_right"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.3,
+          "health": 30,
+          "zone_name": "[unknown]"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 20,
+          "zone_name": "face"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.3,
+          "health": 30,
+          "zone_name": "[unknown]"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.3,
+          "health": 30,
+          "zone_name": "[unknown]"
+        }
+      ],
+      "health": 60
+    },
     "Shrieker": {
       "damageable_zones": [
         {
@@ -10903,7 +17411,70 @@
       ],
       "health": 80
     },
-    "Spore Burst Hunter": {
+    "Shrieker (Gloom)": {
+      "damageable_zones": [
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 80,
+          "zone_name": "Main"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.4,
+          "health": 30,
+          "zone_name": "hitzone_limbs"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 20,
+          "zone_name": "hitzone_face"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 1,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.3,
+          "health": 20,
+          "zone_name": "hitzone_wings_r"
+        },
+        {
+          "AV": 0,
+          "Con": 0,
+          "Dur%": 1,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 1,
+          "ToMain%": 0.3,
+          "health": 20,
+          "zone_name": "hitzone_wings_l"
+        }
+      ],
+      "health": 80
+    },
+    "Spore Burst Hunter (Gloom)": {
       "damageable_zones": [
         {
           "AV": 0,
@@ -11019,7 +17590,7 @@
       ],
       "health": 160
     },
-    "Spore Burst Scavenger": {
+    "Spore Burst Scavenger (Gloom)": {
       "damageable_zones": [
         {
           "AV": 0,
@@ -11119,7 +17690,7 @@
       ],
       "health": 60
     },
-    "Spore Burst Warrior": {
+    "Spore Burst Warrior (Gloom)": {
       "damageable_zones": [
         {
           "AV": 1,
@@ -11629,7 +18200,383 @@
       ],
       "health": 800
     },
-    "Warrior": {
+    "Warrior (Base)": {
+      "damageable_zones": [
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0.2,
+          "ExMult": 1,
+          "ExTarget": "Part",
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 250,
+          "zone_name": "Main"
+        },
+        {
+          "AV": 1,
+          "Con": 160,
+          "Dur%": 0.2,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 0,
+          "ToMain%": 1,
+          "health": 110,
+          "zone_name": "face"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.4,
+          "health": 75,
+          "zone_name": "hitzone_l_rear_leg"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.4,
+          "health": 75,
+          "zone_name": "hitzone_r_rear_leg"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.4,
+          "health": 75,
+          "zone_name": "hitzone_r_front_leg"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.4,
+          "health": 75,
+          "zone_name": "hitzone_l_front_leg"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.4,
+          "health": 75,
+          "zone_name": "r_claw"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.4,
+          "health": 75,
+          "zone_name": "l_claw"
+        }
+      ],
+      "health": 250
+    },
+    "Warrior (Tier 1 Captive)": {
+      "damageable_zones": [
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0.2,
+          "ExMult": 1,
+          "ExTarget": "Part",
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 250,
+          "zone_name": "Main"
+        },
+        {
+          "AV": 1,
+          "Con": 160,
+          "Dur%": 0.2,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 0,
+          "ToMain%": 1,
+          "health": 110,
+          "zone_name": "face"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.4,
+          "health": 75,
+          "zone_name": "hitzone_l_rear_leg"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.4,
+          "health": 75,
+          "zone_name": "hitzone_r_rear_leg"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.4,
+          "health": 75,
+          "zone_name": "hitzone_r_front_leg"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.4,
+          "health": 75,
+          "zone_name": "hitzone_l_front_leg"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.4,
+          "health": 75,
+          "zone_name": "r_claw"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.4,
+          "health": 75,
+          "zone_name": "l_claw"
+        }
+      ],
+      "health": 250
+    },
+    "Warrior (Tier 1)": {
+      "damageable_zones": [
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0.2,
+          "ExMult": 1,
+          "ExTarget": "Part",
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 250,
+          "zone_name": "Main"
+        },
+        {
+          "AV": 1,
+          "Con": 160,
+          "Dur%": 0.2,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 0,
+          "ToMain%": 1,
+          "health": 110,
+          "zone_name": "face"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.4,
+          "health": 75,
+          "zone_name": "hitzone_l_rear_leg"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.4,
+          "health": 75,
+          "zone_name": "hitzone_r_rear_leg"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.4,
+          "health": 75,
+          "zone_name": "hitzone_r_front_leg"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.4,
+          "health": 75,
+          "zone_name": "hitzone_l_front_leg"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.4,
+          "health": 75,
+          "zone_name": "r_claw"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.4,
+          "health": 75,
+          "zone_name": "l_claw"
+        }
+      ],
+      "health": 250
+    },
+    "Warrior (Tier 2 Guard)": {
+      "damageable_zones": [
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0.2,
+          "ExMult": 1,
+          "ExTarget": "Part",
+          "MainCap": 1,
+          "ToMain%": 1,
+          "health": 325,
+          "zone_name": "Main"
+        },
+        {
+          "AV": 1,
+          "Con": 200,
+          "Dur%": 0.2,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "IsFatal": true,
+          "MainCap": 0,
+          "ToMain%": 1,
+          "health": 150,
+          "zone_name": "face"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.4,
+          "health": 100,
+          "zone_name": "hitzone_l_rear_leg"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.4,
+          "health": 100,
+          "zone_name": "hitzone_r_rear_leg"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.4,
+          "health": 100,
+          "zone_name": "hitzone_r_front_leg"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.4,
+          "health": 100,
+          "zone_name": "hitzone_l_front_leg"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.4,
+          "health": 100,
+          "zone_name": "r_claw"
+        },
+        {
+          "AV": 1,
+          "Con": 0,
+          "Dur%": 0,
+          "ExMult": 1,
+          "ExTarget": "Main",
+          "MainCap": 0,
+          "ToMain%": 0.4,
+          "health": 100,
+          "zone_name": "l_claw"
+        }
+      ],
+      "health": 325
+    },
+    "Warrior (Tier 2)": {
       "damageable_zones": [
         {
           "AV": 1,

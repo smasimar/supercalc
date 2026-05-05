@@ -21,9 +21,15 @@ Normalization rules:
   - Illuminate: fac_illuminate
   - Ignore    : fac_super_earth, fac_helldivers, anything unmapped
 
-Deduping:
-  - If multiple entries for the same unit exist within a faction, the script
-    keeps the one with the most damageable_zones; if tied, the higher health wins.
+Unit naming (duplicate loc_name):
+  - Each top-level JSON key becomes its own output entry (no merging).
+  - Name is loc_name when the asset slug equals the parent folder slug
+    (e.g. .../cha_berserker/cha_berserker).
+  - Otherwise append (Variant) where Variant is the asset tail after parent_,
+    title-cased from snake_case (e.g. .../cha_berserker/cha_berserker_iron_fleet
+    with loc_name "Berserker" -> "Berserker (Iron Fleet)").
+  - If two keys still collide on that display string, a numeric suffix (2), (3), ...
+    is appended (no hex signatures).
 
 Zone field filtering/renames:
   - ignore: affected_by_collision_impact, armor_angle_check, bleedout_enabled, child_zones,
@@ -51,8 +57,8 @@ import os
 import re
 import argparse
 from typing import Union
-from collections import defaultdict, OrderedDict
-from typing import Any, Dict
+from collections import defaultdict
+from typing import Any, Dict, Optional
 
 # --- Mapping helpers -------------------------------------------------------
 
@@ -209,15 +215,56 @@ def transform_zone(zone: Dict[str, Any]) -> Dict[str, Any]:
     return out
 
 
-def _score_payload(payload: Dict[str, Any]) -> tuple:
-    zones = payload.get("damageable_zones")
-    zlen = len(zones) if isinstance(zones, list) else 0
-    health = payload.get("health") or 0
-    return (zlen, health)
+def humanize_variant_slug(variant_slug: str) -> str:
+    """Turn snake_case tail into 'Title Case Words'."""
+    parts = [p for p in str(variant_slug).split("_") if p]
+    if not parts:
+        return ""
+    return " ".join(p.title() for p in parts)
 
 
-def _best_payload(a: Dict[str, Any], b: Dict[str, Any]) -> Dict[str, Any]:
-    return a if _score_payload(a) >= _score_payload(b) else b
+def display_name_from_key(loc_name: str, content_key: str) -> str:
+    """Build a unique-friendly display name from loc_name and the JSON object key path."""
+    sanitized_loc = sanitize_string(str(loc_name))
+    base = content_key.split("^_^", 1)[0].strip().rstrip("/")
+    parts = base.split("/")
+    if len(parts) < 2:
+        return sanitized_loc
+    parent_slug = parts[-2]
+    asset_slug = parts[-1]
+    if asset_slug == parent_slug:
+        return sanitized_loc
+    prefix = parent_slug + "_"
+    if asset_slug.startswith(prefix):
+        variant_slug = asset_slug[len(prefix) :]
+        if variant_slug:
+            label = humanize_variant_slug(variant_slug)
+            if label:
+                return f"{sanitized_loc} ({label})"
+    return sanitized_loc
+
+
+def extract_disambiguator_from_key(content_key: str) -> Optional[str]:
+    """Return short 0x<id> token from keys like '... ^_^ 0x54e107dacf6929cb' for collision suffix."""
+    m = re.search(r"\^_\^\s*0x([0-9a-fA-F]+)", content_key)
+    if not m:
+        return None
+    hx = m.group(1)
+    return f"0x{hx[:8]}"
+
+
+def unique_display_name(
+    desired: str, fac_dict: Dict[str, Dict[str, Any]], content_key: str
+) -> str:
+    """Ensure desired is unique within fac_dict; append numeric suffix if needed."""
+    if desired not in fac_dict:
+        return desired
+    n = 2
+    while True:
+        candidate = f"{desired} ({n})"
+        if candidate not in fac_dict:
+            return candidate
+        n += 1
 
 
 def parse_enemy_units(src: dict) -> dict:
@@ -242,8 +289,9 @@ def parse_enemy_units(src: dict) -> dict:
         if not loc_name or str(loc_name).strip().upper() == "N/A":
             continue
 
-        # Sanitize the unit name to drop any '^_^' suffixes
-        unit_name = sanitize_string(str(loc_name))
+        display_name = display_name_from_key(str(loc_name), key)
+        fac_dict = per_faction[faction]
+        display_name = unique_display_name(display_name, fac_dict, key)
 
         # Build zones: transform and drop empties/non-dicts
         raw_zones = payload.get("damageable_zones") or []
@@ -273,10 +321,7 @@ def parse_enemy_units(src: dict) -> dict:
             "damageable_zones": zones,
         }
 
-        if unit_name in per_faction[faction]:
-            per_faction[faction][unit_name] = _best_payload(per_faction[faction][unit_name], current)
-        else:
-            per_faction[faction][unit_name] = current
+        fac_dict[display_name] = current
 
     # Stable alphabetical unit order by key when serialized (sort_keys=True on dump)
     return per_faction
