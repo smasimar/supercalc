@@ -14768,18 +14768,18 @@
     "Hive Guard": {
       "damageable_zones": [
         {
-          "AV": 1,
+          "AV": 2,
           "Con": 0,
           "Dur%": 0.3,
           "ExMult": 1,
           "ExTarget": "Part",
           "MainCap": 1,
           "ToMain%": 1,
-          "health": 375,
+          "health": 500,
           "zone_name": "Main"
         },
         {
-          "AV": 4,
+          "AV": 3,
           "Con": 200,
           "Dur%": 0.35,
           "ExMult": 1,
@@ -14813,7 +14813,7 @@
           "zone_name": "hitzone_r_rear_leg"
         },
         {
-          "AV": 4,
+          "AV": 3,
           "Con": 0,
           "Dur%": 0,
           "ExMult": 1,
@@ -14824,7 +14824,7 @@
           "zone_name": "hitzone_r_front_leg"
         },
         {
-          "AV": 4,
+          "AV": 3,
           "Con": 0,
           "Dur%": 0,
           "ExMult": 1,
@@ -14879,7 +14879,7 @@
           "zone_name": "[unknown]"
         }
       ],
-      "health": 375
+      "health": 500
     },
     "Hive Lord": {
       "damageable_zones": [
